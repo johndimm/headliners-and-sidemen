@@ -5,7 +5,7 @@ const CoverArt = ( {release_group_gid} ) => {
   const [coverArt, setCoverArt] = useState('')
 
   useEffect ( () => {
-    const url = `http://coverartarchive.org/release-group/${release_group_gid}?fmt=json`
+    const url = `https://coverartarchive.org/release-group/${release_group_gid}?fmt=json`
     setCoverArt('')
     axios.get(url).then(function (response) {
       // console.log('CoverArt:', response.data)
