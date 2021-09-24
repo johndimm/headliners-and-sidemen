@@ -3,7 +3,7 @@ import FirstAfter from 'components/FirstAfter'
 import LastBefore from 'components/LastBefore'
 import Center from 'components/Center'
 import Header from 'components/Header'
-import Init from 'components/CoverArt'
+
 
 export default function Index() {
   const router = useRouter()
