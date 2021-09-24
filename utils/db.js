@@ -1,0 +1,39 @@
+// const { response } = require('express');
+const { pg, Pool } = require('pg');
+const pool = new Pool();
+
+// pg will convert dates to datetimes by default, we don't want that.
+var types = require('pg').types;
+types.setTypeParser(types.builtins.DATE, (str) => str);
+
+async function performSQLQuery(query) {
+    console.log('===> performSQLQuery, query: ', query);
+
+    try {
+        const response = await pool.query(query);
+        return response.rows;
+    } catch (error) {
+        return error;
+        console.log('===> performSQLQuery, error:', error);
+    }
+}
+
+exports.releaseArtists = function (release_group_id) {
+	return performSQLQuery(`select * from context.release_artists(${release_group_id});`);
+};
+
+exports.artistReleases = function (artist_id) {
+	return performSQLQuery(`select * from context.artist_releases(${artist_id});`);
+};
+
+exports.lastBefore = function (release_group_id) {
+	return performSQLQuery(`select * from context.last_before(${release_group_id});`);
+};
+
+exports.firstAfter = function (release_group_id) {
+	return performSQLQuery(`select * from context.first_after(${release_group_id});`);
+};
+
+exports.search = function (query) {
+	return performSQLQuery(`select * from context.search('${query}');`);
+};

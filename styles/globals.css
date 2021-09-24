@@ -1,0 +1,93 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.hidebody {
+  font-family: sans-serif;
+}
+
+.artist {
+font-weight: 600;
+}
+.instrument {
+  margin-left: 20px;
+  font-size: 10pt;
+  margin-bottom: 10px;
+}
+.title {
+  font-size: 24pt;
+  font-weight: 600;
+}
+.date {
+  font-size: 8pt;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td, th {
+	border: 1px solid lightgray;
+	padding: 5px;
+	cursor: pointer;
+  vertical-align: top;
+}
+
+.middle {
+  text-align: center;
+  max-width: 500px;
+  padding: 10px;
+  margin: 10px;
+}
+
+img {
+  max-width: 200px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.middle img {
+  max-width: 500px;
+}
+
+.headliner {
+  margin-bottom: 10px;
+}
+
+.linked_album {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid lightgray;
+  max-width: 250px;
+}
+
+.form {
+  margin: 10px;
+  padding: 10px;
+}
+
+.page_title {
+  font-size:24pt;
+  margin-left: 50px;
+  margin-right: 50px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.page_subtitle {
+  font-size: 10pt;
+}
