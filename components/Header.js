@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 const Header = () => {
-    const [records, setRecords] = useState([])
-
     const search = async (e) => {
        e.preventDefault()
        const query = e.target[0].value
