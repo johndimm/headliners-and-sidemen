@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Artist =  ( { record } ) => {
   const link = `/artist_releases/${record.artist_id}`
-    return <Link href={link}>
+    return <Link href={link} passHref={true}>
       <div>
           <div className='date'>{record.begin_date}</div>
           <div className='artist'>{record.artist}</div>

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Image from 'next/image'
 import axios from 'axios'
 
 const CoverArt = ( {release_group_gid} ) => {
@@ -18,7 +19,7 @@ const CoverArt = ( {release_group_gid} ) => {
   if (! coverArt)
     return null
 
-  return <img src={coverArt} />
+  return <Image src={coverArt} alt={release_group_gid} />
 }
 
 export default CoverArt

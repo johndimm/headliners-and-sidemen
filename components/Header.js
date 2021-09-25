@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const Header = () => {
     const [records, setRecords] = useState([])
@@ -16,10 +18,10 @@ const Header = () => {
             <input placeholder='Search...' name='query' type='text' width='80'></input>
             <input type='submit' />
             <br />
-            powered by: <a href='https://musicbrainz.org/'><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank'/></a>
+            powered by: <Link href='https://musicbrainz.org/' passHref={true}><Image width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
         </div>
         <div className='page_title_div'>
-          <div className='page_title'><a href="/">Headliners and Sidemen</a></div>
+          <div className='page_title'><Link href="/">Headliners and Sidemen</Link></div>
           <div className='page_subtitle'>What were the musicians who played on this album doing before and after?</div>
         </div>
       </form>
