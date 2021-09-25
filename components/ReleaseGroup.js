@@ -3,7 +3,7 @@ import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
 const ReleaseGroup = ( {record}) => {
-    const link = `/release_group/${record.release_group}`
+    const link = `/release_group_set/${record.release_group}`
 
     return <div className='linked_album'>
           <Link href={link}>

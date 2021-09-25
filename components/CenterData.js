@@ -1,19 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const Center = ( {release_group}) => {
-    const [data, setData] = useState ([])
+const CenterData = ( {records}) => {
 
-    useEffect( () => {
-        const url = `/api/release_group/${release_group}`
-        axios.get(url).then(function (response) {
-            console.log("Center, data", response.data)
-            setData(response.data)
-        }).catch(err => err)
-    },[release_group])
-
+    const data = records
+    console.log('CenterData', data)
     let artists 
     let release
     let begin_date = '2200-01-01'
@@ -38,4 +29,4 @@ const Center = ( {release_group}) => {
     return <div>{release}{artists}</div>
 }
 
-export default Center
+export default CenterData

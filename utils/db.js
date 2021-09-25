@@ -3,7 +3,7 @@ const { pg, Pool } = require('pg');
 
 const pgOptions = {
     connectionString: process.env.DATABASE_URL_GCE,
-    ssl: { rejectUnauthorized: false }
+    ssl: false // { rejectUnauthorized: false }
 }
 console.log(pgOptions)
 const pool = new Pool(pgOptions);
@@ -24,8 +24,9 @@ async function performSQLQuery(query) {
     }
 }
 
-exports.releaseArtists = function (release_group_id) {
-	return performSQLQuery(`select * from context.release_artists(${release_group_id});`);
+exports.releaseGroup = function (release_group_id) {
+    console.log('releaseGroup:', release_group_id)
+	return performSQLQuery(`select * from context.release_group(${release_group_id});`);
 };
 
 exports.artistReleases = function (artist_id) {
@@ -42,4 +43,9 @@ exports.firstAfter = function (release_group_id) {
 
 exports.search = function (query) {
 	return performSQLQuery(`select * from context.search('${query}');`);
+};
+
+exports.releaseGroupSet = function (release_group_id) {
+    console.log('releaseGroupSet:', release_group_id)
+	return performSQLQuery(`select * from context.release_group_set(${release_group_id});`);
 };

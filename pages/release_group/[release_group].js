@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'next'
 import { useRouter } from 'next/router'
 import FirstAfter from 'components/FirstAfter'
 import LastBefore from 'components/LastBefore'
@@ -9,6 +10,7 @@ export default function Index() {
   const router = useRouter()
   const { release_group } = router.query
   
+
   console.log('release-group page, release_group:', release_group)
 
   if (! release_group)

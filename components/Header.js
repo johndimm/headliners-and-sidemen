@@ -19,7 +19,7 @@ const Header = () => {
             powered by: <a href='https://musicbrainz.org/'><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank'/></a>
         </div>
         <div className='page_title_div'>
-          <div className='page_title'>Headliners and Sidemen</div>
+          <div className='page_title'><a href="/">Headliners and Sidemen</a></div>
           <div className='page_subtitle'>What were the musicians who played on this album doing before and after?</div>
         </div>
       </form>

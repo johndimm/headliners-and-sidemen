@@ -1,7 +1,7 @@
 set search_path=context;
 
-create or replace function search(_query text)
-returns table (
+drop type if exists context_record_type cascade;
+create type context_record_type as (
     release_group int,
     title character varying,
     headliner character varying,
@@ -11,13 +11,24 @@ returns table (
     instrument character varying(255),
     begin_date date,
     end_date date,
+    rank int,
     release_group_gid uuid 
-)
+);
+
+drop type if exists page_section_enum cascade;
+create type page_section_enum as
+  enum('last_before', 'center', 'first_after');
+
+
+
+drop function if exists search;
+create or replace function search(_query text)
+returns setof context_record_type
 language plpgsql    
 as $$
 begin
   return query
-    select c.*, rg.gid as release_group_gid
+    select c.*, 1 as rank, rg.gid as release_group_gid
     from context.context as c
     join context.release_group as rg on rg.id = c.release_group
     where c.artist ilike concat('%', _query, '%')
@@ -30,24 +41,15 @@ end;
 $$
 ;
 
-create or replace function release_artists(release_group_id int)
-returns table (
-    release_group int,
-    title character varying,
-    headliner character varying,
-    headliner_id integer,
-    artist character varying,
-    artist_id integer,
-    instrument character varying(255),
-    begin_date date,
-    end_date date,
-    release_group_gid uuid 
-)
+drop function if exists release_group;
+drop function if exists get_release_group;
+create or replace function release_group(release_group_id int)
+returns setof context_record_type
 language plpgsql    
 as $$
 begin
   return query
-    select c.*, rg.gid as release_group_gid
+    select c.*, 1 as rank, rg.gid as release_group_gid
     from context.context as c
     join context.release_group as rg on rg.id = c.release_group
     where c.release_group=release_group_id
@@ -58,24 +60,14 @@ end;
 $$
 ;
 
+DROP FUNCTION if exists artist_releases;
 create or replace function artist_releases(_artist_id int)
-returns table (
-    release_group int,
-    title character varying,
-    headliner character varying,
-    headliner_id integer,
-    artist character varying,
-    artist_id integer,
-    instrument character varying(255),
-    begin_date date,
-    end_date date,
-    release_group_gid uuid 
-)
+returns setof context_record_type
 language plpgsql    
 as $$
 begin
   return query
-    select c.*, rg.gid as release_group_gid
+    select c.*, 1 as rank, rg.gid as release_group_gid
     from context.context as c
     join context.release_group as rg on rg.id = c.release_group
     where c.artist_id = _artist_id
@@ -86,30 +78,18 @@ end;
 $$
 ;
 
-drop function first_after(int);
+drop function if exists first_after(int);
 create or replace function first_after(_release_group_id int)
-returns table (
-    release_group int,
-    title character varying,
-    headliner character varying,
-    headliner_id integer,
-    artist character varying,
-    artist_id integer,
-    instrument character varying(255),
-    begin_date date,
-    end_date date,
-    rank bigint,
-    release_group_gid uuid 
-)
+returns setof context_record_type
 language plpgsql    
 as $$
 begin
   return query
     with all_after as (
       select c2.*,
-          ROW_NUMBER() OVER (PARTITION by c2.artist
-          ORDER BY c2.begin_date
-          ) as rank, 
+        cast(ROW_NUMBER() OVER (PARTITION by c2.artist
+            ORDER BY c2.begin_date
+            ) as int) as rank,
           rg.gid as release_group_gid
       from context.context as c 
       join context.context as c2 on c2.artist_id = c.artist_id
@@ -127,30 +107,18 @@ end;
 $$
 ;
 
-drop function last_before(int);
+drop function if exists last_before(int);
 create or replace function last_before(_release_group_id int)
-returns table (
-    release_group int,
-    title character varying,
-    headliner character varying,
-    headliner_id integer,
-    artist character varying,
-    artist_id integer,
-    instrument character varying(255),
-    begin_date date,
-    end_date date,
-    rank bigint,
-    release_group_gid uuid    
-)
+returns setof context_record_type
 language plpgsql    
 as $$
 begin
   return query
     with all_before as (
       select c2.*,
-          ROW_NUMBER() OVER (PARTITION by c2.artist
+          cast(ROW_NUMBER() OVER (PARTITION by c2.artist
             ORDER BY c2.begin_date DESC
-            ) as rank,
+            ) as int) as rank,
           rg.gid as release_group_gid
       from context.context as c 
       join context.context as c2 on c2.artist_id = c.artist_id
@@ -168,7 +136,7 @@ end;
 $$
 ;
 
-create or replace function first_after(_artist_id int, _target_date date)
+create or replace function release_group_set(_release_group int)
 returns table (
     release_group int,
     title character varying,
@@ -178,46 +146,47 @@ returns table (
     artist_id integer,
     instrument character varying(255),
     begin_date date,
-    end_date date    
+    end_date date,
+    rank int,
+    release_group_gid uuid,
+    page_section page_section_enum 
 )
 language plpgsql    
 as $$
 begin
   return query
-    select *
-    from context.context
-    where context.artist_id = _artist_id
-    and context.begin_date > _target_date
-    order by context.begin_date
-    limit 1
-    ;
-end;
-$$
-;
+
+/*
+    c.release_group,
+    c.title,
+    c.headliner,
+    c.headliner_id,
+    c.artist,
+    c.artist_id,
+    c.instrument,
+    c.begin_date,
+    c.end_date,
+    c.rank,
+    c.release_group_gid,
+*/
+
+    select *,    
+    cast('last_before' as context.page_section_enum) as page_section
+    from context.last_before(_release_group) as c
+
+    union all
+
+    select *,
+      cast('center' as context.page_section_enum) as page_section
+    from context.release_group(_release_group)
+
+    union all
+
+    select *, 
+      cast('first_after' as context.page_section_enum) as page_section
+    from context.first_after(_release_group)
 
 
-create or replace function last_before(_artist_id int, _target_date date)
-returns table (
-    release_group int,
-    title character varying,
-    headliner character varying,
-    headliner_id integer,
-    artist character varying,
-    artist_id integer,
-    instrument character varying(255),
-    begin_date date,
-    end_date date    
-)
-language plpgsql    
-as $$
-begin
-  return query
-    select *
-    from context.context
-    where context.artist_id = _artist_id
-    and context.begin_date < _target_date
-    order by context.begin_date desc
-    limit 1
     ;
 end;
 $$

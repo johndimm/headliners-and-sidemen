@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import Center from 'components/Center'
-import FirstAfter from 'components/FirstAfter'
 
 export default function Index() {
   const router = useRouter()
@@ -12,5 +11,5 @@ export default function Index() {
   if (! release_group)
     return null
 
-  return <div><FirstAfter release_group={release_group} /></div>
+  return <div><Center release_group={release_group} /></div>
 }
