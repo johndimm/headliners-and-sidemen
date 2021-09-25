@@ -18,7 +18,7 @@ const Header = () => {
             <input placeholder='Search...' name='query' type='text' width='80'></input>
             <input type='submit' />
             <br />
-            powered by: <Link href='https://musicbrainz.org/' passHref={true}><Image width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
+            powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
         </div>
         <div className='page_title_div'>
           <div className='page_title'><Link href="/">Headliners and Sidemen</Link></div>

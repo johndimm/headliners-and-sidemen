@@ -19,7 +19,7 @@ const CoverArt = ( {release_group_gid} ) => {
   if (! coverArt)
     return null
 
-  return <Image src={coverArt} alt={release_group_gid} />
+  return <img src={coverArt} alt={release_group_gid} />
 }
 
 export default CoverArt
