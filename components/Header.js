@@ -10,12 +10,19 @@ const Header = () => {
     }
 
     return <div className='form'>
-        <form onSubmit={search}>
-        <input placeholder='Search...' name='query' type='text' width='80'></input>
-        <input type='submit' />
-        <span className='page_title'>Headliners and Sidemen</span>
-        <span className='page_subtitle'>What else were the musicians on an album doing before and after?</span>
-        </form>
+      <form onSubmit={search}>
+        <div className='search_input'>
+
+            <input placeholder='Search...' name='query' type='text' width='80'></input>
+            <input type='submit' />
+            <br />
+            powered by: <a href='https://musicbrainz.org/'><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank'/></a>
+        </div>
+        <div className='page_title_div'>
+          <div className='page_title'>Headliners and Sidemen</div>
+          <div className='page_subtitle'>What were the musicians who played on this album doing before and after?</div>
+        </div>
+      </form>
 
     </div>
 }

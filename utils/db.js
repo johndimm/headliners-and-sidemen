@@ -1,9 +1,12 @@
 // const { response } = require('express');
 const { pg, Pool } = require('pg');
-const pool = new Pool({
+
+const pgOptions = {
     connectionString: process.env.DATABASE_URL_GCE,
     ssl: { rejectUnauthorized: false }
-});
+}
+console.log(pgOptions)
+const pool = new Pool(pgOptions);
 
 // pg will convert dates to datetimes by default, we don't want that.
 var types = require('pg').types;

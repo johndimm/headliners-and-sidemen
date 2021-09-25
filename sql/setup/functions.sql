@@ -51,7 +51,7 @@ begin
     from context.context as c
     join context.release_group as rg on rg.id = c.release_group
     where c.release_group=release_group_id
-    order by c.begin_date desc
+    order by c.artist
     limit 200
     ;
 end;

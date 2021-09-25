@@ -21,8 +21,9 @@ a {
 }
 
 .artist {
-font-weight: 600;
+  font-weight: 600;
 }
+
 .instrument {
   margin-left: 20px;
   font-size: 10pt;
@@ -43,7 +44,6 @@ table {
 td, th {
 	border: 1px solid lightgray;
 	padding: 5px;
-	cursor: pointer;
   vertical-align: top;
 }
 
@@ -75,19 +75,35 @@ img {
   max-width: 250px;
 }
 
+.linked_album:hover, .artist:hover {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
 .form {
   margin: 10px;
   padding: 10px;
 }
-
+.page_title_div {
+  display: inline-block;
+  margin-left: 50px;
+  width: 600px;
+}
 .page_title {
   font-size:24pt;
-  margin-left: 50px;
-  margin-right: 50px;
   font-weight: 600;
-  font-style: italic;
 }
 
 .page_subtitle {
   font-size: 10pt;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.search_input {
+  display: inline-block;
+}
+
+.search_input img {
+  width: 100px;
+  margin-bottom: -10px;
 }
