@@ -8,7 +8,7 @@ const LastBefore = ( {release_group} ) => {
     useEffect( () => {
         document.body.style.cursor = 'progress' 
         const url = `/api/last_before/${release_group}`
-        console.log(url)
+        // console.log(url)
         axios.get(url).then(function (response) {
             setRecords(response.data)
             document.body.style.cursor = 'default' 

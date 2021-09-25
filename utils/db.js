@@ -25,7 +25,7 @@ async function performSQLQuery(query) {
 }
 
 exports.releaseGroup = function (release_group_id) {
-    console.log('releaseGroup:', release_group_id)
+    // console.log('releaseGroup:', release_group_id)
 	return performSQLQuery(`select * from context.release_group(${release_group_id});`);
 };
 
@@ -46,6 +46,6 @@ exports.search = function (query) {
 };
 
 exports.releaseGroupSet = function (release_group_id) {
-    console.log('releaseGroupSet:', release_group_id)
+    // console.log('releaseGroupSet:', release_group_id)
 	return performSQLQuery(`select * from context.release_group_set(${release_group_id});`);
 };

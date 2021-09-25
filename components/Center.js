@@ -9,7 +9,7 @@ const Center = ( {release_group}) => {
     useEffect( () => {
         const url = `/api/release_group/${release_group}`
         axios.get(url).then(function (response) {
-            console.log("Center, data", response.data)
+            // console.log("Center, data", response.data)
             setData(response.data)
         }).catch(err => err)
     },[release_group])
@@ -19,7 +19,7 @@ const Center = ( {release_group}) => {
     let begin_date = '2200-01-01'
     let coverArt
     if (Array.isArray(data) && data.length > 0) {
-      console.log(data[0], data[0].release_group_gid)
+      // console.log(data[0], data[0].release_group_gid)
       coverArt = <CoverArt release_group_gid={data[0].release_group_gid} />
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
