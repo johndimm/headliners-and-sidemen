@@ -10,7 +10,7 @@ const ReleasesOverYears = ( {records} ) => {
         headers = []
         records.forEach ( (record, idx) => {
             const year = record.begin_date.substring(0, 4)
-            console.log('ReleasesOverYears:', year, record.title)
+            // console.log('ReleasesOverYears:', year, record.title)
             if (! (year in years)) {
                 years[year] = []
                 headers.push(<th key={idx}>{year}</th>)
