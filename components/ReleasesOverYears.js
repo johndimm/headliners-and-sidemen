@@ -10,6 +10,7 @@ const ReleasesOverYears = ( {records} ) => {
         headers = []
         records.forEach ( (record, idx) => {
             const year = record.begin_date.substring(0, 4)
+            console.log('ReleasesOverYears:', year, record.title)
             if (! (year in years)) {
                 years[year] = []
                 headers.push(<th key={idx}>{year}</th>)
@@ -17,7 +18,7 @@ const ReleasesOverYears = ( {records} ) => {
             years[year].push(<ReleaseGroup key={idx} record={record} />)
         })
 
-        cells = Object.keys(years).map ( (year, idx) => {
+        cells = Object.keys(years).sort(function(a, b){return b-a}).map ( (year, idx) => {
             return <td key={idx}>{years[year]}</td>    
         })
     }

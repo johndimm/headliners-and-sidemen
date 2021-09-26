@@ -1,0 +1,1 @@
+echo $DATABASE_URL_GCE

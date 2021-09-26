@@ -32,7 +32,6 @@ begin
     from context as c
     where c.artist ilike concat('%', _query, '%')
       or c.title ilike concat('%', _query, '%')
-      or c.instrument ilike concat('%', _query, '%')
     order by c.begin_date desc
     limit 100
     ;
