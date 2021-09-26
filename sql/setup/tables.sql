@@ -1,7 +1,7 @@
-set search_path=context;
+-- set search_path=context;
 
-drop table if exists context;
-CREATE TABLE context (
+drop table if exists context_xfer;
+CREATE TABLE context_xfer (
     release_group integer,
     title character varying,
     headliner character varying,
@@ -13,14 +13,11 @@ CREATE TABLE context (
     end_date date
 );
 
-drop table if exists release_group;
-CREATE TABLE release_group (
-    id integer,
-    gid uuid,
-    name character varying,
-    artist_credit integer,
-    type integer,
-    comment character varying(255),
-    edits_pending integer,
-    last_updated timestamp with time zone
+drop table if exists covers;
+create table covers (
+  id int,
+  gid uuid,
+  url text
 );
+
+

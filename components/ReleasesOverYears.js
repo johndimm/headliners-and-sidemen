@@ -12,22 +12,22 @@ const ReleasesOverYears = ( {records} ) => {
             const year = record.begin_date.substring(0, 4)
             if (! (year in years)) {
                 years[year] = []
-                headers.push(<th>{year}</th>)
+                headers.push(<th key={idx}>{year}</th>)
             }
             years[year].push(<ReleaseGroup key={idx} record={record} />)
         })
 
         cells = Object.keys(years).map ( (year, idx) => {
-            return <td key={idx+1000}>{years[year]}</td>    
+            return <td key={idx}>{years[year]}</td>    
         })
     }
 
     return <div>
-      <Header />
-    <table>
-        <thead><tr>{headers}</tr></thead>
-        <tbody><tr>{cells}</tr></tbody>
-    </table>
+        <Header />
+        <table>
+            <thead><tr>{headers}</tr></thead>
+            <tbody><tr>{cells}</tr></tbody>
+        </table>
     </div>
 }
 

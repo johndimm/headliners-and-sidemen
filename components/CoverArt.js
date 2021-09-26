@@ -1,25 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import Image from 'next/image'
-import axios from 'axios'
+// import Image from 'next/image'
 
-const CoverArt = ( {release_group_gid} ) => {
-  const [coverArt, setCoverArt] = useState('')
-
-  useEffect ( () => {
-    const url = `https://coverartarchive.org/release-group/${release_group_gid}?fmt=json`
-    setCoverArt('')
-    axios.get(url).then(function (response) {
-      // console.log('CoverArt:', response.data)
-      const src = response.data.images[0].thumbnails['small']
-      setCoverArt(src)
-    }).catch(err => { setCoverArt('') })
-
-  },[release_group_gid] )
-
-  if (! coverArt)
+const CoverArt = ( { cover_url } ) => {
+  if (!cover_url)
     return null
-
-  return <img src={coverArt} alt={release_group_gid} />
+    
+  return <img src={cover_url} alt='Cover Art' />
 }
 
 export default CoverArt

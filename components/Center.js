@@ -20,7 +20,11 @@ const Center = ( {release_group}) => {
     let coverArt
     if (Array.isArray(data) && data.length > 0) {
       // console.log(data[0], data[0].release_group_gid)
-      coverArt = <CoverArt release_group_gid={data[0].release_group_gid} />
+      if (data[0].cover_url) {
+        const bigCover = data[0].cover_url.replace('250.jpg', '500.jpg')
+        // console.log('bigCover', bigCover)
+        coverArt = <img src={bigCover} alt='Cover Art' />
+      }
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 

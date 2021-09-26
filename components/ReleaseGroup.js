@@ -9,7 +9,7 @@ const ReleaseGroup = ( {record}) => {
           <Link href={link} passHref={true}>
               <div>
                 <b>{record.title}</b> by {record.headliner}
-                <CoverArt release_group_gid={record.release_group_gid} />
+                <CoverArt cover_url={record.cover_url} />
               </div>
           </Link>
           <Artist record={record} />

@@ -10,8 +10,7 @@ export default function Index() {
   const router = useRouter()
   const { release_group } = router.query
   
-
-  console.log('release-group page, release_group:', release_group)
+  // console.log('release-group page, release_group:', release_group)
 
   if (! release_group)
     return null
@@ -23,7 +22,7 @@ export default function Index() {
       <td>
         <LastBefore release_group={release_group} />
       </td>
-      <td className='middle'>
+      <td className='center'>
         <Center release_group={release_group} />
       </td>
       <td>

@@ -26,26 +26,26 @@ async function performSQLQuery(query) {
 
 exports.releaseGroup = function (release_group_id) {
     // console.log('releaseGroup:', release_group_id)
-	return performSQLQuery(`select * from context.release_group(${release_group_id});`);
+	return performSQLQuery(`select * from release_group(${release_group_id});`);
 };
 
 exports.artistReleases = function (artist_id) {
-	return performSQLQuery(`select * from context.artist_releases(${artist_id});`);
+	return performSQLQuery(`select * from artist_releases(${artist_id});`);
 };
 
 exports.lastBefore = function (release_group_id) {
-	return performSQLQuery(`select * from context.last_before(${release_group_id});`);
+	return performSQLQuery(`select * from last_before(${release_group_id});`);
 };
 
 exports.firstAfter = function (release_group_id) {
-	return performSQLQuery(`select * from context.first_after(${release_group_id});`);
+	return performSQLQuery(`select * from first_after(${release_group_id});`);
 };
 
 exports.search = function (query) {
-	return performSQLQuery(`select * from context.search('${query}');`);
+	return performSQLQuery(`select * from search('${query}');`);
 };
 
 exports.releaseGroupSet = function (release_group_id) {
     // console.log('releaseGroupSet:', release_group_id)
-	return performSQLQuery(`select * from context.release_group_set(${release_group_id});`);
+	return performSQLQuery(`select * from release_group_set(${release_group_id});`);
 };

@@ -42,7 +42,7 @@ table {
 }
 
 td, th {
-	border: 1px solid lightgray;
+
 	padding: 5px;
   vertical-align: top;
 }
@@ -61,7 +61,7 @@ img {
 }
 
 .center img {
-  max-width: 500px;
+  max-width: 400px;
 }
 
 .headliner {
@@ -73,6 +73,8 @@ img {
   margin: 10px;
   border: 1px solid lightgray;
   max-width: 250px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 .linked_album:hover, .artist:hover {

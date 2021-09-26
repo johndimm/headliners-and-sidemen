@@ -1,4 +1,4 @@
-set search_path=context;
+-- set search_path=context;
 
-\copy context from 'context-dump.tsv';
-\copy release_group from 'rg-dump.tsv';
+\copy context_xfer from 'context-dump.tsv';
+\copy covers from 'covers.tsv';

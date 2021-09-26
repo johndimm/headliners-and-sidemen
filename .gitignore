@@ -36,3 +36,4 @@ yarn-error.log*
 .env
 musicbrainz.txt
 env.*
+env2.*

@@ -1,4 +1,4 @@
-set search_path=context;
+-- set search_path=context;
 
 drop type if exists context_record_type cascade;
 create type context_record_type as (
@@ -11,8 +11,8 @@ create type context_record_type as (
     instrument character varying(255),
     begin_date date,
     end_date date,
-    rank int,
-    release_group_gid uuid 
+    cover_url text,
+    rank int
 );
 
 drop type if exists page_section_enum cascade;
@@ -28,9 +28,8 @@ language plpgsql
 as $$
 begin
   return query
-    select c.*, 1 as rank, rg.gid as release_group_gid
-    from context.context as c
-    join context.release_group as rg on rg.id = c.release_group
+    select c.*, 1 as rank
+    from context as c
     where c.artist ilike concat('%', _query, '%')
       or c.title ilike concat('%', _query, '%')
       or c.instrument ilike concat('%', _query, '%')
@@ -49,9 +48,8 @@ language plpgsql
 as $$
 begin
   return query
-    select c.*, 1 as rank, rg.gid as release_group_gid
-    from context.context as c
-    join context.release_group as rg on rg.id = c.release_group
+    select c.*, 1 as rank
+    from context as c
     where c.release_group=release_group_id
     order by c.artist
     limit 200
@@ -67,9 +65,8 @@ language plpgsql
 as $$
 begin
   return query
-    select c.*, 1 as rank, rg.gid as release_group_gid
-    from context.context as c
-    join context.release_group as rg on rg.id = c.release_group
+    select c.*, 1 as rank
+    from context as c
     where c.artist_id = _artist_id
     order by c.begin_date desc
     limit 300
@@ -89,11 +86,9 @@ begin
       select c2.*,
         cast(ROW_NUMBER() OVER (PARTITION by c2.artist
             ORDER BY c2.begin_date
-            ) as int) as rank,
-          rg.gid as release_group_gid
-      from context.context as c 
-      join context.context as c2 on c2.artist_id = c.artist_id
-      join context.release_group as rg on rg.id = c2.release_group
+            ) as int) as rank
+      from context as c 
+      join context as c2 on c2.artist_id = c.artist_id
       where c.release_group = _release_group_id 
       and c2.begin_date > c.begin_date
       order by c2.artist, c2.begin_date
@@ -118,11 +113,9 @@ begin
       select c2.*,
           cast(ROW_NUMBER() OVER (PARTITION by c2.artist
             ORDER BY c2.begin_date DESC
-            ) as int) as rank,
-          rg.gid as release_group_gid
-      from context.context as c 
-      join context.context as c2 on c2.artist_id = c.artist_id
-      join context.release_group as rg on rg.id = c2.release_group
+            ) as int) as rank
+      from context as c 
+      join context as c2 on c2.artist_id = c.artist_id
       where c.release_group = _release_group_id 
       and c2.begin_date < c.begin_date
       order by c2.artist, c2.begin_date desc
@@ -147,8 +140,8 @@ returns table (
     instrument character varying(255),
     begin_date date,
     end_date date,
+    cover_url text,
     rank int,
-    release_group_gid uuid,
     page_section page_section_enum 
 )
 language plpgsql    
@@ -171,20 +164,20 @@ begin
 */
 
     select *,    
-    cast('last_before' as context.page_section_enum) as page_section
-    from context.last_before(_release_group) as c
+    cast('last_before' as page_section_enum) as page_section
+    from last_before(_release_group) as c
 
     union all
 
     select *,
-      cast('center' as context.page_section_enum) as page_section
-    from context.release_group(_release_group)
+      cast('center' as page_section_enum) as page_section
+    from release_group(_release_group)
 
     union all
 
     select *, 
-      cast('first_after' as context.page_section_enum) as page_section
-    from context.first_after(_release_group)
+      cast('first_after' as page_section_enum) as page_section
+    from first_after(_release_group)
 
 
     ;
