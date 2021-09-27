@@ -49,7 +49,7 @@ The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database)
 
 
 
-Here is the data extraction query, instantiated from a template for this range of id's.
+Here is the data extraction query, instantiated from a template for this range of 1000 id's.
 
 ```
 select rg.id as release_group,
@@ -87,5 +87,33 @@ Sample results:
 2717	Abbey Road	The Beatles	303	George Harrison	2863	synthesizer	1969-08-19	1969-08-19
 ```
 
+Table schema for run-time queries:
+```
+                         Table "public.context"
+    Column     |          Type          | Collation | Nullable | Default 
+---------------+------------------------+-----------+----------+---------
+ release_group | integer                |           |          | 
+ title         | character varying      |           |          | 
+ headliner     | character varying      |           |          | 
+ headliner_id  | integer                |           |          | 
+ artist        | character varying      |           |          | 
+ artist_id     | integer                |           |          | 
+ instrument    | character varying(255) |           |          | 
+ begin_date    | date                   |           |          | 
+ end_date      | date                   |           |          | 
+ cover_url     | text                   |           |          | 
+Indexes:
+    "idx_con_aid" btree (artist_id)
+    "idx_con_artist" btree (artist)
+    "idx_con_rg" btree (release_group)
+    "idx_con_title" btree (title)
+```
 
+## Implementation
+
+The postgres database is hosted on an e2.micro on Google Compute Engines.
+
+The app is built with nextjs and is hosted on both heroku and vercel.
+- [heroku](https://headliners-and-sidemen.herokuapp.com/)
+- [vercel](https://headliners-and-sidemen.vercel.app/)
 
