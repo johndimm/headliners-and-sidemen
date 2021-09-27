@@ -15,9 +15,9 @@ This app presents a new method.
 
 - by exploring the **area around your album**
 
-The *area around your album* is defined in a specific and objective way.   For each artist who played on your album, find the last album they recorded before and the first album they recorded after recording your album. 
+The *area around your album* is defined in a specific and objective way.   For each artist who played on your album, find the last album they recorded before and the first album they recorded after recording your album.  
 
-The interface lets you navigate the **colaboration graph** of albums related by the personnel they have in common.
+The interface lets you navigate the **colaboration graph** of albums.
 
 ## Collaboration Graphs
 
@@ -26,7 +26,7 @@ The usual definition has
 - edges: two musicians are connected if they appear on the same album
 
 These graphs are used to calculate degress of separation between musicians.  Examples are the
-six degress of Kevin Bacon (actors in movies) and Erdos Number (mathematicians collaborating on math papers).
+Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Number (mathematicians collaborating on math papers).
 
 
 Here we are using the same data organized in a different way:
@@ -46,8 +46,6 @@ Since we have the collaboration graph, we can show the complete history of a mus
 ## Data
 
 The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
-
-
 
 Here is the data extraction query, instantiated from a template for this range of 1000 id's.
 
@@ -87,6 +85,8 @@ Sample results:
 2717	Abbey Road	The Beatles	303	George Harrison	2863	synthesizer	1969-08-19	1969-08-19
 ```
 
+There are 67,615 musicians (artists) connected to 92,044 albums (release groups) through 1,018,092 recordings, extracted from a total of 2,351,000 albums.
+
 Table schema for run-time queries:
 ```
                          Table "public.context"
@@ -111,9 +111,34 @@ Indexes:
 
 ## Implementation
 
-The postgres database is hosted on an e2.micro on Google Compute Engines.
+The postgres database is hosted on an e2-micro (2 vCPUs, 1 GB memory) running on Google Compute Engines.
 
 The app is built with nextjs and is hosted on both heroku and vercel.
 - [heroku](https://headliners-and-sidemen.herokuapp.com/)
 - [vercel](https://headliners-and-sidemen.vercel.app/)
 
+## Postgres
+
+This uses postgres user-defined functions in lieu of an ORM.  That makes it easy to use postgres window functions to get the first album before and next album after.  The javascript API transparently passes SQL query results back to the front end.  See /sql/setup/functions.sql for the function and type definitions.
+
+```
+exports.releaseGroup = function (release_group_id) {
+	return performSQLQuery(`select * from release_group(${release_group_id});`);
+};
+
+exports.artistReleases = function (artist_id) {
+	return performSQLQuery(`select * from artist_releases(${artist_id});`);
+};
+
+exports.lastBefore = function (release_group_id) {
+	return performSQLQuery(`select * from last_before(${release_group_id});`);
+};
+
+exports.firstAfter = function (release_group_id) {
+	return performSQLQuery(`select * from first_after(${release_group_id});`);
+};
+
+exports.search = function (query) {
+	return performSQLQuery(`select * from search('${query}');`);
+};
+```

@@ -11,7 +11,6 @@ def download_image_info (id, gid, output):
             if len(images) > 0:
                  print("%s\t%s\t%s" % (id, gid, images[0]['thumbnails']['small']), file=output)
     except urllib.error.HTTPError as e:
-        # "e" can be treated as a http.client.HTTPResponse object
         return print (e)
 
 def process_list (start, end):
@@ -25,11 +24,8 @@ def process_list (start, end):
         i += 1
         (id, gid) = line.strip().split('\t')
         if (int(id) > start and int(id) < end):
-          #print ("id:%s, gid:%s" % (id, gid))
           download_image_info(id, gid, output)
           time.sleep(0.2)
-        #if (i > 3):
-        #    return
     f.close();
     output.close()
 
@@ -37,7 +33,7 @@ def stripes():
     for i in range(2351):
         start = i * 1000
         end = start + 1000
-        if start >= 2300000: # 886000: # 796000:
-            process_list(start, end)
+        # if start >= 2300000: # 886000: # 796000:
+        process_list(start, end)
 
 stripes()

@@ -148,20 +148,6 @@ as $$
 begin
   return query
 
-/*
-    c.release_group,
-    c.title,
-    c.headliner,
-    c.headliner_id,
-    c.artist,
-    c.artist_id,
-    c.instrument,
-    c.begin_date,
-    c.end_date,
-    c.rank,
-    c.release_group_gid,
-*/
-
     select *,    
     cast('last_before' as page_section_enum) as page_section
     from last_before(_release_group) as c
@@ -177,7 +163,6 @@ begin
     select *, 
       cast('first_after' as page_section_enum) as page_section
     from first_after(_release_group)
-
 
     ;
 end;
