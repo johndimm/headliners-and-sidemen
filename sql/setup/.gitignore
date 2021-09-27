@@ -1,1 +1,3 @@
 *.tsv
+local.sh
+gce.sh

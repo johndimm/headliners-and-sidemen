@@ -68,7 +68,7 @@ begin
     from context as c
     where c.artist_id = _artist_id
     order by c.begin_date desc
-    limit 300
+    limit 500
     ;
 end;
 $$
