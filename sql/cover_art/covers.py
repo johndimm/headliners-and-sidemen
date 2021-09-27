@@ -37,7 +37,7 @@ def stripes():
     for i in range(2351):
         start = i * 1000
         end = start + 1000
-        if start >= 87000:
+        if start >= 886000: # 796000:
             process_list(start, end)
 
 stripes()

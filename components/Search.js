@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ReleasesOverYears from 'components/ReleasesOverYears'
+import dups from 'utils/dups'
 
 const Search = ( {query} ) => {
     const [records, setRecords] = useState([])
@@ -13,7 +14,7 @@ const Search = ( {query} ) => {
         }).catch(err => err)
     }, [query])
 
-    return <ReleasesOverYears records={records} />
+    return <ReleasesOverYears records={dups.removeDups(records)} />
 }
 
 export default Search

@@ -90,6 +90,7 @@ img {
   display: inline-block;
   margin-left: 40px;
   width: 470px;
+  cursor: pointer;
 }
 .page_title {
   font-size:24pt;
@@ -108,5 +109,5 @@ img {
 
 .search_input img {
   width: 100px;
-  margin-bottom: -10px;
+  margin-bottom: -8px;
 }

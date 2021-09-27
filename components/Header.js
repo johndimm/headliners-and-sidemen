@@ -18,10 +18,18 @@ const Header = () => {
             <br />
             powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
         </div>
+        <Link href="https://github.com/johndimm/headliners-and-sidemen/">
+        <a>
         <div className='page_title_div'>
-          <div className='page_title'><Link href="/">Headliners and Sidemen</Link></div>
-          <div className='page_subtitle'>What were the musicians who played on this album doing before and after?</div>
+
+
+              <div className='page_title'>Headliners and Sidemen</div>
+              <div className='page_subtitle'>What were the musicians who played on this album doing before and after?
+              </div>
+
         </div>
+        </a>
+        </Link>
       </form>
 
     </div>
