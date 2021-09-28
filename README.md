@@ -10,13 +10,15 @@ You have found an album you like and you want more.  Where do you look?
 - you can **search** the album title or headliner and browse the hitlist
 - by liking the album your **personal recommendations** may change slightly
 
+You browse lists by clicking "next" over and over. It's a passive consumer experience.  The system keeps presenting you with albums you might like and your response is to say either yes or no.
+
 This app presents a new method.
 
 - by exploring **your album's neighborhood**
 
 *Your album's neighborhood* is defined in a specific and objective way.   For each artist who played on your album, the neighborhood contains the last album they recorded before and the first album they recorded after recording your album.  
 
-The interface lets you navigate the space of albums defined by the**colaboration graph**.
+The interface lets you navigate the space of albums defined by the **colaboration graph**.  You make active choices, moving from node to node in the space.
 
 ## Collaboration Graphs
 
@@ -29,7 +31,7 @@ These graphs are used to calculate degrees of separation between musicians.  Exa
 Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Numbers (mathematicians collaborating on academic papers).
 
 
-Here we are using the same data to calculate nearby albums rather than similar musicians.
+Here we are using the same data to find nearby albums rather than similar musicians.
 
 - nodes: musicians and albums
 - edges: musicians are connected to the albums they recorded for, but they are not connected to each other
@@ -144,3 +146,14 @@ exports.search = function (query) {
 	return performSQLQuery(`select * from search('${query}');`);
 };
 ```
+
+## Next
+
+![Some Well-Connected Movies](public/some-well-connected-movies.jpg)
+
+- Movies using IMDb
+  - [proof of concept](https://www.johndimm.com/context/3329.html) using a small sample
+
+- Academic papers on a given subject
+
+- Other ares where people from a large pool get together in various combinations to collaborate on a project.
