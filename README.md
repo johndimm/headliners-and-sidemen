@@ -149,7 +149,7 @@ exports.search = function (query) {
 
 ## Next
 
-![Some Well-Connected Movies](public/some-well-connected-movies.jpg)
+![Some Well-Connected Movies](public/some-well-connected-movies.png)
 
 - Movies using IMDb
   - [proof of concept](https://www.johndimm.com/context/3329.html) using a small sample
