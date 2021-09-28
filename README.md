@@ -14,11 +14,11 @@ You browse lists by clicking "next" over and over. It's a passive consumer exper
 
 This app presents a new method.
 
-- by exploring **your album's neighborhood**
+- by exploring your album's **neighborhood**
 
-*Your album's neighborhood* is defined in a specific and objective way.   For each artist who played on your album, the neighborhood contains the last album they recorded before and the first album they recorded after recording your album.  
+The *neighborhood* of an album is defined in a specific and objective way.   For each artist who played on your album, the neighborhood contains the last album they recorded before and the first album they recorded after recording your album.  
 
-The interface lets you navigate the space of albums defined by the **colaboration graph**.  You make active choices, moving from node to node in the space.
+The interface lets you navigate the space of albums defined by the **colaboration graph**.  You make active choices, moving from node to node in the space, going in different directions.
 
 ## Collaboration Graphs
 
@@ -28,15 +28,19 @@ The usual definition has
 - edges: two musicians are connected if they appear on the same album
 
 These graphs are used to calculate degrees of separation between musicians.  Examples in other domains are the
-Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Numbers (mathematicians collaborating on academic papers).
+Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Numbers (mathematicians collaborating on academic papers).  The movies or papers function only to establish connections between people.
 
 
-Here we are using the same data to find nearby albums rather than similar musicians.
+The approach here switches focus from people to the things they do together, in this case albums.  We are finding nearby albums rather than similar musicians.
 
 - nodes: musicians and albums
-- edges: musicians are connected to the albums they recorded for, but they are not connected to each other
+- edges: musicians are connected to the albums they recorded for
 
-Each edge has an important attribute:  the date of the recording.  Often an album has contributions from different dates, so the selection of nearby albums uses each musician's recording dates to find their last album before and first album ßafter.
+Musicians are not connected to each other.  The use case requires minimal graph analysis that can be done on the fly in postgres using window functions.
+
+Each edge has an important attribute:  the date of the recording.  Nearby albums will have overlapping personnel and be close in the time sequence of recordings done during the musician's career.  
+
+Often an album has contributions from different dates, so the selection of nearby albums uses each musician's specific recording dates to find their last album before and first album after.  That is why you will sometimes see an album in the left column that was recorded later in time than an album in the right column.
 
 
 
@@ -44,14 +48,14 @@ Each edge has an important attribute:  the date of the recording.  Often an albu
 
 [![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://headliners-and-sidemen.vercel.app/artist_releases/4291)
 
-Since we have the collaboration graph, we can show the complete history of a musicians appearances, on their own albums and those of other people.  The results are displayed in columns by year.
+Since we have the collaboration graph, we can show the complete history of a musicians appearances, on their own albums and those of other people.  The results are displayed in columns by year, capped at 500.  That's a lot, but on a large screen it is pretty cool.
 
 
 ## Data
 
 The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
 
-Here is the data extraction query, instantiated from a template for this range of 1000 id's.
+Here is the data extraction query.  The query has to be handled in batches.
 
 ```
 select rg.id as release_group,
@@ -85,8 +89,12 @@ group by 1,2,3,4,5,6,7
 
 Sample results:
 ```
-2717	Abbey Road	The Beatles	303	George Harrison	2863	piano	1969-02-25	1969-02-25
-2717	Abbey Road	The Beatles	303	George Harrison	2863	synthesizer	1969-08-19	1969-08-19
+10226	Blue Rondo	The Dave Brubeck Quartet	5444	Randy Jones	477140	drums (drum set)	1986-11-01	\N
+10229	Red Holloway & Company	Red Holloway	5483	Cedar Walton	51394	piano	1987-01-01	\N
+10229	Red Holloway & Company	Red Holloway	5483	Jimmie Smith	615236	drums (drum set)	1987-01-01	\N
+10229	Red Holloway & Company	Red Holloway	5483	Red Holloway	5483	saxophone	1987-01-01	\N
+10229	Red Holloway & Company	Red Holloway	5483	Richard Reid	1209898	bass	1987-01-01	\N
+10231	Marian McPartland Plays the Music of Billy Strayhorn	Marian McPartland	5285	Jerry Dodgion	359201	alto saxophone	1987-03-01	\N
 ```
 
 There are 67,615 musicians (artists) connected to 92,044 albums (release groups) through 1,018,092 recordings, extracted from a total of 2,351,000 albums.
