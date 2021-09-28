@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 
-![release group](public/headliners-and-sidemen-release-group.png)
+[![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.vercel.app/release_group/143692)
 
 You have found an album you like and you want more.  Where do you look?
 
@@ -42,7 +42,7 @@ Each edge has an important attribute:  the date of the recording.  Often an albu
 
 ## Artist Releases
 
-![artist releases](public/headliners-and-sidemen-artist-releases.png)
+[![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://headliners-and-sidemen.vercel.app/artist_releases/4291ß)
 
 Since we have the collaboration graph, we can show the complete history of a musicians appearances, on their own albums and those of other people.  The results are displayed in columns by year.
 
@@ -149,7 +149,7 @@ exports.search = function (query) {
 
 ## Next
 
-![Some Well-Connected Movies](public/some-well-connected-movies.png)
+[![Some Well-Connected Movies](public/some-well-connected-movies.png)](https://www.johndimm.com/context/3329.html)
 
 - Movies using IMDb
   - [proof of concept](https://www.johndimm.com/context/3329.html) using a small sample
