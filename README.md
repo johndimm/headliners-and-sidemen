@@ -1,6 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# Headliners and Sidemen
 
 ![release group](public/headliners-and-sidemen-release-group.png)
 
@@ -9,32 +8,35 @@ You have found an album you like and you want more.  Where do you look?
 - **"more like this"** shows other albums that people who enjoyed this album have disproportionately liked
 - **curated lists** show samples from genres containing thousands of albums
 - you can **search** the album title or headliner and browse the hitlist
-- by "liking" the album your **personal recommendations** may change slightly
+- by liking the album your **personal recommendations** may change slightly
 
 This app presents a new method.
 
-- by exploring the **area around your album**
+- by exploring **your album's neighborhood**
 
-The *area around your album* is defined in a specific and objective way.   For each artist who played on your album, find the last album they recorded before and the first album they recorded after recording your album.  
+*Your album's neighborhood* is defined in a specific and objective way.   For each artist who played on your album, the neighborhood contains the last album they recorded before and the first album they recorded after recording your album.  
 
-The interface lets you navigate the **colaboration graph** of albums.
+The interface lets you navigate the space of albums defined by the**colaboration graph**.
 
 ## Collaboration Graphs
 
 The usual definition has 
+
 - nodes: musicians
 - edges: two musicians are connected if they appear on the same album
 
-These graphs are used to calculate degress of separation between musicians.  Examples are the
-Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Number (mathematicians collaborating on math papers).
+These graphs are used to calculate degrees of separation between musicians.  Examples in other domains are the
+Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Numbers (mathematicians collaborating on academic papers).
 
 
-Here we are using the same data organized in a different way:
+Here we are using the same data to calculate nearby albums rather than similar musicians.
 
 - nodes: musicians and albums
 - edges: musicians are connected to the albums they recorded for, but they are not connected to each other
 
-Each edge has an important attribute:  the date of the recording.  Often an album has contributions from different dates, so the selection of nearby albums uses each musician's recording dates to find the last before and first after.
+Each edge has an important attribute:  the date of the recording.  Often an album has contributions from different dates, so the selection of nearby albums uses each musician's recording dates to find their last album before and first album ßafter.
+
+
 
 ## Artist Releases
 
