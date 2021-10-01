@@ -18,6 +18,7 @@ const LastBefore = ( {release_group} ) => {
 
     let html
     if (records.length > 0) {
+      console.log(records)
       html = dups.removeDups(records).map ( (record, idx) => {
         return <ReleaseGroup key={idx} record={record} />
       })

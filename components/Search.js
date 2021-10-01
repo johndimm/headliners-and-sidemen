@@ -7,7 +7,8 @@ const Search = ( {query} ) => {
     const [records, setRecords] = useState([])
 
     useEffect( () => {
-        const url = `/api/search/${query}`
+        const queryEsc = encodeURIComponent(query)
+        const url = `/api/search/${queryEsc}`
         console.log(url)
         axios.get(url).then(function (response) {
             setRecords(response.data)

@@ -12,6 +12,7 @@ create type context_record_type as (
     begin_date date,
     end_date date,
     cover_url text,
+    tsvector tsvector,
     rank int
 );
 
@@ -19,6 +20,20 @@ drop type if exists page_section_enum cascade;
 create type page_section_enum as
   enum('last_before', 'center', 'first_after');
 
+drop function if exists update_imdb_cover_art;
+create or replace function update_imdb_cover_art(_release_group int, _url text)
+returns boolean
+language plpgsql    
+as $$
+begin
+    update context 
+    set cover_url = _url 
+    where release_group = _release_group;
+
+    return 1;
+end;
+$$
+;
 
 
 drop function if exists search;
@@ -30,8 +45,10 @@ begin
   return query
     select c.*, 1 as rank
     from context as c
-    where c.artist ilike concat('%', _query, '%')
-      or c.title ilike concat('%', _query, '%')
+    where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+    --where c.artist ilike concat('%', _query, '%')
+    --  or c.title ilike concat('%', _query, '%')
+    and c.begin_date is not null
     order by c.begin_date desc
     limit 100
     ;

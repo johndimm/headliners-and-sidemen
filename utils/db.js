@@ -25,7 +25,7 @@ async function performSQLQuery(query) {
 }
 
 exports.releaseGroup = function (release_group_id) {
-    // console.log('releaseGroup:', release_group_id)
+    console.log('releaseGroup:', release_group_id)
 	return performSQLQuery(`select * from release_group(${release_group_id});`);
 };
 
@@ -49,3 +49,8 @@ exports.releaseGroupSet = function (release_group_id) {
     // console.log('releaseGroupSet:', release_group_id)
 	return performSQLQuery(`select * from release_group_set(${release_group_id});`);
 };
+
+exports.updateIMDbCoverArt = function (imdbid, url) {
+    const release_group = parseInt(imdbid.replace('tt', ''))
+    return performSQLQuery(`select * from update_imdb_cover_art(${release_group}, '${url}');`);   
+}

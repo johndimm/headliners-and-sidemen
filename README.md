@@ -40,7 +40,7 @@ Musicians are not connected to each other.  The use case requires minimal graph 
 
 Each edge has an important attribute:  the date of the recording.  Nearby albums will have overlapping personnel and be close in the time sequence of recordings done during the musician's career.  
 
-Often an album has contributions from different dates, so the selection of nearby albums uses each musician's specific recording dates to find their last album before and first album after.  That is why you will sometimes see an album in the left column that was recorded later in time than an album in the right column.
+Often an album has contributions from different dates, so the selection of nearby albums uses each musician's recording dates to find their last album before and first album after.  That is why you will sometimes see an album in the left column that was recorded later in time than an album in the right column.
 
 
 
@@ -164,4 +164,4 @@ exports.search = function (query) {
 
 - Academic papers on a given subject
 
-- Other ares where people from a large pool get together in various combinations to collaborate on a project.
+- Other areas where people from a large pool get together in various combinations to collaborate on projects

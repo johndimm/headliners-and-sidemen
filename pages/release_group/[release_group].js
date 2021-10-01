@@ -1,34 +1,19 @@
-import { useEffect, useState } from 'next'
+//import React, {useState, useEffect} from 'react'
+//import axios from 'axios'
 import { useRouter } from 'next/router'
-import FirstAfter from 'components/FirstAfter'
-import LastBefore from 'components/LastBefore'
-import Center from 'components/Center'
-import Header from 'components/Header'
+//import FirstAfter from 'components/FirstAfter'
+//import LastBefore from 'components/LastBefore'
+//import Center from 'components/Center'
+//import Header from 'components/Header'
+import BrowseLayout from 'components/BrowseLayout'
 
-
+// const Index = () => {
 export default function Index() {
+
   const router = useRouter()
-  const { release_group } = router.query
-  
-  // console.log('release-group page, release_group:', release_group)
+  let { release_group } = router.query
 
-  if (! release_group)
-    return null
-
-  return <div>
-    <Header />
-    <table>
-    <tbody><tr>
-      <td>
-        <LastBefore release_group={release_group} />
-      </td>
-      <td className='center'>
-        <Center release_group={release_group} />
-      </td>
-      <td>
-        <FirstAfter release_group={release_group} />     
-      </td>
-    </tr></tbody>
-  </table> 
-  </div> 
+  return <BrowseLayout release_group={release_group} />
 }
+
+// export default Index
