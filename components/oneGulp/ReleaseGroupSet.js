@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import Header from 'components/Header'
-import FirstAfterData from 'components/FirstAfterData'
-import LastBeforeData from 'components/LastBeforeData'
-import CenterData from 'components/CenterData'
+import FirstAfterData from 'components/oneGulp/FirstAfterData'
+import LastBeforeData from 'components/oneGulp/LastBeforeData'
+import CenterData from 'components/oneGulp/CenterData'
 
 const ReleaseGroupSet = ( { release_group}) => {
     const [data, setData] = useState ({
