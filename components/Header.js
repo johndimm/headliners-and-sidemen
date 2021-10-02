@@ -58,7 +58,7 @@ const HeaderIMDb = () => {
 
 
             <div className='page_title'>Cast and Crew</div>
-            <div className='page_subtitle'>What were the actors in this movie doing before and after?
+            <div className='page_subtitle'>What did the cast and crew of this movie do before and after?
             </div>
 
       </div>

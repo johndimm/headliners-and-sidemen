@@ -13,6 +13,7 @@ create type context_record_type as (
     end_date date,
     cover_url text,
     tsvector tsvector,
+    artist_seq int,
     rank int
 );
 
@@ -49,7 +50,7 @@ begin
     --where c.artist ilike concat('%', _query, '%')
     --  or c.title ilike concat('%', _query, '%')
     and c.begin_date is not null
-    order by c.begin_date
+    order by c.begin_date desc
     limit 300
     ;
 end;
@@ -84,15 +85,64 @@ begin
     select c.*, 1 as rank
     from context as c
     where c.artist_id = _artist_id
-    order by c.begin_date
+    order by c.begin_date desc
     limit 800
     ;
 end;
 $$
 ;
 
-drop function if exists first_after(int);
+drop function if exists first_after;
 create or replace function first_after(_release_group_id int)
+returns setof context_record_type
+language plpgsql    
+as $$
+begin
+  return query
+    with all_after as (
+      select c2.*, 1 as rank
+      from context as c 
+      join context as c2 on c2.artist_id = c.artist_id and c2.artist_seq = c.artist_seq + 1
+
+      where c.release_group = _release_group_id 
+      order by c2.artist, c2.begin_date
+    )
+    select *
+    from all_after as ab
+    where ab.rank = 1
+    order by ab.artist
+    ;
+end;
+$$
+;
+
+
+drop function if exists last_before;
+create or replace function last_before(_release_group_id int)
+returns setof context_record_type
+language plpgsql    
+as $$
+begin
+  return query
+    with all_after as (
+      select c2.*, 1 as rank
+      from context as c 
+      join context as c2 on c2.artist_id = c.artist_id and c2.artist_seq = c.artist_seq - 1
+
+      where c.release_group = _release_group_id 
+      order by c2.artist, c2.begin_date
+    )
+    select *
+    from all_after as ab
+    where ab.rank = 1
+    order by ab.artist
+    ;
+end;
+$$
+;
+
+drop function if exists first_after_OLD(int);
+create or replace function first_after_OLD(_release_group_id int)
 returns setof context_record_type
 language plpgsql    
 as $$
@@ -118,8 +168,8 @@ end;
 $$
 ;
 
-drop function if exists last_before(int);
-create or replace function last_before(_release_group_id int)
+drop function if exists last_before_OLD(int);
+create or replace function last_before_OLD(_release_group_id int)
 returns setof context_record_type
 language plpgsql    
 as $$

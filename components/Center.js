@@ -76,8 +76,10 @@ const Center = ( {release_group, data_source}) => {
         return <Artist key={idx} record={record} />
       })
 
+      begin_date = begin_date.toString().replace('-01-01','')
+
       release = <div>
-          <div className='date'>{begin_date.toString()}</div>
+          <div className='date'>{begin_date}</div>
           <div className='title'>{data[0].title}</div>
           <div className='headliner'>{data[0].headliner}</div>
           {coverArt}
