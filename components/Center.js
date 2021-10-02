@@ -27,17 +27,21 @@ const IMDbImage = ( {imdbid} ) => {
     });
   },[imdbid])
 
-  let image
-  if (data && 'Poster' in data) {
-    console.log('data.Poster:', data.Poster)
-    image =  <img src={data.Poster} alt='cover_art' />
-
-    // Save it.
-    const cover_url = encodeURIComponent(data.Poster)
-    const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url}`
+  const imageFound = (imdbid, cover_url) => {
+    if (cover_url === 'N/A' || cover_url === 'N')
+      return
+    const cover_url_esc = encodeURIComponent(cover_url)
+    const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
     console.log('fetchUrl', fetchUrl)
     fetch(fetchUrl)
+  }
 
+  let image
+  if (data && 'Poster' in data && 
+  ( data.Poster !== 'N/A' && data.Poster !== 'N' ) ) {
+    console.log('data.Poster:', data.Poster)
+    image =  <img src={data.Poster} alt='cover_art' onLoad={imageFound(imdbid, data.Poster)}
+      />
   }
   return <div>{image}</div>
 }
