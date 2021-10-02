@@ -7,7 +7,6 @@ const Search = ( {query} ) => {
     const [records, setRecords] = useState([])
     const [source, setSource] = useState('')
 
-    
     const setDataSource = async () => {
         const url = `/api/env/DATA_SOURCE`
         const response = await fetch(url)
@@ -17,7 +16,7 @@ const Search = ( {query} ) => {
         console.log('set data_source:', data_source)
     }
 
-    const search = async () => {
+    const doSearch = async () => {
         const queryEsc = encodeURIComponent(query)
         const url = `/api/search/${queryEsc}`
         console.log(url)
@@ -28,7 +27,7 @@ const Search = ( {query} ) => {
 
     useEffect( () => {
         setDataSource()
-        search()
+        doSearch()
     }, [query])
 
     return <ReleasesOverYears data_source={source} records={dups.removeDups(records)} />

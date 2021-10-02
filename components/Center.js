@@ -3,7 +3,46 @@ import axios from 'axios'
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const IMDbImage = ( {imdbid}) => {
+const IMDbImage = ( {imdbid} ) => {
+  const [data, setData] = useState({})
+
+  var options = {
+    method: 'GET',
+    url: 'https://movie-database-imdb-alternative.p.rapidapi.com/',
+    params: {r: 'json', i: imdbid},
+    headers: {
+      'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
+      'x-rapidapi-key': '7c50e30be4msh46ea378278c3277p1a0889jsnadf4767451d5'
+    }
+  };
+
+  useEffect( () => {
+    axios.request(options).then(function (response) {
+      console.log('AltIMDbImage:', response.data);
+      const poster_url = response.data
+      if (poster_url != 'N/A')
+        setData(response.data)
+    }).catch(function (error) {
+      console.error(error);
+    });
+  },[imdbid])
+
+  let image
+  if (data && 'Poster' in data) {
+    console.log('data.Poster:', data.Poster)
+    image =  <img src={data.Poster} alt='cover_art' />
+
+    // Save it.
+    const cover_url = encodeURIComponent(data.Poster)
+    const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url}`
+    console.log('fetchUrl', fetchUrl)
+    fetch(fetchUrl)
+
+  }
+  return <div>{image}</div>
+}
+
+const oldIMDbImage = ( {imdbid}) => {
   const [data, setData] = useState({})
 
   const options = {
