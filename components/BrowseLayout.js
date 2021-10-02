@@ -7,7 +7,7 @@ import Header from 'components/Header'
 
 // const Index = () => {
 export default function BrowseLayout( { release_group }) {
-  const [dataSource, setDataSource] = React.useState('musicbrainz')
+  const [dataSource, setDataSource] = React.useState('')
 
   useEffect( () => {
     const url = `/api/env/DATA_SOURCE/`
@@ -27,7 +27,8 @@ export default function BrowseLayout( { release_group }) {
       release_group = 38581
     else if (dataSource == 'imdb')
       release_group = 133093
-    console.log('BrowseLayout, release_group:', release_group)
+    else
+      return null
   }
 
     return <div>

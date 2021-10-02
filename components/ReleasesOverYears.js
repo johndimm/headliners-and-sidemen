@@ -5,6 +5,7 @@ const ReleasesOverYears = ( {records, data_source} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
+        console.log("ReleasesOverYears num records:", records.length)
         let years = {}
         if (records && Array.isArray(records))
         records.forEach ( (record, idx) => {

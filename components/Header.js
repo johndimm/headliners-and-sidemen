@@ -70,12 +70,12 @@ const HeaderIMDb = () => {
 }
 
 const Header = ({ data_source }) => {
-  let html
-  html = data_source == 'musicbrainz'
-    ? <HeaderMusicbrainz />
-    : <HeaderIMDb />
-
-  return html 
+  if (data_source == 'musicbrainz')
+    return <HeaderMusicbrainz />
+  else if (data_source == 'imdb')
+    return <HeaderIMDb />
+  else
+    return null
 }
 
 export default Header

@@ -50,7 +50,7 @@ begin
     --  or c.title ilike concat('%', _query, '%')
     and c.begin_date is not null
     order by c.begin_date
-    limit 100
+    limit 300
     ;
 end;
 $$
@@ -85,7 +85,7 @@ begin
     from context as c
     where c.artist_id = _artist_id
     order by c.begin_date
-    limit 500
+    limit 800
     ;
 end;
 $$
