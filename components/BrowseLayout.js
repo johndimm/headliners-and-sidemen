@@ -19,7 +19,7 @@ export default function BrowseLayout( { release_group }) {
     // console.log(url)
     axios.get(url).then(function (response) {
         const data_source = response.data['DATA_SOURCE']
-        console.log('Got data_source:', data_source)
+        // console.log('Got data_source:', data_source)
         if (data_source)
           setDataSource(data_source)
     }).catch(err => err)

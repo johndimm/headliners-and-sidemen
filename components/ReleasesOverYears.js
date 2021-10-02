@@ -1,7 +1,7 @@
 import ReleaseGroup from 'components/ReleaseGroup'
 import Header from 'components/Header'
 
-const ReleasesOverYears = ( {records} ) => {
+const ReleasesOverYears = ( {records, data_source} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
@@ -23,14 +23,14 @@ const ReleasesOverYears = ( {records} ) => {
             years[year].push(<ReleaseGroup key={idx} record={record} />)
         })
 
-        Object.keys(years).sort(function(a, b){return b-a}).forEach ( (year, idx) => {
+        Object.keys(years).sort(function(a, b){return a-b}).forEach ( (year, idx) => {
             headers.push(<th key={idx}>{year}</th>)  
             cells.push(<td key={idx}>{years[year]}</td>)
         })
     }
 
     return <div>
-        <Header />
+        <Header data_source={data_source} />
         <table>
             <thead><tr>{headers}</tr></thead>
             <tbody><tr>{cells}</tr></tbody>

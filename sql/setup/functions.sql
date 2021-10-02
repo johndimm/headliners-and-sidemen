@@ -49,7 +49,7 @@ begin
     --where c.artist ilike concat('%', _query, '%')
     --  or c.title ilike concat('%', _query, '%')
     and c.begin_date is not null
-    order by c.begin_date desc
+    order by c.begin_date
     limit 100
     ;
 end;
@@ -84,7 +84,7 @@ begin
     select c.*, 1 as rank
     from context as c
     where c.artist_id = _artist_id
-    order by c.begin_date desc
+    order by c.begin_date
     limit 500
     ;
 end;
