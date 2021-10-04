@@ -13,10 +13,12 @@
 #cat title.crew.tsv | sed 's/"/""/g' > title.crew.clean.tsv
 #psql -f title.crew.sql 
 
-psql -f index.sql
+cat title.episode.tsv | sed 's/"/""/g' > title.episode.clean.tsv
+psql -f title.episode.sql 
 
-psql -f build.sql
 
-psql -f index2.sql
+# psql -f index.sql
+
+
 
 

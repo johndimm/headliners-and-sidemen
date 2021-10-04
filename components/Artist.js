@@ -7,7 +7,7 @@ const Artist =  ( { record } ) => {
     date = record['begin_date'].replace('-01-01','')
 
     return <Link href={link} passHref={true}>
-      <div>
+      <div className='artist_info'>
           <div className='date'>{date}</div>
           <div className='artist'>{record.artist}</div>
           <div className='instrument'>{record.instrument}</div>

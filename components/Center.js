@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
+import Link from 'next/link'
 
 const IMDbImage = ( {imdbid} ) => {
   const [data, setData] = useState({})
@@ -43,7 +43,8 @@ const IMDbImage = ( {imdbid} ) => {
     image =  <img src={data.Poster} alt='cover_art' onLoad={imageFound(imdbid, data.Poster)}
       />
   }
-  return <div>{image}</div>
+  const link = `https://www.imdb.com/title/${imdbid}`
+  return <div><a target='imdb' rel="noreferrer" href={link}>{image}</a></div>
 }
 
 const Center = ( {release_group, data_source}) => {
@@ -63,13 +64,16 @@ const Center = ( {release_group, data_source}) => {
     let coverArt
     if (Array.isArray(data) && data.length > 0) {
       // console.log(data[0], data[0].release_group_gid)
+      // const workingId = 'tt0944947'
+
+      const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
+      console.log('imdbid:', imdbid)
       if (data[0].cover_url) {
         const bigCover = data[0].cover_url.replace('250.jpg', '500.jpg')
-        // console.log('bigCover', bigCover)
-        coverArt = <img src={bigCover} alt='Cover Art' />
-      } else if (data_source == 'imdb') {
-        // const workingId = 'tt0944947'
-        const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
+        const link = `https://www.imdb.com/title/${imdbid}`
+        console.log('imdb link:', link)
+        coverArt = <a target='imdb' rel="noreferrer" href={link}><img src={bigCover} alt='Cover Art' /></a>
+      } else if (data_source == 'imdb' || data_source == 'imdb_tv') {
         console.log("going for ", imdbid)
         coverArt = <IMDbImage imdbid={imdbid} />
       }

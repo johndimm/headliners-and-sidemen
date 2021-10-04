@@ -1,4 +1,5 @@
-alter table context rename to old_context;
+set search_path=tv;
+
+drop table context;
 alter table careers rename to context;
 
-drop table old_context;

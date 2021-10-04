@@ -1,4 +1,4 @@
--- set search_path=context;
+-- set search_path=tv;
 
 drop type if exists context_record_type cascade;
 create type context_record_type as (
@@ -50,8 +50,8 @@ begin
     --where c.artist ilike concat('%', _query, '%')
     --  or c.title ilike concat('%', _query, '%')
     and c.begin_date is not null
-    order by c.begin_date desc
-    limit 300
+    order by c.begin_date
+    limit 600
     ;
 end;
 $$

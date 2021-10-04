@@ -77,8 +77,12 @@ img {
   border-radius: 5px;
 }
 
-.linked_album:hover, .artist:hover {
+.linked_album:hover {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.artist_info:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
 }
 
 .form {

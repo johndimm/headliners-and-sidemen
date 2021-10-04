@@ -58,7 +58,7 @@ const HeaderIMDb = () => {
 
 
             <div className='page_title'>Cast and Crew</div>
-            <div className='page_subtitle'>What did the cast and crew of this movie do before and after?
+            <div className='page_subtitle'>What did the cast and crew of this production do before and after?
             </div>
 
       </div>
@@ -72,7 +72,7 @@ const HeaderIMDb = () => {
 const Header = ({ data_source }) => {
   if (data_source == 'musicbrainz')
     return <HeaderMusicbrainz />
-  else if (data_source == 'imdb')
+  else if (data_source == 'imdb' || data_source == 'imdb_tv')
     return <HeaderIMDb />
   else
     return null
