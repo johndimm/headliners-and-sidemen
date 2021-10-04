@@ -3,6 +3,14 @@ import axios from 'axios'
 import Artist from 'components/Artist'
 import Link from 'next/link'
 
+const generateExternalLink = (dataSource, imdbid, title, artist) => {
+  const query = encodeURIComponent (title + ', ' + artist)
+  const link = dataSource == 'imdb' || dataSource == 'imdb_tv'
+    ? `https://www.imdb.com/title/${imdbid}`
+    : `https://www.youtube.com/results?search_query=${query}`
+  return link  
+}
+
 const IMDbImage = ( {imdbid} ) => {
   const [data, setData] = useState({})
 
@@ -43,13 +51,15 @@ const IMDbImage = ( {imdbid} ) => {
     image =  <img src={data.Poster} alt='cover_art' onLoad={imageFound(imdbid, data.Poster)}
       />
   }
-  const link = `https://www.imdb.com/title/${imdbid}`
+  //const link = `https://www.imdb.com/title/${imdbid}`
+  const link = generateExternalLink('imdb', imdbid, null, null)
   return <div><a target='imdb' rel="noreferrer" href={link}>{image}</a></div>
 }
 
 const Center = ( {release_group, data_source}) => {
     const [data, setData] = useState ([])
     console.log('data_source', data_source)
+
     useEffect( () => {
         const url = `/api/release_group/${release_group}`
         axios.get(url).then(function (response) {
@@ -61,20 +71,15 @@ const Center = ( {release_group, data_source}) => {
     let artists 
     let release
     let begin_date = '2200-01-01'
-    let coverArt
     if (Array.isArray(data) && data.length > 0) {
-      // console.log(data[0], data[0].release_group_gid)
-      // const workingId = 'tt0944947'
-
+      let coverArt
       const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
       console.log('imdbid:', imdbid)
       if (data[0].cover_url) {
         const bigCover = data[0].cover_url.replace('250.jpg', '500.jpg')
-        const link = `https://www.imdb.com/title/${imdbid}`
-        console.log('imdb link:', link)
+        const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
         coverArt = <a target='imdb' rel="noreferrer" href={link}><img src={bigCover} alt='Cover Art' /></a>
       } else if (data_source == 'imdb' || data_source == 'imdb_tv') {
-        console.log("going for ", imdbid)
         coverArt = <IMDbImage imdbid={imdbid} />
       }
 
