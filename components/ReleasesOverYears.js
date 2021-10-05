@@ -11,13 +11,11 @@ const ReleasesOverYears = ( {records, data_source} ) => {
         records.forEach ( (record, idx) => {
             let year
             if ('begin_date' in record && record.begin_date != '') {
-                const d = new Date(record.begin_date);
-                year = d.getFullYear()
+                year = record.begin_date.substring(0,4)
             } else {
                 year = 1900
             }
 
-            // console.log('ReleasesOverYears:', year, record.title)
             if (! (year in years)) {
                 years[year] = []
             }

@@ -85,7 +85,7 @@ begin
     select c.*, 1 as rank
     from context as c
     where c.artist_id = _artist_id
-    order by c.begin_date desc
+    order by c.begin_date
     limit 800
     ;
 end;
