@@ -1,0 +1,20 @@
+get a list of imdbid's from the database.  where we have no cover_url, and it's high connectivity.
+
+first, find artists with lots of 
+then use the movies they are in
+
+
+with busy_artists as (
+  select artist_id, count(*) as cnt
+  from context
+  group by 1
+  having count(*) > 1
+  order by cnt desc
+  limit 100
+) 
+  select release_group, sum(ba.cnt) as cnt
+  from context as c
+  join busy_artists as ba on ba.artist_id = c.artist_id
+  where cover_url is null
+  order by cnt desc
+; 

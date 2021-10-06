@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReleaseGroup from 'components/ReleaseGroup'
 import dups from 'utils/dups'
 
-const LastBefore = ( {release_group} ) => {
+const LastBefore = ( {release_group, data_source} ) => {
     const [records, setRecords] = useState([])
 
     useEffect( () => {
@@ -18,9 +18,9 @@ const LastBefore = ( {release_group} ) => {
 
     let html
     if (records.length > 0) {
-      console.log(records)
+      // console.log(records)
       html = dups.removeDups(records).map ( (record, idx) => {
-        return <ReleaseGroup key={idx} record={record} />
+        return <ReleaseGroup key={idx} record={record} data_source={data_source} />
       })
     }
 

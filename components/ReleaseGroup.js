@@ -2,7 +2,7 @@ import Link from 'next/link'
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const ReleaseGroup = ( {record}) => {
+const ReleaseGroup = ( {record, data_source}) => {
     const link = `/release_group/${record.release_group}`
     const hlin = record.headliner
       ? <span> by {record.headliner}</span>
@@ -12,7 +12,7 @@ const ReleaseGroup = ( {record}) => {
           <Link href={link} passHref={true}>
               <div>
                 <b>{record.title}</b> {hlin}
-                <CoverArt cover_url={record.cover_url} />
+                <CoverArt record={record} data_source={data_source}/>
               </div>
           </Link>
           <Artist record={record} />

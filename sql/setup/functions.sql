@@ -47,8 +47,6 @@ begin
     select c.*, 1 as rank
     from context as c
     where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
-    --where c.artist ilike concat('%', _query, '%')
-    --  or c.title ilike concat('%', _query, '%')
     and c.begin_date is not null
     order by c.begin_date
     limit 600

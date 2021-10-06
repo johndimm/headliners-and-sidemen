@@ -1,0 +1,1 @@
+curl -H 'x-rapidapi-host: movie-database-imdb-alternative.p.rapidapi.com' -H 'x-rapidapi-key: 7c50e30be4msh46ea378278c3277p1a0889jsnadf4767451d5' "https://movie-database-imdb-alternative.p.rapidapi.com/?r=json&i=tt0177943"

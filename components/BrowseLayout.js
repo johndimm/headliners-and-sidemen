@@ -34,13 +34,13 @@ export default function BrowseLayout( { release_group }) {
     <table>
     <tbody><tr>
       <td>
-        <LastBefore release_group={release_group} />
+        <LastBefore release_group={release_group} data_source={dataSource}/>
       </td>
       <td className='center'>
         <Center release_group={release_group} data_source={dataSource}/>
       </td>
       <td>
-        <FirstAfter release_group={release_group} />     
+        <FirstAfter release_group={release_group} data_source={dataSource}/>     
       </td>
     </tr></tbody>
   </table> 

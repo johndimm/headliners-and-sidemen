@@ -10,7 +10,8 @@ const ReleasesOverYears = ( {records, data_source} ) => {
         if (records && Array.isArray(records))
         records.forEach ( (record, idx) => {
             let year
-            if ('begin_date' in record && record.begin_date != '') {
+            if ('begin_date' in record && record.begin_date && record.begin_date != '') {
+                //console.log('ReleasesOverYears, begin_date:', record.begin_date)
                 year = record.begin_date.substring(0,4)
             } else {
                 year = 1900
