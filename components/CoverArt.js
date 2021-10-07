@@ -13,21 +13,39 @@ const CoverArt = ( {record, data_source} ) => {
   const [data, setData] = useState({})
 
   useEffect( () => {
-    if (data_source == 'imdb' || data_source == 'imdb_tv')
-    axios.request(options).then(function (response) {
-      // console.log('IMDbImage:', response.data);
-      const poster_url = response.data
-      if (poster_url != 'N/A')
-        setData(response.data)
-    }).catch(function (error) {
-      console.error(error);
-    });
+    // console.log('CoverArt: useEffect -- data_source, record', data_source, record)
+
+    if ( ! (data_source == 'imdb' || data_source == 'imdb_tv') )
+      return
+    
+    if (
+        record.cover_url && (
+          record.cover_url.substring(0,4) == 'http')
+       ) 
+ 
+      return
+
+      console.log ('useEffect, looking for cover art')
+      axios.request(options).then(function (response) {
+        //console.log('IMDbImage:', response.data);
+        const poster_url = response.data
+        console.log('Just received this url:', poster_url)
+        if (poster_url != 'N/A' && poster_url != 'N')
+          setData(response.data)
+      }).catch(function (error) {
+        console.error(error);
+      });
+    
   },[imdbid])
 
+  //console.log('CoverArt, url:', record.cover_url)
+
+  //return <img src='https://m.media-amazon.com/images/M/MV5BZGJjYzhjYTYtMDBjYy00OWU1LTg5OTYtNmYwOTZmZjE3ZDdhXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg' />
 
   const imdbid = 'tt' + record.release_group.toString().padStart(7, '0')
 
   if (record.cover_url) {
+    //console.log('CoverArt, using the given url')
     const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
     const link = generateExternalLink(data_source, imdbid, record.title, record.artist)
     return <a target='imdb' rel="noreferrer" 
@@ -51,14 +69,14 @@ const CoverArt = ( {record, data_source} ) => {
       return
     const cover_url_esc = encodeURIComponent(cover_url)
     const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
-    // console.log('fetchUrl', fetchUrl)
+    //console.log('fetchUrl', fetchUrl)
     fetch(fetchUrl)
   }
 
   let image
   if (data && 'Poster' in data && 
   ( data.Poster !== 'N/A' && data.Poster !== 'N' ) ) {
-    // console.log('data.Poster:', data.Poster)
+    //console.log('data.Poster:', data.Poster)
     image =  <img src={data.Poster} alt='cover_art' 
       onLoad={updateDatabase(imdbid, data.Poster)} />
   }

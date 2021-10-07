@@ -20,7 +20,7 @@ const ReleasesOverYears = ( {records, data_source} ) => {
             if (! (year in years)) {
                 years[year] = []
             }
-            years[year].push(<ReleaseGroup key={idx} record={record} />)
+            years[year].push(<ReleaseGroup key={idx} record={record} data_source={data_source}/>)
         })
 
         Object.keys(years).sort(function(a, b){return a-b}).forEach ( (year, idx) => {
