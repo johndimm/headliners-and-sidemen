@@ -2,6 +2,8 @@ import db from 'utils/db'
 
 export default async function handler (req, res) {
   const { env_var } = req.query
+
+  // Only allow access to specific env vars.
   const accept = { 'DATA_SOURCE': 1 }
   const response = {}
 
