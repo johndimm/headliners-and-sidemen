@@ -58,7 +58,7 @@ const CoverArt = ( {record, data_source} ) => {
     params: {r: 'json', i: imdbid},
     headers: {
       'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
-      'x-rapidapi-key': '7c50e30be4msh46ea378278c3277p1a0889jsnadf4767451d5'
+      'x-rapidapi-key': 'GEuSb6FUftp2lzzZ2wkQkYSGKcFhvkJT'
     }
   };
 
