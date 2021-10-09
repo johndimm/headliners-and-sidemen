@@ -10,7 +10,7 @@ const HeaderMusicbrainz = () => {
        window.location = `/search/${query}`
     }
 
-    return <div className='form'>
+    return <div className='header'>
       <form onSubmit={search}>
         <div className='search_input'>
 
@@ -18,6 +18,13 @@ const HeaderMusicbrainz = () => {
             <input type='submit' />
             <br />
             powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
+
+            <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
+          <span className='link_span'>
+          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
+          </span>
+         </Link>
+
         </div>
         <Link href="https://github.com/johndimm/headliners-and-sidemen/">
         <a>

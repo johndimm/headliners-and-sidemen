@@ -75,13 +75,22 @@ img {
   max-width: 250px;
   border: 1px solid lightgray;
   border-radius: 5px;
+  cursor:pointer;
+}
+
+.artist_info {
+  cursor: pointer;
 }
 
 .linked_album:hover {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-.artist_info:hover {
+.xartist_info:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
+}
+
+.xalbum_title:hover {
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
 }
 
@@ -116,6 +125,11 @@ img {
 
 .search_input {
   display: inline-block;
+}
+
+.search_input input {
+  height: 30px;
+  font-size: 14pt;
 }
 
 .search_input img {

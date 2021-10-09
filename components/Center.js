@@ -40,10 +40,14 @@ const Center = ( {release_group, data_source}) => {
 
       const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
       const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
+      const logo = data_source == 'musicbrainz'
+        ? '/youtube.png'
+        : 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
+
       external_links = <div>
         <a target='imdb' rel="noreferrer" 
         href={link}>
-          <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/>
+          <img height='50' src={logo} target='_blank' alt='IMDb'/>
         </a>
       </div>
 
