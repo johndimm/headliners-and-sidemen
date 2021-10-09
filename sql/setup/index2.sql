@@ -1,6 +1,3 @@
--- set search_path=context;
--- set search_path=tv;
-
 drop index if exists idx_con_title;
 drop index if exists idx_con_artist;
 drop index if exists idx_con_aid;

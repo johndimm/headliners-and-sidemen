@@ -1,7 +1,7 @@
-psql -f tables.sql
-psql -f load.sql
-psql -f index.sql
 psql -f merge.sql
+psql -f merge_rename.sql
+psql -f load_fulltext.sql
+psql -f careers.sql
+psql -f careers_rename.sql
+psql -f gin_index.sql
 psql -f index2.sql
-psql -f functions.sql
-psql -f cleanup.sql

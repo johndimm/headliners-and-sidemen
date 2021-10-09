@@ -1,7 +1,7 @@
 import ReleaseGroup from 'components/ReleaseGroup'
 import Header from 'components/Header'
 
-const ReleasesOverYears = ( {records, data_source} ) => {
+const ReleasesOverYears = ( {records, data_source, artist} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
@@ -29,10 +29,36 @@ const ReleasesOverYears = ( {records, data_source} ) => {
         })
     }
 
+    let htmlArtist
+    let htmlDetails
+    if (artist && artist.partial_bio) {
+        console.log('artist', artist)
+
+        const fields = 
+        ['birth_date', 'birth_place']
+        
+        htmlDetails = fields.map( (field, idx) => {
+           if (artist[field] == 'N/A')
+             return null
+           return <tr key={idx}><th>{field}</th><td>{artist[field]}</td></tr>
+        })
+
+        htmlArtist = <div className='artist_featured'>
+          <div className='artist_featured_name'>
+              {artist.name}
+          </div>
+          <img className='artist_featured_pix' src={artist.image_url} />
+          <div className='artist_featured_bio'>{artist.partial_bio}</div>
+          <table><tbody>{htmlDetails}</tbody></table>
+        </div>
+        
+    }
+
     return <div>
         <Header data_source={data_source} />
         <div className="content">
-            <table>
+            {htmlArtist}
+            <table className='timeline'>
                 <thead><tr>{headers}</tr></thead>
                 <tbody><tr>{cells}</tr></tbody>
             </table>

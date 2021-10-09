@@ -15,7 +15,7 @@ const ReleaseGroup = ( {record, data_source}) => {
                 <CoverArt record={record} data_source={data_source}/>
               </div>
           </Link>
-          <Artist record={record} />
+          <Artist record={record} withpix={false} data_source={data_source}/>
         </div>
 }
 

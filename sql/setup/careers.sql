@@ -1,5 +1,3 @@
-set search_path=tv;
-
 create index idx_con_aid on context(artist_id);
 
 drop table if exists careers;

@@ -49,10 +49,10 @@ const Center = ( {release_group, data_source}) => {
         details = fields.map( (field, idx) => {
            if (album[field] == 'N/A')
              return null
-           return <tr key={idx}><th>{field}</th> <td>{album[field]}</td></tr>
+           return <tr key={idx}><th>{field}</th><td>{album[field]}</td></tr>
         })
         
-        console.log('details:', details)
+        // console.log('details:', details)
     }
 
     let artists 
@@ -65,7 +65,7 @@ const Center = ( {release_group, data_source}) => {
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 
-        return <Artist key={idx} record={record} />
+        return <Artist key={idx} record={record} withpix={true} data_source={data_source}/>
       })
 
       begin_date = begin_date.toString().replace('-01-01','')
@@ -93,9 +93,15 @@ const Center = ( {release_group, data_source}) => {
         </div>
     }
 
-    return <div>{release}{artists}{external_links}
-               <div className='details'><table><tbody>{details}</tbody></table></div>
-          </div>
+    return <div>
+
+      {release}
+      <div className='artists'>
+      {artists}
+      </div>
+      {external_links}
+      <div className='details'><table><tbody>{details}</tbody></table></div>
+      </div>
 }
 
 export default Center

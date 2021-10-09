@@ -7,6 +7,7 @@ import dups from 'utils/dups'
 const ArtistReleases = ( {artist_id} ) => {
     const [records, setRecords] = useState([])
     const [source, setSource] = useState('')
+    const [artist, setArtist] = useState({})
 
     const setDataSource = async () => {
         const url = `/api/env/DATA_SOURCE`
@@ -17,7 +18,7 @@ const ArtistReleases = ( {artist_id} ) => {
         console.log('set data_source:', data_source)
     }
 
-    const search = async () => {
+    const getReleases = async () => {
         const url = `/api/artist_releases/${artist_id}`
         console.log(url)
         axios.get(url).then(function (response) {
@@ -25,22 +26,26 @@ const ArtistReleases = ( {artist_id} ) => {
         }).catch(err => err)
     }
 
+    const getArtistInfo = async () => {
+        const nconst = 'nm' + artist_id.toString().padStart(7, '0')
+        const url = `/api/artist_info/${nconst}`
+        const response = await fetch(url)
+        const data = await response.json()
+        setArtist(data.ActorDetails)
+    }
+
     useEffect( () => {
         setDataSource()
-        search()
+        getReleases()
+        getArtistInfo()
     }, [artist_id])
 
-  //  olduseEffect( () => {
-  //      document.body.style.cursor = 'progress' 
-  //      const url = `/api/artist_releases/${artist_id}`
-  //      //console.log(url)
-  //      axios.get(url).then(function (response) {
-  //          setRecords(response.data)
-  //          document.body.style.cursor = 'default'
-  //      }).catch(err => err)
-  //  }, [artist_id])
-
-    return <ReleasesOverYears data_source={source} records={dups.removeDups(records)} />
+    return <div>
+      <ReleasesOverYears 
+        data_source={source} 
+        records={dups.removeDups(records)}
+        artist={artist} />
+    </div>
 }
 
 export default ArtistReleases
