@@ -135,3 +135,10 @@ img {
 .search_input img {
   margin-bottom: -8px;
 }
+
+.plot, .details {
+  display: inline-block;
+  text-align: left;
+  width: 300px;
+  margin-bottom: 20px;
+}

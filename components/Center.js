@@ -13,7 +13,10 @@ const generateExternalLink = (dataSource, imdbid, title, artist) => {
 
 const Center = ( {release_group, data_source}) => {
     const [data, setData] = useState ([])
+    const [album, setAlbum] = useState({})
     // console.log('data_source', data_source)
+
+    const imdbid = 'tt' + release_group.toString().padStart(7, '0')
 
     useEffect( () => {
         const url = `/api/release_group/${release_group}`
@@ -21,7 +24,36 @@ const Center = ( {release_group, data_source}) => {
             // console.log("Center, data", response.data)
             setData(response.data)
         }).catch(err => err)
+
+        if (data_source == 'imdb' || data_source == 'imdb_tv') {
+          const url = `/api/imdb/${imdbid}`
+          axios.get(url).then(function (response) {
+            // console.log("Center, data", response.data)
+            setAlbum(response.data)
+            console.log('setAlbum:', response.data)
+        }).catch(err => err)
+      }
+
     },[release_group])
+
+
+    let plot
+    let details
+    if (Object.keys(album).length > 0) {
+      if (album.Plot != 'N/A')
+        plot = album.Plot
+      
+      const fields = 
+        ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
+        
+        details = fields.map( (field, idx) => {
+           if (album[field] == 'N/A')
+             return null
+           return <tr key={idx}><th>{field}</th> <td>{album[field]}</td></tr>
+        })
+        
+        console.log('details:', details)
+    }
 
     let artists 
     let release
@@ -38,7 +70,7 @@ const Center = ( {release_group, data_source}) => {
 
       begin_date = begin_date.toString().replace('-01-01','')
 
-      const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
+
       const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
       const logo = data_source == 'musicbrainz'
         ? '/youtube.png'
@@ -56,10 +88,14 @@ const Center = ( {release_group, data_source}) => {
           <div className='title'>{data[0].title}</div>
           <div className='headliner'>{data[0].headliner}</div>
           {coverArt}
+          <div className='plot'>{plot}</div>
+ 
         </div>
     }
 
-    return <div>{release}{artists}{external_links}</div>
+    return <div>{release}{artists}{external_links}
+               <div className='details'><table><tbody>{details}</tbody></table></div>
+          </div>
 }
 
 export default Center
