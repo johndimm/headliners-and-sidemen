@@ -85,16 +85,23 @@ img {
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
 }
 
-.form {
-  margin: 10px;
-  padding: 10px;
+.header {
+  position: relative;
+  top: 0;
+  padding: 20px;
   white-space: nowrap;
+  background-color: white;
+  width: 100%
 }
+
+.link_span {
+  cursor: pointer;
+}
+
 .page_title_div {
   display: inline-block;
   margin-left: 40px;
   width: 470px;
-  cursor: pointer;
 }
 .page_title {
   font-size:24pt;

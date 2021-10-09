@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 
-const generateExternalLink = (dataSource, imdbid, title, artist) => {
-  const query = encodeURIComponent (title + ', ' + artist)
-  const link = dataSource == 'imdb' || dataSource == 'imdb_tv'
-    ? `https://www.imdb.com/title/${imdbid}`
-    : `https://www.youtube.com/results?search_query=${query}`
-  return link  
-}
 
 const CoverArt = ( {record, data_source} ) => {
   const [data, setData] = useState({})
@@ -46,9 +39,8 @@ const CoverArt = ( {record, data_source} ) => {
 
   if (record.cover_url) {
     const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
-    const link = generateExternalLink(data_source, imdbid, record.title, record.artist)
-    return <a target='imdb' rel="noreferrer" 
-      href={link}><img src={bigCover} alt='Cover Art' /></a>
+
+    return <img src={bigCover} alt='Cover Art' />
   }
 
   let image
@@ -59,8 +51,7 @@ const CoverArt = ( {record, data_source} ) => {
       onLoad={updateDatabase(imdbid, data.Poster)} />
   }
 
-  const link = generateExternalLink('imdb', imdbid, null, null)
-  return <div><a target='imdb' rel="noreferrer" href={link}>{image}</a></div>
+  return <div>{image}</div>
 }
 
 export default CoverArt

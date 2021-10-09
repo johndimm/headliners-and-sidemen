@@ -43,27 +43,35 @@ const HeaderIMDb = () => {
      window.location = `/search/${query}`
   }
 
-  return <div className='form'>
+  return <div className='header'>
     <form onSubmit={search}>
       <div className='search_input'>
 
           <input placeholder='Search...' name='query' type='text' width='80'></input>
           <input type='submit' />
           <br />
-          powered by: <Link href='https://imdb.com/' passHref={true}><img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/></Link>
+          powered by: 
+          <Link href='https://imdb.com/' passHref={true}>
+          <span className='link_span'>
+          <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/>
+          </span>
+          </Link>
+
+          <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
+          <span className='link_span'>
+          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
+          </span>
+         </Link>
+
       </div>
-      <Link href="https://github.com/johndimm/headliners-and-sidemen/">
+
       <a>
       <div className='page_title_div'>
-
-
             <div className='page_title'>Cast and Crew</div>
             <div className='page_subtitle'>What did the cast and crew of this production do before and after?
             </div>
-
       </div>
       </a>
-      </Link>
     </form>
 
   </div>

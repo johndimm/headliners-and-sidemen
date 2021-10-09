@@ -31,10 +31,12 @@ const ReleasesOverYears = ( {records, data_source} ) => {
 
     return <div>
         <Header data_source={data_source} />
-        <table>
-            <thead><tr>{headers}</tr></thead>
-            <tbody><tr>{cells}</tr></tbody>
-        </table>
+        <div className="content">
+            <table>
+                <thead><tr>{headers}</tr></thead>
+                <tbody><tr>{cells}</tr></tbody>
+            </table>
+        </div>
     </div>
 }
 

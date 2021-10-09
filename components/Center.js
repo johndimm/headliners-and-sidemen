@@ -25,21 +25,10 @@ const Center = ( {release_group, data_source}) => {
 
     let artists 
     let release
+    let external_links
     let begin_date = '2200-01-01'
     if (Array.isArray(data) && data.length > 0) {
       let coverArt = <CoverArt record={data[0]} />
-
- /*     
-      const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
-      console.log('imdbid:', imdbid)
-      if (data[0].cover_url) {
-        const bigCover = data[0].cover_url.replace('250.jpg', '500.jpg')
-        const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
-        coverArt = <a target='imdb' rel="noreferrer" href={link}><img src={bigCover} alt='Cover Art' /></a>
-      } else if (data_source == 'imdb' || data_source == 'imdb_tv') {
-        coverArt = <CoverArt imdbid={imdbid} />
-      }
-  */
 
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
@@ -49,6 +38,15 @@ const Center = ( {release_group, data_source}) => {
 
       begin_date = begin_date.toString().replace('-01-01','')
 
+      const imdbid = 'tt' + data[0].release_group.toString().padStart(7, '0')
+      const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
+      external_links = <div>
+        <a target='imdb' rel="noreferrer" 
+        href={link}>
+          <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/>
+        </a>
+      </div>
+
       release = <div>
           <div className='date'>{begin_date}</div>
           <div className='title'>{data[0].title}</div>
@@ -57,7 +55,7 @@ const Center = ( {release_group, data_source}) => {
         </div>
     }
 
-    return <div>{release}{artists}</div>
+    return <div>{release}{artists}{external_links}</div>
 }
 
 export default Center
