@@ -6,16 +6,16 @@ const Artist =  ( { record, withpix, data_source } ) => {
   const [artist, setArtist] = useState('')
   
   const getArtistInfo = async () => {
-    if (data_source == 'musicbrainz') 
+    if (!withpix || data_source == 'musicbrainz') 
       return
 
     const nconst = 'nm' + record['artist_id'].toString().padStart(7, '0')
     const url = `/api/artist_info/${nconst}`
-    // console.log('getArtistInfo, url:', url)
+    console.log('getArtistInfo, url:', url)
     const results = await fetch(url)
     const data = await results.json()
-    console.log(data.ActorDetails)
-    setArtist(data.ActorDetails)
+    console.log(data.results)
+    setArtist(data.results)
   }
 
   useEffect ( () => {
@@ -23,21 +23,30 @@ const Artist =  ( { record, withpix, data_source } ) => {
   },[record])
 
   let pix
-  if (withpix && artist && 'image_url' in artist) 
+  if (withpix && artist && 'image_url' in artist && artist['image_url']) {
+      const name = 'name' in artist
+        ? artist['name'] 
+        : ''
+
       pix = <img className='artist_pix' 
       onError={(e)=>{
         e.target.style.display='none'
         }}
-      src={artist['image_url']} alt={artist['partial_bio']} />
+      src={artist['image_url']} alt={name} />
+  }
   
+  const title = artist && 'partial_bio' in artist
+    ? artist['partial_bio'] 
+    : ''
 
   const link = `/artist_releases/${record.artist_id}`
+
   let begin_date
   if (record && 'begin_date' in record && record['begin_date']) 
     begin_date = record['begin_date'].replace('-01-01','')
 
     return <Link href={link} passHref={true}>
-      <a title={artist['partial_bio']}>
+      <a title={title}>
       <div className='artist_info'>
           <div>{pix}</div>
           <div className='date'>{begin_date}</div>

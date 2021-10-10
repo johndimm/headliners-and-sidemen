@@ -14,9 +14,15 @@ const GitHub = () => {
 const Variations = () => {
   return <div className='variations'>
     <ul>
-    <li><a href='https://cast-and-crew.herokuapp.com/'>TV Series</a></li>
-    <li><a href='https://headliners-and-sidemen.herokuapp.com/'>Music</a></li>
-    <li><a href='https://movies-and-actors.herokuapp.com/'>Movies</a></li>
+    <li><a 
+      title='from imdb: 186,798 TV series with 595,528 actors'
+      href='https://cast-and-crew.herokuapp.com/'>TV Series</a></li>
+    <li><a 
+    title='from musicbrainz: 92,044 albums with 68,813 musicians' 
+    href='https://headliners-and-sidemen.herokuapp.com/'>Music</a></li>
+    <li><a 
+    title='from imdb: 573,761 movies with 1,403,250 actors'
+    href='https://movies-and-actors.herokuapp.com/'>Movies</a></li>
     </ul>
   </div>
 }

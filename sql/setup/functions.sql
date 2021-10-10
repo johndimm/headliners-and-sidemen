@@ -48,8 +48,8 @@ begin
     from context as c
     where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     and c.begin_date is not null
-    order by c.begin_date
-    limit 600
+    order by c.begin_date desc
+    limit 100
     ;
 end;
 $$

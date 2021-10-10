@@ -31,7 +31,7 @@ const ArtistReleases = ( {artist_id} ) => {
         const url = `/api/artist_info/${nconst}`
         const response = await fetch(url)
         const data = await response.json()
-        setArtist(data.ActorDetails)
+        setArtist(data.results)
     }
 
     useEffect( () => {
