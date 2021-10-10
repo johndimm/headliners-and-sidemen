@@ -2,25 +2,34 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # What is it?
 
+
 This is research tool for students, critics, collectors, and consumers.
 
-A movie, TV series, or audio recording is a project that brings together a team of artists.  It is a point in time when their careers intersect.  This interface uses projects and team member's careers to show the neighborhood around a project.
+A movie, TV series, or audio recording is a project that brings together a team of artists.  It is a point in time when their careers intersect.  
 
+We can use this structure to define the neighborhood around a project.
 
-> The **<i>neighborhood</i>** around a project consists of each team member's previous and next project.
+> The **<i>neighborhood</i>** around a project consists of each team member's previous and next projects.
 
+The interface presents this neighborhood, and lets you click the before and after projects in the left and right columns to follow an artist's career.
 
-By clicking on the before and after projects in the left and right columns, you can follow an artist's career.
  
 # Why?
 
-Personalized recommendations and "more like this" lists show you what is popular among people like you, since they are derived from the behavior of crowds.  Here, the connections are entirely objective.  Projects are linked by the co-occurrence of artists.  Popularity is not involved.  The result is that you can easily follow a chain of links and find yourself in a sub-basement of IMDb.
+Personalized recommendations and "more like this" lists show you what is popular among people like you, since they are derived from the behavior of crowds. It works well for recent releases where there is lots of data. If nobody saw X, there's no crowd-sourced data about it, and it is invisible to recommendations.
 
-If you like things other people don't, this is for you.
+Curated lists are small and search takes more energy than you want to spend on entertainment.
+
+Here, the connections are entirely objective.  Projects are linked by the co-occurrence of artists.  Popularity is not involved.  It doesn't matter what the rest of the world thinks. 
+
+The result is that you can easily follow a chain of links and find yourself in the sub-basement of IMDb.
+
+>If you like things other people don't, this is for you.
+
 
 # Music
 
-A few days before recording for Ben Webster's album, Art Farmer played trumpet for Michel Legrand.  A month later he played on Cannonball Adderly's album "alabama/africa".
+A few days before recording for Ben Webster's album, Art Farmer played trumpet for Michel Legrand.  A month later he played on Cannonball Adderly's album "alabama/africa".  He is a headliner on many albums, a sideman on these three.
 
 [![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.herokuapp.com/release_group/276870)
 
@@ -35,9 +44,9 @@ The year before making True Romance, Christian Slater did a movie calls Kuffs, a
 
 [![Movies](public/cast-and-crew-movie.png)](https://movies-and-actors.herokuapp.com/release_group/108399)
 
-## Artist Releases
+## Careers
 
-Francis Ford Coppola's early career.  For the rest, scroll right.
+Francis Ford Coppola's early career.  For the rest, click and scroll right.
 
 [![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://movies-and-actors.herokuapp.com/artist_releases/338)
 
@@ -46,7 +55,7 @@ Francis Ford Coppola's early career.  For the rest, scroll right.
 
 ### Music
 
-The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
+The data is publicly available from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
 
 Here is the data extraction query.  
 
@@ -123,16 +132,16 @@ Main query for movies:
 
 ```
 select 
-cast (replace(tb.tconst, 'tt', '') as int) as release_group,
-cast (tb.primaryTitle as character varying) as title, 
-cast('' as character varying) as headliner,
--1 as headliner_id,
-cast (nb.primaryName as character varying) as artist,
-cast (replace(nb.nconst, 'nm', '') as int) as artist_id,
-cast(tp.characters as varchar(255)) as instrument,
-make_date(tb.startYear,1,1) as begin_date,
-make_date(1900,1,1) as end_date,
-null as cover_url
+    cast (replace(tb.tconst, 'tt', '') as int) as release_group,
+    cast (tb.primaryTitle as character varying) as title, 
+    cast('' as character varying) as headliner,
+    -1 as headliner_id,
+    cast (nb.primaryName as character varying) as artist,
+    cast (replace(nb.nconst, 'nm', '') as int) as artist_id,
+    cast(tp.characters as varchar(255)) as instrument,
+    make_date(tb.startYear,1,1) as begin_date,
+    make_date(1900,1,1) as end_date,
+    null as cover_url
 from title_basics as tb
 join title_principals as tp on tp.tconst = tb.tconst
 join name_basics as nb on nb.nconst = tp.nconst
