@@ -130,8 +130,8 @@ img {
 }
 
 .search_input input {
-  height: 30px;
-  font-size: 14pt;
+  height: 25px;
+  font-size: 12pt;
 }
 
 .search_input img {
@@ -175,6 +175,7 @@ img {
 
 .timeline {
   flex: 2;
+  min-width: 75%;
 }
 
 .content {
@@ -190,3 +191,11 @@ img {
   width: 100%;
 }
 
+.variations {
+  display: inline-block;
+  width: 100px;
+  font-weight: 600;
+  font-size: 10pt;
+  margin-right: 20px;
+  top:-100px;
+}

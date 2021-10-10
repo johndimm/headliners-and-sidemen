@@ -3,6 +3,24 @@ import axios from 'axios'
 import Link from 'next/link'
 // import Image from 'next/image'
 
+const GitHub = () => {
+  return <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
+          <span className='link_span'>
+          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
+          </span>
+          </Link>
+}
+
+const Variations = () => {
+  return <div className='variations'>
+    <ul>
+    <li><a href='https://cast-and-crew.herokuapp.com/'>TV Series</a></li>
+    <li><a href='https://headliners-and-sidemen.herokuapp.com/'>Music</a></li>
+    <li><a href='https://movies-and-actors.herokuapp.com/'>Movies</a></li>
+    </ul>
+  </div>
+}
+
 const HeaderMusicbrainz = () => {
     const search = async (e) => {
        e.preventDefault()
@@ -18,26 +36,21 @@ const HeaderMusicbrainz = () => {
             <input type='submit' />
             <br />
             powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
-
-            <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
-          <span className='link_span'>
-          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
-          </span>
-         </Link>
+     
+            <GitHub />
 
         </div>
-        <Link href="https://github.com/johndimm/headliners-and-sidemen/">
-        <a>
-        <div className='page_title_div'>
 
+        <Variations />
 
-              <div className='page_title'>Headliners and Sidemen</div>
-              <div className='page_subtitle'>What were the musicians who played on this album doing before and after?
-              </div>
+          <a>
+          <div className='page_title_div'>
+                <div className='page_title'>Headliners and Sidemen</div>
+                <div className='page_subtitle'>What were the musicians who played on this album doing before and after?
+                </div>
+          </div>
+          </a>
 
-        </div>
-        </a>
-        </Link>
       </form>
 
     </div>
@@ -64,13 +77,11 @@ const HeaderIMDb = () => {
           </span>
           </Link>
 
-          <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
-          <span className='link_span'>
-          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
-          </span>
-         </Link>
+          <GitHub />
 
       </div>
+
+      <Variations />
 
       <a>
       <div className='page_title_div'>
@@ -79,6 +90,7 @@ const HeaderIMDb = () => {
             </div>
       </div>
       </a>
+
     </form>
 
   </div>

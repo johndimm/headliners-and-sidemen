@@ -33,7 +33,7 @@ const CoverArt = ( {record, data_source} ) => {
        ) 
       return
 
-      getPoster(imdbid)
+      setTimeout (() => getPoster(imdbid), Math.random() * 100)
   },[imdbid])
 
 
