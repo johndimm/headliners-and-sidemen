@@ -152,8 +152,7 @@ limit 50000000
 
 ## Strategy
 
-### Careers
-Using a postgres window function, assign a sequential number to an artist's work.  
+Using a postgres window function, assign a sequential number to each artist's work.  
 
 ```
 select 
@@ -182,7 +181,7 @@ with all_after as (
 select *
 from all_after as ab
 order by ab.artist;
-'''
+```
 
 ## Implementation
 
