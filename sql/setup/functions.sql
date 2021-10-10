@@ -107,7 +107,6 @@ begin
     )
     select *
     from all_after as ab
-    where ab.rank = 1
     order by ab.artist
     ;
 end;
@@ -132,7 +131,6 @@ begin
     )
     select *
     from all_after as ab
-    where ab.rank = 1
     order by ab.artist
     ;
 end;

@@ -150,6 +150,40 @@ limit 50000000
 ;
 ```
 
+## Strategy
+
+### Careers
+Using a postgres window function, assign a sequential number to an artist's work.  
+
+```
+select 
+  c.*,
+  cast(
+      ROW_NUMBER() OVER (
+      PARTITION by c.artist_id
+      ORDER BY c.begin_date
+    ) as int) as artist_seq
+from context as c;
+```
+
+Use it at runtime to find the first project after this one by adding 1.
+
+```
+with all_after as (
+  select 
+    c2.*, 
+    1 as rank
+  from context as c 
+  join context as c2 on c2.artist_id = c.artist_id 
+    and c2.artist_seq = c.artist_seq + 1
+  where c.release_group = _release_group_id 
+  order by c2.artist, c2.begin_date
+)
+select *
+from all_after as ab
+order by ab.artist;
+'''
+
 ## Implementation
 
 The postgres database is hosted on an e2-micro (2 vCPUs, 1 GB memory) running on Google Compute Engines.
