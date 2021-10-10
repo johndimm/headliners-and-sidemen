@@ -7,7 +7,7 @@ This is research tool for students, critics, collectors, and consumers.
 A movie, TV series, or audio recording is a project that brings together a team of artists.  It is a point in time when their careers intersect.  This interface uses projects and team member's careers to show the neighborhood around a project.
 
 
-    The *neighborhood* around a project consists of each team member's previous and next project.
+> The **<i>neighborhood</i>** around a project consists of each team member's previous and next project.
 
 
 By clicking on the before and after projects in the left and right columns, you can follow an artist's career.
@@ -48,7 +48,7 @@ Francis Ford Coppola's early career.  For the rest, scroll right.
 
 The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
 
-Here is the data extraction query.  The query has to be handled in batches.
+Here is the data extraction query.  
 
 ```
 select rg.id as release_group,
@@ -74,8 +74,7 @@ join artist a on a.id = ar.entity0
 join link as l on l.id = ar.link
 join link_attribute as la on la.link = l.id
 join link_attribute_type as lat on lat.id = la.attribute_type
-where rg.id between 1049000 and 1050000
-and l.begin_date_year is not null
+where l.begin_date_year is not null
 group by 1,2,3,4,5,6,7
 ;
 ```
