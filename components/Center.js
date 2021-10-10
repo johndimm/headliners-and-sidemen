@@ -30,7 +30,7 @@ const Center = ( {release_group, data_source}) => {
           axios.get(url).then(function (response) {
             // console.log("Center, data", response.data)
             setAlbum(response.data)
-            console.log('setAlbum:', response.data)
+            // console.log('setAlbum:', response.data)
         }).catch(err => err)
       }
 

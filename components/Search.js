@@ -13,13 +13,13 @@ const Search = ( {query} ) => {
         const data = await response.json()
         const data_source = data['DATA_SOURCE']
         setSource(data_source)
-        console.log('set data_source:', data_source)
+        // console.log('set data_source:', data_source)
     }
 
     const doSearch = async () => {
         const queryEsc = encodeURIComponent(query)
         const url = `/api/search/${queryEsc}`
-        console.log(url)
+        // console.log(url)
         axios.get(url).then(function (response) {
             setRecords(response.data)
         }).catch(err => err)

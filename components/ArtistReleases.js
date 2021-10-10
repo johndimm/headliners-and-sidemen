@@ -3,7 +3,6 @@ import axios from 'axios'
 import ReleasesOverYears from 'components/ReleasesOverYears'
 import dups from 'utils/dups'
 
-
 const ArtistReleases = ( {artist_id} ) => {
     const [records, setRecords] = useState([])
     const [source, setSource] = useState('')
@@ -15,14 +14,15 @@ const ArtistReleases = ( {artist_id} ) => {
         const data = await response.json()
         const data_source = data['DATA_SOURCE']
         setSource(data_source)
-        console.log('set data_source:', data_source)
+        //console.log('set data_source:', data_source)
     }
 
     const getReleases = async () => {
         const url = `/api/artist_releases/${artist_id}`
-        console.log(url)
+        // console.log(url)
         axios.get(url).then(function (response) {
             setRecords(response.data)
+            // console.log('ArtistReleases', response.data)
         }).catch(err => err)
     }
 

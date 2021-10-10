@@ -1,57 +1,50 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# What is it?
 
-[![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.vercel.app/release_group/143692)
+This is research tool for students, critics, collectors, and consumers.
 
-You have found an album you like and you want more.  Where do you look?
-
-- **"more like this"** shows other albums that people who enjoyed this album have disproportionately liked
-- **curated lists** show samples from genres containing thousands of albums
-- you can **search** the album title or headliner and browse the hitlist
-- by liking the album your **personal recommendations** may change slightly
-
-You browse lists by clicking "next" over and over. It's a passive consumer experience.  The system keeps presenting you with albums you might like and your response is to say either yes or no.
-
-This app presents a new method.
-
-- by exploring your album's **neighborhood**
-
-The *neighborhood* of an album is defined in a specific and objective way.   For each artist who played on your album, the neighborhood contains the last album they recorded before and the first album they recorded after recording your album.  
-
-The interface lets you navigate the space of albums defined by the **colaboration graph**.  You make active choices, moving from node to node in the space, going in different directions.
-
-## Collaboration Graphs
-
-The usual definition has 
-
-- nodes: musicians
-- edges: two musicians are connected if they appear on the same album
-
-These graphs are used to calculate degrees of separation between musicians.  Examples in other domains are the
-Six Degrees of Kevin Bacon (actors appearing in movies) and Erdős Numbers (mathematicians collaborating on academic papers).  The movies or papers function only to establish connections between people.
+A movie, TV series, or audio recording is a project that brings together a team of artists.  It is a point in time when their careers intersect.  This interface uses projects and team member's careers to show the neighborhood around a project.
 
 
-The approach here switches focus from people to the things they do together, in this case albums.  We are finding nearby albums rather than similar musicians.
-
-- nodes: musicians and albums
-- edges: musicians are connected to the albums they recorded for
-
-Musicians are not connected to each other.  The use case requires minimal graph analysis that can be done on the fly in postgres using window functions.
-
-Each edge has an important attribute:  the date of the recording.  Nearby albums will have overlapping personnel and be close in the time sequence of recordings done during the musician's career.  
-
-Often an album has contributions from different dates, so the selection of nearby albums uses each musician's recording dates to find their last album before and first album after.  That is why you will sometimes see an album in the left column that was recorded later in time than an album in the right column.
+    The *neighborhood* around a project consists of each team member's previous and next project.
 
 
+By clicking on the before and after projects in the left and right columns, you can follow an artist's career.
+ 
+# Why?
+
+Personalized recommendations and "more like this" lists show you what is popular among people like you, since they are derived from the behavior of crowds.  Here, the connections are entirely objective.  Projects are linked by the co-occurrence of artists.  Popularity is not involved.  The result is that you can easily follow a chain of links and find yourself in a sub-basement of IMDb.
+
+If you like things other people don't, this is for you.
+
+# Music
+
+A few days before recording for Ben Webster's album, Art Farmer played trumpet for Michel Legrand.  A month later he played on Cannonball Adderly's album "alabama/africa".
+
+[![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.herokuapp.com/release_group/276870)
+
+# TV Series
+
+A year before The West Wing, Aaron Sorkin wrote Sports Night.  After, he wrote Studio 60.
+
+[![TV Series](public/cast-and-crew-tv.png)](https://cast-and-crew.herokuapp.com/release_group/200276)
+
+# Movies
+The year before making True Romance, Christian Slater did a movie calls Kuffs, and the same year he did Untamed Heart.
+
+[![Movies](public/cast-and-crew-movie.png)](https://movies-and-actors.herokuapp.com/release_group/108399)
 
 ## Artist Releases
 
-[![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://headliners-and-sidemen.vercel.app/artist_releases/4291)
+Francis Ford Coppola's early career.  For the rest, scroll right.
 
-Since we have the collaboration graph, we can show the complete history of a musicians appearances, on their own albums and those of other people.  The results are displayed in columns by year, capped at 500.  That's a lot, but on a large screen it is pretty cool.
+[![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://movies-and-actors.herokuapp.com/artist_releases/338)
 
 
 ## Data
+
+### Music
 
 The data is from [musicbrainz](https://musicbrainz.org/doc/MusicBrainz_Database).  
 
@@ -121,6 +114,34 @@ Indexes:
     "idx_con_title" btree (title)
 ```
 
+## Movies and TV
+
+Built using the public data available here:
+
+https://www.imdb.com/interfaces/
+
+Main query for movies:
+
+```
+select 
+cast (replace(tb.tconst, 'tt', '') as int) as release_group,
+cast (tb.primaryTitle as character varying) as title, 
+cast('' as character varying) as headliner,
+-1 as headliner_id,
+cast (nb.primaryName as character varying) as artist,
+cast (replace(nb.nconst, 'nm', '') as int) as artist_id,
+cast(tp.characters as varchar(255)) as instrument,
+make_date(tb.startYear,1,1) as begin_date,
+make_date(1900,1,1) as end_date,
+null as cover_url
+from title_basics as tb
+join title_principals as tp on tp.tconst = tb.tconst
+join name_basics as nb on nb.nconst = tp.nconst
+where tb.titleType = 'movie'
+limit 50000000
+;
+```
+
 ## Implementation
 
 The postgres database is hosted on an e2-micro (2 vCPUs, 1 GB memory) running on Google Compute Engines.
@@ -128,40 +149,3 @@ The postgres database is hosted on an e2-micro (2 vCPUs, 1 GB memory) running on
 The app is built with nextjs and is hosted on both heroku and vercel.
 - [heroku](https://headliners-and-sidemen.herokuapp.com/)
 - [vercel](https://headliners-and-sidemen.vercel.app/)
-
-## Postgres
-
-This uses postgres user-defined functions in lieu of an ORM.  That makes it easy to use postgres window functions to get the first album before and next album after.  The javascript API transparently passes SQL query results back to the front end.  See /sql/setup/functions.sql for the function and type definitions.
-
-```
-exports.releaseGroup = function (release_group_id) {
-	return performSQLQuery(`select * from release_group(${release_group_id});`);
-};
-
-exports.artistReleases = function (artist_id) {
-	return performSQLQuery(`select * from artist_releases(${artist_id});`);
-};
-
-exports.lastBefore = function (release_group_id) {
-	return performSQLQuery(`select * from last_before(${release_group_id});`);
-};
-
-exports.firstAfter = function (release_group_id) {
-	return performSQLQuery(`select * from first_after(${release_group_id});`);
-};
-
-exports.search = function (query) {
-	return performSQLQuery(`select * from search('${query}');`);
-};
-```
-
-## Next
-
-[![Some Well-Connected Movies](public/some-well-connected-movies.png)](https://www.johndimm.com/context/3329.html)
-
-- Movies using IMDb
-  - [proof of concept](https://www.johndimm.com/context/3329.html) using a small sample
-
-- Academic papers on a given subject
-
-- Other areas where people from a large pool get together in various combinations to collaborate on projects

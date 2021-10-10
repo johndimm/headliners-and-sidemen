@@ -11,10 +11,10 @@ const Artist =  ( { record, withpix, data_source } ) => {
 
     const nconst = 'nm' + record['artist_id'].toString().padStart(7, '0')
     const url = `/api/artist_info/${nconst}`
-    console.log('getArtistInfo, url:', url)
+    //console.log('getArtistInfo, url:', url)
     const results = await fetch(url)
     const data = await results.json()
-    console.log(data.results)
+    //console.log(data.results)
     setArtist(data.results)
   }
 

@@ -5,7 +5,7 @@ const ReleasesOverYears = ( {records, data_source, artist} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
-        console.log("ReleasesOverYears num records:", records.length)
+        // console.log("ReleasesOverYears num records:", records.length)
         let years = {}
         if (records && Array.isArray(records))
         records.forEach ( (record, idx) => {
@@ -14,7 +14,7 @@ const ReleasesOverYears = ( {records, data_source, artist} ) => {
                 //console.log('ReleasesOverYears, begin_date:', record.begin_date)
                 year = record.begin_date.substring(0,4)
             } else {
-                year = 1900
+                year = 2100
             }
 
             if (! (year in years)) {
@@ -32,7 +32,7 @@ const ReleasesOverYears = ( {records, data_source, artist} ) => {
     let htmlArtist
     let htmlDetails
     if (artist && artist.partial_bio) {
-        console.log('artist', artist)
+        // console.log('artist', artist)
 
         const fields = 
         ['birth_date', 'birth_place']
