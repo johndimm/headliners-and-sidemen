@@ -1,0 +1,10 @@
+user anonymous musicbrainz
+cd pub
+cd musicbrainz
+cd data
+cd fullexport
+ls
+get  LATEST
+cd 20211009-001816
+get mbdump.tar.bz2
+get mbdump-cover-art-archive.tar.bz2

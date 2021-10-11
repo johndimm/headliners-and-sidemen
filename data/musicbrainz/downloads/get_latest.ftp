@@ -1,0 +1,7 @@
+user anonymous musicbrainz
+cd pub
+cd musicbrainz
+cd data
+cd fullexport
+ls
+get  LATEST

@@ -1,28 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-# What is it?
-
-
 This is research tool for students, critics, collectors, and consumers.
 
 A movie, TV series, or audio recording is a project that brings together a team of artists.  It is a point in time when their careers intersect.  
 
-We can use this structure to define the neighborhood around a project.
+We can use this structure to define the neighborhood of a project.
 
-> The **<i>neighborhood</i>** around a project consists of each team member's previous and next projects.
+> The **<i>neighborhood</i>** of a project consists of each team member's previous and next projects.
 
 The interface presents this neighborhood, and lets you click the before and after projects in the left and right columns to follow an artist's career.
 
  
 # Why?
 
-Personalized recommendations and "more like this" lists show you what is popular among people like you, since they are derived from the behavior of crowds. It works well for recent releases where there is lots of data. If nobody saw X, there's no crowd-sourced data about it, and it is invisible to recommendations.
+Personalized recommendations and "more like this" lists show you what is popular among people like you, since they are derived from the behavior of crowds. It works well for recent releases where there is lots of data. But if nobody saw X, there's no crowd-sourced data about it, and it is invisible to recommendations.
 
-Curated lists are small and search takes more energy than you want to spend on entertainment.
+Curated lists are small extracts of a vast ocean of content, and search takes more energy than you want to spend on entertainment.
 
 Here, the connections are entirely objective.  Projects are linked by the co-occurrence of artists.  Popularity is not involved.  It doesn't matter what the rest of the world thinks. 
 
-The result is that you can easily follow a chain of links and find yourself in the sub-basement of IMDb.
+The result is that you can easily follow a chain of links and find yourself in a sub-basement of IMDb.
 
 >If you like things other people don't, this is for you.
 

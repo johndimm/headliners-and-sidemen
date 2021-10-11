@@ -3,3 +3,4 @@ data/*
 cover_art.tgz
 local.sh
 gce.sh
+*.tgz
