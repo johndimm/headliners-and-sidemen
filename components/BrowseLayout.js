@@ -23,7 +23,7 @@ export default function BrowseLayout( { release_group }) {
     return null
 
   if (!release_group) {
-    const startingPoints = {'musicbrainz': 38581, 'imdb': 110912, 'imdb_tv': 200276}
+    const startingPoints = {'musicbrainz': 172859, 'imdb': 110912, 'imdb_tv': 200276}
     release_group = startingPoints[dataSource]
     if (!release_group)
       return null

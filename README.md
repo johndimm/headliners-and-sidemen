@@ -185,3 +185,9 @@ The postgres database is hosted on an e2-micro (2 vCPUs, 1 GB memory) running on
 The app is built with nextjs and is hosted on both heroku and vercel.
 - [heroku](https://headliners-and-sidemen.herokuapp.com/)
 - [vercel](https://headliners-and-sidemen.vercel.app/)
+
+## Issues and Comments
+
+Something missing or not as good as it could be?  Feel free to add an issue to this GitHub repo.  
+
+ Do you wish Spotify, Amazon, Netflix, and HBO would use a browser like this?  Feel free to add comments. 
