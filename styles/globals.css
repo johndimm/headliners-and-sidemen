@@ -173,11 +173,6 @@ img {
   font-size: 16pt;
 }
 
-.timeline {
-  flex: 2;
-  min-width: 75%;
-}
-
 .content {
   display: flex;
 }
