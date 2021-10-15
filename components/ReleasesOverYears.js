@@ -1,7 +1,7 @@
 import ReleaseGroup from 'components/ReleaseGroup'
 import Header from 'components/Header'
 
-const ReleasesOverYears = ( {records, data_source, artist} ) => {
+const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
@@ -55,7 +55,7 @@ const ReleasesOverYears = ( {records, data_source, artist} ) => {
     }
 
     return <div>
-        <Header data_source={data_source} />
+        <Header data_source={data_source} query={query}/>
         <div className="content">
             {htmlArtist}
             <table className='timeline'>

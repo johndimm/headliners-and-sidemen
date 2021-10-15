@@ -39,8 +39,10 @@ const CoverArt = ( {record, data_source} ) => {
 
   if (record.cover_url) {
     const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
-
+    // console.log('cover_url found!!!! :', bigCover, record)
     return <img src={bigCover} alt='Cover Art' />
+  } else {
+    //console.log('no cover_url in record:', record)
   }
 
   let image
@@ -50,6 +52,8 @@ const CoverArt = ( {record, data_source} ) => {
     image =  <img src={data.Poster} alt='cover_art' 
       onLoad={updateDatabase(imdbid, data.Poster)} />
   }
+
+  console.log('image:', image)
 
   return <div>{image}</div>
 }

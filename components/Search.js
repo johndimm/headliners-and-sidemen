@@ -30,7 +30,7 @@ const Search = ( {query} ) => {
         doSearch()
     }, [query])
 
-    return <ReleasesOverYears data_source={source} records={dups.removeDups(records)} />
+    return <ReleasesOverYears data_source={source} records={dups.removeDups(records)} query={query}/>
 }
 
 export default Search

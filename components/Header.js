@@ -27,7 +27,7 @@ const Variations = () => {
   </div>
 }
 
-const HeaderMusicbrainz = () => {
+const HeaderMusicbrainz = ({query}) => {
     const search = async (e) => {
        e.preventDefault()
        const query = e.target[0].value
@@ -38,7 +38,7 @@ const HeaderMusicbrainz = () => {
       <form onSubmit={search}>
         <div className='search_input'>
 
-            <input placeholder='Search...' name='query' type='text' width='80'></input>
+            <input placeholder='Search...' name='query' type='text' width='80' defaultValue={query}></input>
             <input type='submit' />
             <br />
             powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
@@ -62,7 +62,7 @@ const HeaderMusicbrainz = () => {
     </div>
 }
 
-const HeaderIMDb = () => {
+const HeaderIMDb = ( {query} ) => {
   const search = async (e) => {
      e.preventDefault()
      const query = e.target[0].value
@@ -73,7 +73,7 @@ const HeaderIMDb = () => {
     <form onSubmit={search}>
       <div className='search_input'>
 
-          <input placeholder='Search...' name='query' type='text' width='80'></input>
+          <input placeholder='Search...' name='query' type='text' width='80' defaultValue={query}></input>
           <input type='submit' />
           <br />
           powered by: 
@@ -102,11 +102,11 @@ const HeaderIMDb = () => {
   </div>
 }
 
-const Header = ({ data_source }) => {
+const Header = ({ data_source, query }) => {
   if (data_source == 'musicbrainz')
-    return <HeaderMusicbrainz />
+    return <HeaderMusicbrainz query={query}/>
   else if (data_source == 'imdb' || data_source == 'imdb_tv')
-    return <HeaderIMDb />
+    return <HeaderIMDb query={query}/>
   else
     return null
 }

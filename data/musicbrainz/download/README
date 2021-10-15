@@ -1,0 +1,3 @@
+The files in this directory are snapshots of the MusicBrainz database,
+in a format suitable for import into a PostgreSQL database. To import
+them, you need a compatible version of the MusicBrainz server software.

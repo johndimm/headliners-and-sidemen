@@ -3,12 +3,40 @@ import axios from 'axios'
 import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
-const generateExternalLink = (dataSource, imdbid, title, artist) => {
-  const query = encodeURIComponent (title + ', ' + artist)
-  const link = dataSource == 'imdb' || dataSource == 'imdb_tv'
-    ? `https://www.imdb.com/title/${imdbid}`
-    : `https://www.youtube.com/results?search_query=${query}`
-  return link  
+const externalLinks = (dataSource, imdbid, record) => {
+  const query = encodeURIComponent (`"${record.title}" by "${record.artist}"`)
+
+
+  if (dataSource == 'musicbrainz') {
+     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+     const youtube_logo = '/youtube.png'
+     const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group_gid}`
+     const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
+     return <div>
+       <div>
+         <a target='imdb' rel="noreferrer" href={youtube_url}>
+           <img height='75' src={youtube_logo} target='_blank' alt='IMDb'/>
+         </a>
+       </div>
+
+       <div>
+         <a target='imdb' rel="noreferrer" href={musicbrainz_url}>
+           <img max-height='50' max-width='150' src={musicbrainz_logo} target='_blank' alt='IMDb'/>
+         </a>
+       </div>
+  </div>
+  }
+
+  if (dataSource == 'imdb' || dataSource == 'imdb_tv') {
+    const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
+    const link = `https://www.imdb.com/title/${imdbid}`
+    return <div>
+        <a target='imdb' rel="noreferrer" href={link}>
+        <img height='50' src={logo} target='_blank' alt='IMDb'/>
+      </a>
+  </div>
+  }
+ 
 }
 
 const Center = ( {release_group, data_source}) => {
@@ -57,10 +85,11 @@ const Center = ( {release_group, data_source}) => {
 
     let artists 
     let release
-    let external_links
+    let links
     let begin_date = '2200-01-01'
     if (Array.isArray(data) && data.length > 0) {
-      let coverArt = <CoverArt record={data[0]} />
+      console.log('center', data[0])
+      let coverArt = <CoverArt record={data[0]} data_source={data_source} />
 
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
@@ -70,18 +99,7 @@ const Center = ( {release_group, data_source}) => {
 
       begin_date = begin_date.toString().replace('-01-01','')
 
-
-      const link = generateExternalLink(data_source, imdbid, data[0].title, data[0].artist)
-      const logo = data_source == 'musicbrainz'
-        ? '/youtube.png'
-        : 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
-
-      external_links = <div>
-        <a target='imdb' rel="noreferrer" 
-        href={link}>
-          <img height='50' src={logo} target='_blank' alt='IMDb'/>
-        </a>
-      </div>
+      links = externalLinks(data_source, imdbid, data[0])
 
       release = <div>
           <div className='date'>{begin_date}</div>
@@ -99,7 +117,7 @@ const Center = ( {release_group, data_source}) => {
       <div className='artists'>
       {artists}
       </div>
-      {external_links}
+      {links}
       <div className='details'><table><tbody>{details}</tbody></table></div>
       </div>
 }
