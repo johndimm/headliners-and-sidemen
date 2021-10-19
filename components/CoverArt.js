@@ -5,7 +5,8 @@ import React, {useState, useEffect} from 'react'
 const CoverArt = ( {record, data_source} ) => {
   const [data, setData] = useState({})
 
-  const imdbid = 'tt' + record.release_group.toString().padStart(7, '0')
+  // const imdbid = 'tt' + record.release_group.toString().padStart(7, '0')
+  const imdbid = record.release_group
 
   const getPoster = async (imdbid) => {
      const endpoint = `/api/imdb/${imdbid}`

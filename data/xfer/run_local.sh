@@ -1,0 +1,2 @@
+psql -f dump.sql
+

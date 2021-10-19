@@ -9,7 +9,8 @@ const Artist =  ( { record, withpix, data_source } ) => {
     if (!withpix || data_source == 'musicbrainz') 
       return
 
-    const nconst = 'nm' + record['artist_id'].toString().padStart(7, '0')
+    // const nconst = 'nm' + record['artist_id'].toString().padStart(7, '0')
+    const nconst = record['artist_id']
     const url = `/api/artist_info/${nconst}`
     //console.log('getArtistInfo, url:', url)
     const results = await fetch(url)

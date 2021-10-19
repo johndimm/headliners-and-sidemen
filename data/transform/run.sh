@@ -1,7 +1,7 @@
-psql -f merge.sql
-psql -f load_fulltext.sql
-psql -f careers.sql
-psql -f careers_rename.sql
-psql -f gin_index.sql
-psql -f index2.sql
+psql -f context_cover.sql
+psql -f context_fulltext.sql
+psql -f context_careers.sql
+psql -f rename.sql
+psql -f index.sql
 psql -f functions.sql
+psql -f cleanup.sql

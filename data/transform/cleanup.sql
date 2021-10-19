@@ -1,2 +1,4 @@
-drop table context_xfer;
-drop table covers;
+drop table context_cover;
+drop table context_fulltext;
+drop table context_missing;
+

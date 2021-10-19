@@ -27,7 +27,8 @@ const ArtistReleases = ( {artist_id} ) => {
     }
 
     const getArtistInfo = async () => {
-        const nconst = 'nm' + artist_id.toString().padStart(7, '0')
+        // const nconst = 'nm' + artist_id.toString().padStart(7, '0')
+        const nconst = artist_id
         const url = `/api/artist_info/${nconst}`
         const response = await fetch(url)
         const data = await response.json()

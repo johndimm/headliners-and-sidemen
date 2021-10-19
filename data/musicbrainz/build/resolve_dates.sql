@@ -2,7 +2,6 @@ drop table if exists c_date;
 create table c_date as
 select
 release_group,
-release_group_gid,
 title,
 headliner,
 headliner_id,

@@ -44,7 +44,8 @@ const Center = ( {release_group, data_source}) => {
     const [album, setAlbum] = useState({})
     // console.log('data_source', data_source)
 
-    const imdbid = 'tt' + release_group.toString().padStart(7, '0')
+    // const imdbid = 'tt' + release_group.toString().padStart(7, '0')
+    const imdbid = release_group
 
     useEffect( () => {
         const url = `/api/release_group/${release_group}`

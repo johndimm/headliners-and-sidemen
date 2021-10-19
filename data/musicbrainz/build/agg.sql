@@ -3,7 +3,6 @@ create table c_agg as
 with instruments as (
     select
     release_group,
-    release_group_gid,
     title,
     headliner,
     headliner_id,
@@ -12,11 +11,10 @@ with instruments as (
     instrument,
     min(begin_date) as begin_date
     from c_date 
-    group by 1,2,3,4,5,6,7,8  
+    group by 1,2,3,4,5,6,7 
 )
 select
 release_group,
-release_group_gid,
 title,
 headliner,
 headliner_id,
@@ -25,5 +23,5 @@ artist_id,
 string_agg(instrument, ', ') as instrument,
 min(begin_date) as begin_date
 from instruments
-group by 1,2,3,4,5,6,7
+group by 1,2,3,4,5,6
 ;

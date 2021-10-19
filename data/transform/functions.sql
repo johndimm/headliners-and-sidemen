@@ -2,13 +2,12 @@
 
 drop type if exists context_record_type cascade;
 create type context_record_type as (
-    release_group int,
-    release_group_gid uuid,
+    release_group text,
     title character varying,
     headliner character varying,
-    headliner_id integer,
+    headliner_id text,
     artist character varying,
-    artist_id integer,
+    artist_id text,
     instrument text,
     begin_date date,
     cover_url text,
@@ -22,7 +21,7 @@ create type page_section_enum as
   enum('last_before', 'center', 'first_after');
 
 drop function if exists update_imdb_cover_art;
-create or replace function update_imdb_cover_art(_release_group int, _url text)
+create or replace function update_imdb_cover_art(_release_group text, _url text)
 returns boolean
 language plpgsql    
 as $$
@@ -56,7 +55,7 @@ $$
 
 drop function if exists release_group;
 drop function if exists get_release_group;
-create or replace function release_group(release_group_id int)
+create or replace function release_group(_release_group text)
 returns setof context_record_type
 language plpgsql    
 as $$
@@ -64,7 +63,7 @@ begin
   return query
     select c.*, 1 as rank
     from context as c
-    where c.release_group=release_group_id
+    where c.release_group=_release_group
     order by c.artist
     limit 200
     ;
@@ -73,7 +72,7 @@ $$
 ;
 
 DROP FUNCTION if exists artist_releases;
-create or replace function artist_releases(_artist_id int)
+create or replace function artist_releases(_artist_id text)
 returns setof context_record_type
 language plpgsql    
 as $$
@@ -90,7 +89,7 @@ $$
 ;
 
 drop function if exists first_after;
-create or replace function first_after(_release_group_id int)
+create or replace function first_after(_release_group text)
 returns setof context_record_type
 language plpgsql    
 as $$
@@ -104,7 +103,7 @@ begin
       from context as c 
       join context as c2 on c2.artist_id = c.artist_id 
 
-      where c.release_group = _release_group_id 
+      where c.release_group = _release_group 
       and c2.artist_seq > c.artist_seq
       and c.release_group != c2.release_group
       order by c2.artist, c2.artist_seq
@@ -118,31 +117,9 @@ end;
 $$
 ;
 
-drop function if exists first_after_v2;
-create or replace function first_after_v2(_release_group_id int)
-returns setof context_record_type
-language plpgsql    
-as $$
-begin
-  return query
-    with all_after as (
-      select c2.*, 1 as rank
-      from context as c 
-      join context as c2 on c2.artist_id = c.artist_id and c2.artist_seq = c.artist_seq + 1
-
-      where c.release_group = _release_group_id 
-      order by c2.artist, c2.begin_date
-    )
-    select *
-    from all_after as ab
-    order by ab.artist
-    ;
-end;
-$$
-;
 
 drop function if exists last_before;
-create or replace function last_before(_release_group_id int)
+create or replace function last_before(_release_group text)
 returns setof context_record_type
 language plpgsql    
 as $$
@@ -155,7 +132,7 @@ begin
       from context as c 
       join context as c2 on c2.artist_id = c.artist_id 
 
-      where c.release_group = _release_group_id 
+      where c.release_group = _release_group
       and c2.release_group != c.release_group
       and c2.artist_seq < c.artist_seq
       order by c2.artist, c2.artist_seq desc
@@ -169,37 +146,14 @@ end;
 $$
 ;
 
-drop function if exists last_before_v2;
-create or replace function last_before_v2(_release_group_id int)
-returns setof context_record_type
-language plpgsql    
-as $$
-begin
-  return query
-    with all_after as (
-      select c2.*, 1 as rank
-      from context as c 
-      join context as c2 on c2.artist_id = c.artist_id and c2.artist_seq = c.artist_seq - 1
-
-      where c.release_group = _release_group_id 
-      order by c2.artist, c2.begin_date
-    )
-    select *
-    from all_after as ab
-    order by ab.artist
-    ;
-end;
-$$
-;
-
-create or replace function release_group_set(_release_group int)
+create or replace function release_group_set(_release_group text)
 returns table (
-    release_group int,
+    release_group text,
     title character varying,
     headliner character varying,
-    headliner_id integer,
+    headliner_id text,
     artist character varying,
-    artist_id integer,
+    artist_id text,
     instrument character varying(255),
     begin_date date,
     end_date date,
