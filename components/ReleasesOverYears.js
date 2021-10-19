@@ -43,6 +43,9 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
            return <tr key={idx}><th>{field}</th><td>{artist[field]}</td></tr>
         })
 
+        const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
+        const link = `https://www.imdb.com/name/${artist.nconst}`
+
         htmlArtist = <div className='artist_featured'>
           <div className='artist_featured_name'>
               {artist.name}
@@ -50,6 +53,11 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           <img className='artist_featured_pix' src={artist.image_url} />
           <div className='artist_featured_bio'>{artist.partial_bio}</div>
           <table><tbody>{htmlDetails}</tbody></table>
+          <div style={{width:"100%", textAlign:"center"}}>
+            <a target='imdb' rel="noreferrer" href={link}>
+               <img height='40' src={logo} target='_blank' alt='IMDb'/>
+            </a>
+          </div>
         </div>
         
     }

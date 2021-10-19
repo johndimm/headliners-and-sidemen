@@ -32,6 +32,7 @@ const ArtistReleases = ( {artist_id} ) => {
         const url = `/api/artist_info/${nconst}`
         const response = await fetch(url)
         const data = await response.json()
+        data.results['nconst'] = nconst
         setArtist(data.results)
     }
 

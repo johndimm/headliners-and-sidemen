@@ -4,13 +4,13 @@ import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
 const externalLinks = (dataSource, imdbid, record) => {
-  const query = encodeURIComponent (`"${record.title}" by "${record.artist}"`)
+  const query = encodeURIComponent (`"${record.title}" OR "${record.artist}"`)
 
 
   if (dataSource == 'musicbrainz') {
      const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
      const youtube_logo = '/youtube.png'
-     const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group_gid}`
+     const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
      const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
      return <div>
        <div>
