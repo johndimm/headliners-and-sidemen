@@ -12,5 +12,5 @@ c1.*,
 min(c2.begin_date) as sibling_begin_date 
 from context c1
 join uniq c2 on c2.release_group = c1.release_group
-group by 1,2,3,4,5,6,7,8,9,10
+group by 1,2,3,4,5,6,7,8,9,10,11
 ;

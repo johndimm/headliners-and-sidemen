@@ -15,14 +15,14 @@ const Variations = () => {
   return <div className='variations'>
     <ul>
     <li><a 
-      title='from imdb: 186,798 TV series with 595,528 actors'
-      href='https://cast-and-crew.herokuapp.com/'>TV Series</a></li>
+      title='from imdb: 186,000 TV series with 595,000 actors'
+      href='https://cast-and-crew.herokuapp.com/'>186,000 TV Series</a></li>
     <li><a 
-    title='from musicbrainz: 92,044 albums with 68,813 musicians' 
-    href='https://headliners-and-sidemen.herokuapp.com/'>Music</a></li>
+    title='from musicbrainz: 259,000 albums with 256,000 musicians' 
+    href='https://headliners-and-sidemen.herokuapp.com/'>259,000 Albums</a></li>
     <li><a 
-    title='from imdb: 573,761 movies with 1,403,250 actors'
-    href='https://movies-and-actors.herokuapp.com/'>Movies</a></li>
+    title='from imdb: 573,000 movies with 1,403,000 actors'
+    href='https://movies-and-actors.herokuapp.com/'>573,000 Movies</a></li>
     </ul>
   </div>
 }

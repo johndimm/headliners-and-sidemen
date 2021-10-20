@@ -9,6 +9,7 @@ c1.artist,
 c1.artist_id,
 instrument,
 begin_date,
+age,
 c2.cover_url
 from context c1
 left join release_cover as c2 on 

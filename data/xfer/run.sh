@@ -1,5 +1,5 @@
 # in source db
-psql -f dump.sql
+# psql -f dump.sql
 
 # in target db
 psql -f create_context.sql

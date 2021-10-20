@@ -10,6 +10,7 @@ create type context_record_type as (
     artist_id text,
     instrument text,
     begin_date date,
+    age int,
     cover_url text,
     fulltext tsvector,
     artist_seq int,
@@ -157,6 +158,7 @@ returns table (
     instrument character varying(255),
     begin_date date,
     end_date date,
+    age int,
     cover_url text,
     rank int,
     page_section page_section_enum 

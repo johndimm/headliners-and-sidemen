@@ -8,6 +8,7 @@ CREATE TABLE staging.context (
     artist_id text,
     instrument text,
     begin_date date,
+    age int,
     cover_url text,
     fulltext tsvector,
     artist_seq integer

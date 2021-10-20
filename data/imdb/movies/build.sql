@@ -9,6 +9,7 @@ select
     cast (nb.nconst as text) as artist_id,
     cast(tp.characters as text) as instrument,
     make_date(tb.startYear,1,1) as begin_date,
+    cast(tb.startYear as int) - cast(nb.birthYear as int) as age,
     rc.cover_url as cover_url,
     to_tsvector('english', tb.primaryTitle || ' ' || nb.primaryName) as fulltext,
     cast(ROW_NUMBER() OVER (PARTITION by tp.nconst
