@@ -20,6 +20,8 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
             if (! (year in years)) {
                 years[year] = []
             }
+            //if (record.cover_url != null)
+            //  console.log('imdbid, cover_url:', record.release_group, record.cover_url)
             years[year].push(<ReleaseGroup key={idx} record={record} data_source={data_source}/>)
         })
 

@@ -9,6 +9,7 @@ const CoverArt = ( {record, data_source} ) => {
   const imdbid = record.release_group
 
   const getPoster = async (imdbid) => {
+     console.log('getting poster for ', imdbid)
      const endpoint = `/api/imdb/${imdbid}`
      const response = await fetch(endpoint)
      const data = await response.json()
@@ -20,6 +21,11 @@ const CoverArt = ( {record, data_source} ) => {
   const updateDatabase = (imdbid, cover_url) => {
     if (cover_url === 'N/A' || cover_url === 'N')
       return
+    if (!('Poster' in data))
+      return
+
+    console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
+
     const cover_url_esc = encodeURIComponent(cover_url)
     const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
     fetch(fetchUrl)
@@ -29,16 +35,24 @@ const CoverArt = ( {record, data_source} ) => {
     if ( ! (data_source == 'imdb' || data_source == 'imdb_tv') )
       return
     
+    console.log('useEffect, imdbid, record.cover_url', imdbid, record.cover_url)
     if ( record.cover_url
-         && ( record.cover_url.substring(0,4) == 'http' )
-       ) 
-      return
+         && ( record.cover_url.substring(0,4) == 'http' 
+            || record.cover_url == 'N/A'
+           )
+       ) {
+           // console.log('do not get poster for imdbid', imdbid)
+           //if (record.cover_url == 'N/A')
+           //  record.cover_url = ''
+           return
+       }
 
       setTimeout (() => getPoster(imdbid), Math.random() * 100)
   },[imdbid])
 
 
-  if (record.cover_url) {
+  if (record.cover_url && record.cover_url != 'N/A') {
+    // console.log('CoverArt, record.cover', record.cover_url)
     const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
     // console.log('cover_url found!!!! :', bigCover, record)
     return <img src={bigCover} alt='Cover Art' />
@@ -50,11 +64,12 @@ const CoverArt = ( {record, data_source} ) => {
   if (data 
     && 'Poster' in data 
     && ( data.Poster !== 'N/A' && data.Poster !== 'N' ) ) {
+      console.log('Cover Art using downloaded image, data.Poster', data.Poster)
     image =  <img src={data.Poster} alt='cover_art' 
-      onLoad={updateDatabase(imdbid, data.Poster)} />
+      onLoad={() => updateDatabase(imdbid, data.Poster)} />
   }
 
-  console.log('image:', image)
+  // console.log('image:', image)
 
   return <div>{image}</div>
 }

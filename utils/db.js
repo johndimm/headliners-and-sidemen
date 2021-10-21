@@ -51,6 +51,5 @@ exports.releaseGroupSet = function (release_group_id) {
 };
 
 exports.updateIMDbCoverArt = function (imdbid, url) {
-    const release_group = parseInt(imdbid.replace('tt', ''))
-    return performSQLQuery(`select * from update_imdb_cover_art('${release_group}', '${url}');`);   
+    return performSQLQuery(`select * from update_imdb_cover_art('${imdbid}', '${url}');`);   
 }
