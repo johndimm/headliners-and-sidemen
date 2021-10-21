@@ -9,12 +9,12 @@ const ReleaseGroup = ( {record, data_source}) => {
       : null
 
     return <div className='linked_album'>
-          <Link href={link} passHref={true}>
+          <a href={link}>
               <div className="album_title">
                 <b>{record.title}</b> {hlin}
                 <CoverArt record={record} data_source={data_source}/>
               </div>
-          </Link>
+          </a>
           <Artist record={record} withpix={false} data_source={data_source}/>
         </div>
 }

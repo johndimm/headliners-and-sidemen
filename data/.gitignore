@@ -1,2 +1,4 @@
 *.tsv
 *.dat
+*.out
+job.txt

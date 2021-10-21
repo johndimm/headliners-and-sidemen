@@ -1,0 +1,2 @@
+tail covers.out
+wc -l data/*

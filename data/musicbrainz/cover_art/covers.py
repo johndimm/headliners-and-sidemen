@@ -1,16 +1,19 @@
 import urllib.request, json 
 import time
 
-def download_image_info (id, gid, output):
+def download_image_info (gid, output):
     cover_url =  'https://coverartarchive.org/release-group/%s?fmt=json' % gid
-    print (id, cover_url)
+    print (gid, cover_url)
     try:
         with urllib.request.urlopen(cover_url) as url:
+          try:
             data = json.loads(url.read().decode())
             images = data['images']
             if len(images) > 0:
-                 print("%s\t%s\t%s" % (id, gid, images[0]['thumbnails']['small']), file=output)
-    except urllib.error.HTTPError as e:
+                 print("%s\t%s" % (gid, images[0]['thumbnails']['small']), file=output)
+          except urllib.error.HTTPError as e:
+            return print (e)
+    except Exception as e:
         return print (e)
 
 def process_list (start, end):
@@ -21,19 +24,21 @@ def process_list (start, end):
     f = open ('gid.tsv')
     i = 0
     for line in f:
-        i += 1
-        (id, gid) = line.strip().split('\t')
-        if (int(id) > start and int(id) < end):
-          download_image_info(id, gid, output)
+        (gid, begin_date) = line.strip().split('\t')
+        if (i >= start and i < end):
+          download_image_info(gid, output)
           time.sleep(0.2)
+        i += 1
     f.close();
     output.close()
 
 def stripes():
-    for i in range(2351):
+#    process_list(0,1)
+#    return
+
+    for i in range(228):
         start = i * 1000
         end = start + 1000
-        # if start >= 2300000: # 886000: # 796000:
         process_list(start, end)
 
 stripes()
