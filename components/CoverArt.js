@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 // import axios from 'axios'
 
+let imgList = {}
 
 const CoverArt = ( {record, data_source} ) => {
   const [data, setData] = useState({})
@@ -9,7 +10,15 @@ const CoverArt = ( {record, data_source} ) => {
   const imdbid = record.release_group
 
   const getPoster = async (imdbid) => {
-     console.log('getting poster for ', imdbid)
+     
+     if (imgList[imdbid] == 1) {
+       console.log('should already have the poster for ', imdbid)
+     } else {
+       console.log('new image for  ', imdbid)
+     }
+     
+     imgList[imdbid] = 1
+
      const endpoint = `/api/imdb/${imdbid}`
      const response = await fetch(endpoint)
      const data = await response.json()

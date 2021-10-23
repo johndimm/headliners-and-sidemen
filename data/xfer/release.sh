@@ -1,3 +1,7 @@
+#
+#  env gce_music_postgres
+#
+
 drop schema if exists last_good cascade;
 
 create schema last_good;

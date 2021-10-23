@@ -44,11 +44,48 @@ language plpgsql
 as $$
 begin
   return query
+    with years as (
+    select c.*, 
+          cast(ROW_NUMBER() OVER (PARTITION by extract(year from c.begin_date)
+            ORDER BY c.begin_date
+          ) as int) as rank
+    from context as c
+    where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+    order by c.begin_date 
+    )
+    select *
+    from years
+    where rank <= 5
+    -- limit 200
+    ;
+end;
+$$
+;
+
+
+drop function if exists search_early_late;
+create or replace function search_early_late(_query text)
+returns setof context_record_type
+language plpgsql    
+as $$
+begin
+  return query
+    with latest as (
     select c.*, 1 as rank
     from context as c
     where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     order by c.begin_date desc
-    limit 100
+    limit 200
+    ), earliest as (
+    select c.*, 1 as rank
+    from context as c
+    where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+    order by c.begin_date 
+    limit 200
+    )
+    select * from earliest
+    union
+    select * from latest
     ;
 end;
 $$

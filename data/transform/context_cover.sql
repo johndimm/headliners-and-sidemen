@@ -3,7 +3,7 @@ create table context_cover as
 select 
 c1.release_group,
 c1.title,
-c1.headliner,
+cast(c1.headliner as character varying) as headliner,
 c1.headliner_id,
 c1.artist,
 c1.artist_id,

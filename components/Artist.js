@@ -47,7 +47,7 @@ const Artist =  ( { record, withpix, data_source } ) => {
     begin_date = record['begin_date'].replace('-01-01','')
 
   let age
-  if (record && 'age' in record && record['age'])
+  if (record && 'age' in record && record['age'] && record['age'] > 0)
     age = <span className='age'>({record['age']})</span>
 
     return <Link href={link} passHref={true}>
