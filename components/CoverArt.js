@@ -16,7 +16,7 @@ const CoverArt = ( {record, data_source} ) => {
      } else {
        console.log('new image for  ', imdbid)
      }
-     
+
      imgList[imdbid] = 1
 
      const endpoint = `/api/imdb/${imdbid}`
@@ -64,7 +64,10 @@ const CoverArt = ( {record, data_source} ) => {
     // console.log('CoverArt, record.cover', record.cover_url)
     const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
     // console.log('cover_url found!!!! :', bigCover, record)
-    return <img src={bigCover} alt='Cover Art' />
+    return <img src={bigCover} alt='Cover Art'
+      onError={(e)=>{
+        e.target.style.display='none'
+        }}  />
   } else {
     //console.log('no cover_url in record:', record)
   }
@@ -75,6 +78,9 @@ const CoverArt = ( {record, data_source} ) => {
     && ( data.Poster !== 'N/A' && data.Poster !== 'N' ) ) {
       console.log('Cover Art using downloaded image, data.Poster', data.Poster)
     image =  <img src={data.Poster} alt='cover_art' 
+      onError={(e)=>{
+        e.target.style.display='none'
+        }} 
       onLoad={() => updateDatabase(imdbid, data.Poster)} />
   }
 
