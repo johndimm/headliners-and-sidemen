@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import LastBefore from 'components/LastBefore'
+import Sidebar from 'components/Sidebar'
 
 export default function Index() {
   const router = useRouter()
@@ -10,5 +10,5 @@ export default function Index() {
   if (! release_group)
     return null
 
-  return <div><LastBefore release_group={release_group} /></div>
+  return <div><Sidebar before_after='last_before' release_group={release_group} /></div>
 }
