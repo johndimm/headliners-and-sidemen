@@ -4,7 +4,7 @@ import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
 const externalLinks = (dataSource, imdbid, record) => {
-  const query = encodeURIComponent (`"${record.title}" OR "${record.artist}"`)
+  const query = encodeURIComponent (`"${record.title}" OR "${record.headliner}"`)
 
 
   if (dataSource == 'musicbrainz') {
@@ -89,7 +89,7 @@ const Center = ( {release_group, data_source}) => {
     let links
     let begin_date = '2200-01-01'
     if (Array.isArray(data) && data.length > 0) {
-      console.log('center', data[0])
+      // console.log('center', data[0])
       let coverArt = <CoverArt record={data[0]} data_source={data_source} />
 
       artists = data.map( (record, idx) => {

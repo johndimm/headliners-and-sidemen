@@ -1,4 +1,4 @@
-import urllib.request, json 
+:import urllib.request, json 
 import time
 
 def download_image_info (gid, output):

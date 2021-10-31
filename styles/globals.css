@@ -80,8 +80,8 @@ img {
 
 .artist_info {
   cursor: pointer;
-
-  margin: 20px;
+  margin: 5px;
+  padding: 0px;
 }
 
 .linked_album:hover {

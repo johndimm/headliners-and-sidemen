@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import FirstAfter from 'components/FirstAfter'
-import LastBefore from 'components/LastBefore'
+//import FirstAfter from 'components/FirstAfter'
+//import LastBefore from 'components/LastBefore'
+import Sidebar from 'components/Sidebar'
 import Center from 'components/Center'
 import Header from 'components/Header'
 
@@ -39,13 +40,15 @@ export default function BrowseLayout( { release_group }) {
       <table>
       <tbody><tr>
         <td>
-          <LastBefore release_group={release_group} data_source={dataSource}/>
+          <Sidebar before_after='last_before' 
+            release_group={release_group} data_source={dataSource}/>
         </td>
         <td className='center'>
           <Center release_group={release_group} data_source={dataSource}/>
         </td>
         <td>
-          <FirstAfter release_group={release_group} data_source={dataSource}/>     
+          <Sidebar before_after='first_after' 
+            release_group={release_group} data_source={dataSource}/>     
         </td>
       </tr></tbody>
     </table> 

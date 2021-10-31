@@ -11,11 +11,11 @@ const CoverArt = ( {record, data_source} ) => {
 
   const getPoster = async (imdbid) => {
      
-     if (imgList[imdbid] == 1) {
-       console.log('should already have the poster for ', imdbid)
-     } else {
-       console.log('new image for  ', imdbid)
-     }
+  //   if (imgList[imdbid] == 1) {
+  //     console.log('should already have the poster for ', imdbid)
+  //   } else {
+  //     console.log('new image for  ', imdbid)
+  //   }
 
      imgList[imdbid] = 1
 
@@ -33,7 +33,7 @@ const CoverArt = ( {record, data_source} ) => {
     if (!('Poster' in data))
       return
 
-    console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
+    // console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
 
     const cover_url_esc = encodeURIComponent(cover_url)
     const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
@@ -44,7 +44,7 @@ const CoverArt = ( {record, data_source} ) => {
     if ( ! (data_source == 'imdb' || data_source == 'imdb_tv') )
       return
     
-    console.log('useEffect, imdbid, record.cover_url', imdbid, record.cover_url)
+    // console.log('useEffect, imdbid, record.cover_url', imdbid, record.cover_url)
     if ( record.cover_url
          && ( record.cover_url.substring(0,4) == 'http' 
             || record.cover_url == 'N/A'
@@ -76,12 +76,14 @@ const CoverArt = ( {record, data_source} ) => {
   if (data 
     && 'Poster' in data 
     && ( data.Poster !== 'N/A' && data.Poster !== 'N' ) ) {
-      console.log('Cover Art using downloaded image, data.Poster', data.Poster)
-    image =  <img src={data.Poster} alt='cover_art' 
+      // console.log('Cover Art using downloaded image, data.Poster', data.Poster)
+      image = <img src={data.Poster} alt='cover_art' 
       onError={(e)=>{
         e.target.style.display='none'
         }} 
       onLoad={() => updateDatabase(imdbid, data.Poster)} />
+  } else {
+    image = <div style={{'height':'10px'}}></div>
   }
 
   // console.log('image:', image)
