@@ -5,10 +5,21 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     let headers = []
     let cells = []
     if (records.length > 0) {
+        let releases = {}
+
+        records.forEach( (record, idx) => {
+          if  (! (record.release_group in releases)) {
+            releases[record.release_group] = []
+          }
+          releases[record.release_group].push(record)
+        })
+
         // console.log("ReleasesOverYears num records:", records.length)
         let years = {}
         if (records && Array.isArray(records))
-        records.forEach ( (record, idx) => {
+        //records.forEach ( (record, idx) => {
+        Object.keys(releases).forEach ( (release_group, idx) => {
+            const record = releases[release_group][0]
             let year
             if ('begin_date' in record && record.begin_date && record.begin_date != '') {
                 //console.log('ReleasesOverYears, begin_date:', record.begin_date)
@@ -22,7 +33,11 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
             }
             //if (record.cover_url != null)
             //  console.log('imdbid, cover_url:', record.release_group, record.cover_url)
-            years[year].push(<ReleaseGroup key={idx} record={record} data_source={data_source}/>)
+            years[year].push(<ReleaseGroup 
+              key={idx} 
+              record={record} 
+              data_source={data_source}
+              artists={releases[release_group]} />)
         })
 
         Object.keys(years).sort(function(a, b){return a-b}).forEach ( (year, idx) => {

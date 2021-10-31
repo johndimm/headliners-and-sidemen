@@ -73,6 +73,7 @@ img {
   margin: 10px;
   border: 1px solid lightgray;
   max-width: 250px;
+  min-width: 200px;
   border: 1px solid lightgray;
   border-radius: 5px;
   cursor:pointer;
