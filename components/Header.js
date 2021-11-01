@@ -20,7 +20,9 @@ const Variations =  ({data_source})  => {
 
   const movie_href = data_source == 'imdb' ? null : 'https://movies-and-actors.herokuapp.com/'
   const tv_href = data_source == 'imdb_tv' ? null : 'https://cast-and-crew.herokuapp.com/'
-  const music_href = data_source == 'musicbrainz' ? null : 'https://cast-and-crew.herokuapp.com/'
+  const music_href = data_source == 'musicbrainz' ? null : 'https://headliners-and-sidemen.herokuapp.com/'
+
+  console.log('music_href:', music_href)
 
   return <div className='variations'>
     <ul>
@@ -77,7 +79,7 @@ const HeaderMusicbrainz = ({query}) => {
 
           <a>
           <div className='page_title_div'>
-                <div className='page_title'>{titles['musicbrains'].title}</div>
+                <div className='page_title'>{titles['musicbrainz'].title}</div>
                 <div className='page_subtitle'>{titles['musicbrainz'].subtitle}</div>
           </div>
           </a>
