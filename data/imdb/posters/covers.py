@@ -54,9 +54,10 @@ def stripes():
 #    return
 
 #  573761 movies.dat
-    start_on = 0
+    start_on = 12000 
     window = 1000
     for i in range(90):
+        print ("i:", i)
         start = i * window
         end = start + window
         if start >= start_on:

@@ -11,6 +11,8 @@ const GitHub = () => {
           </Link>
 }
 
+
+
 const Variations = () => {
   return <div className='variations'>
     <ul>
@@ -25,6 +27,21 @@ const Variations = () => {
     href='https://movies-and-actors.herokuapp.com/'>573,000 Movies</a></li>
     </ul>
   </div>
+}
+
+const titles = { 
+  "imdb": {
+    title: "Constellations", 
+    subtitle:'What did the actors on this movie do before and after?'
+  },
+  "imdb_tv": {
+    title: 'Cast and Crew',
+    subtitle:'What did the cast and crew of this TV series do before and after?'
+  },
+  "musicbrainz": {
+    title: 'Headliners and Sidemen',
+    subtitle: 'What did the musicians on this album do before and after?'
+  }
 }
 
 const HeaderMusicbrainz = ({query}) => {
@@ -51,9 +68,8 @@ const HeaderMusicbrainz = ({query}) => {
 
           <a>
           <div className='page_title_div'>
-                <div className='page_title'>Headliners and Sidemen</div>
-                <div className='page_subtitle'>What were the musicians who played on this album doing before and after?
-                </div>
+                <div className='page_title'>{titles['musicbrains'].title}</div>
+                <div className='page_subtitle'>{titles['musicbrainz'].subtitle}</div>
           </div>
           </a>
 
@@ -62,7 +78,7 @@ const HeaderMusicbrainz = ({query}) => {
     </div>
 }
 
-const HeaderIMDb = ( {query} ) => {
+const HeaderIMDb = ( {query, data_source} ) => {
   const search = async (e) => {
      e.preventDefault()
      const query = e.target[0].value
@@ -91,9 +107,8 @@ const HeaderIMDb = ( {query} ) => {
 
       <a>
       <div className='page_title_div'>
-            <div className='page_title'>Cast and Crew</div>
-            <div className='page_subtitle'>What did the cast and crew of this production do before and after?
-            </div>
+            <div className='page_title'>{titles[data_source].title}</div>
+            <div className='page_subtitle'>{titles[data_source].subtitle}</div>
       </div>
       </a>
 
@@ -106,7 +121,7 @@ const Header = ({ data_source, query }) => {
   if (data_source == 'musicbrainz')
     return <HeaderMusicbrainz query={query}/>
   else if (data_source == 'imdb' || data_source == 'imdb_tv')
-    return <HeaderIMDb query={query}/>
+    return <HeaderIMDb query={query} data_source={data_source}/>
   else
     return null
 }
