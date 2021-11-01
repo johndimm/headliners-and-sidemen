@@ -201,3 +201,8 @@ img {
   font-size:10pt;
   font-weight: 100;
 }
+
+.selected_variation {
+  font-weight: 600;
+  font-style: italic;
+}

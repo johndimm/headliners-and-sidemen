@@ -13,18 +13,27 @@ const GitHub = () => {
 
 
 
-const Variations = () => {
+const Variations =  ({data_source})  => {
+  const movie_class = data_source == 'imdb' ? 'selected_variation' : ''
+  const tv_class = data_source == 'imdb_tv' ? 'selected_variation' : ''
+  const music_class = data_source == 'musicbrainz' ? 'selected_variation' : ''
+
+  const movie_href = data_source == 'imdb' ? null : 'https://movies-and-actors.herokuapp.com/'
+  const tv_href = data_source == 'imdb_tv' ? null : 'https://cast-and-crew.herokuapp.com/'
+  const music_href = data_source == 'musicbrainz' ? null : 'https://cast-and-crew.herokuapp.com/'
+
   return <div className='variations'>
     <ul>
-    <li><a 
+    <li className={movie_class}><a 
+      title='from imdb: 573,000 movies with 1,403,000 actors'
+      href={movie_href}
+      >573,000 Movies</a></li>
+    <li className={tv_class}><a 
       title='from imdb: 186,000 TV series with 595,000 actors'
-      href='https://cast-and-crew.herokuapp.com/'>186,000 TV Series</a></li>
-    <li><a 
-    title='from musicbrainz: 259,000 albums with 256,000 musicians' 
-    href='https://headliners-and-sidemen.herokuapp.com/'>259,000 Albums</a></li>
-    <li><a 
-    title='from imdb: 573,000 movies with 1,403,000 actors'
-    href='https://movies-and-actors.herokuapp.com/'>573,000 Movies</a></li>
+      href={tv_href}>186,000 TV Series</a></li>
+    <li className={music_class}><a 
+      title='from musicbrainz: 259,000 albums with 256,000 musicians' 
+      href={music_href}>259,000 Albums</a></li>
     </ul>
   </div>
 }
@@ -64,7 +73,7 @@ const HeaderMusicbrainz = ({query}) => {
 
         </div>
 
-        <Variations />
+        <Variations data_source='musicbrainz'/>
 
           <a>
           <div className='page_title_div'>
@@ -103,7 +112,7 @@ const HeaderIMDb = ( {query, data_source} ) => {
 
       </div>
 
-      <Variations />
+      <Variations data_source={data_source}/>
 
       <a>
       <div className='page_title_div'>
