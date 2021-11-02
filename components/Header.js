@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 import Link from 'next/link'
-// import Image from 'next/image'
 
 const GitHub = () => {
   return <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
@@ -10,8 +9,6 @@ const GitHub = () => {
           </span>
           </Link>
 }
-
-
 
 const Variations =  ({data_source})  => {
   const movie_class = data_source == 'imdb' ? 'selected_variation' : ''
@@ -69,9 +66,11 @@ const HeaderMusicbrainz = ({query}) => {
             <input placeholder='Search...' name='query' type='text' width='80' defaultValue={query}></input>
             <input type='submit' />
             <br />
-            powered by: <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
+
+            <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
      
             <GitHub />
+            <a className='gallery' href='/nine'>gallery</a>
 
         </div>
 
@@ -103,7 +102,6 @@ const HeaderIMDb = ( {query, data_source} ) => {
           <input placeholder='Search...' name='query' type='text' width='80' defaultValue={query}></input>
           <input type='submit' />
           <br />
-          powered by: 
           <Link href='https://imdb.com/' passHref={true}>
           <span className='link_span'>
           <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/>
@@ -111,6 +109,7 @@ const HeaderIMDb = ( {query, data_source} ) => {
           </Link>
 
           <GitHub />
+          <a className='gallery' href='/nine'>gallery</a>
 
       </div>
 
