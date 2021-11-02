@@ -26,24 +26,24 @@ The result is that you can easily follow a chain of links and find yourself in a
 
 A few days before recording for Ben Webster's album, Art Farmer played trumpet for Michel Legrand.  A month later he played on Cannonball Adderly's album "alabama/africa".  He is a headliner on many albums, a sideman on these three.
 
-[![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.herokuapp.com/release_group/276870)
+[![release group](public/headliners-and-sidemen-release-group.png)](https://headliners-and-sidemen.herokuapp.com/release_group/de2c03d0-5eaa-3934-b616-2ef7f0959895)
 
 # TV Series
 
 A year before The West Wing, Aaron Sorkin wrote Sports Night.  After, he wrote Studio 60.
 
-[![TV Series](public/cast-and-crew-tv.png)](https://cast-and-crew.herokuapp.com/release_group/200276)
+[![TV Series](public/cast-and-crew-tv.png)](https://cast-and-crew.herokuapp.com/release_group/tt0200276)
 
 # Movies
 The year before making True Romance, Christian Slater did a movie calls Kuffs, and the same year he did Untamed Heart.
 
-[![Movies](public/cast-and-crew-movie.png)](https://movies-and-actors.herokuapp.com/release_group/108399)
+[![Movies](public/cast-and-crew-movie.png)](https://movies-and-actors.herokuapp.com/release_group/tt0108399)
 
 ## Careers
 
 Francis Ford Coppola's early career.  For the rest, click and scroll right.
 
-[![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://movies-and-actors.herokuapp.com/artist_releases/338)
+[![artist releases](public/headliners-and-sidemen-artist-releases.png)](https://movies-and-actors.herokuapp.com/artist_releases/nm0000338)
 
 
 ## Data
