@@ -25,9 +25,9 @@ export default function BrowseLayout( { release_group }) {
 
   if (!release_group) {
     const startingPoints = {
-       'musicbrainz': 'ef1afe99-b3d7-32a3-98f0-2e85cbc573e3', 
-       'imdb': 'tt0110912', 
-       'imdb_tv': 'tt0200276'
+       'musicbrainz': 'ab7dfb92-6c05-46b8-b8ae-ed4ee87b68c3', 
+       'imdb': 'tt0108399', 
+       'imdb_tv': 'tt7375404'
     }
     release_group = startingPoints[dataSource]
     if (!release_group)
