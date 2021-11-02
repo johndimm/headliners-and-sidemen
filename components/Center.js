@@ -15,13 +15,13 @@ const externalLinks = (dataSource, imdbid, record) => {
      return <div>
        <div>
          <a target='imdb' rel="noreferrer" href={youtube_url}>
-           <img height='75' src={youtube_logo} target='_blank' alt='IMDb'/>
+           <img height='75' src={youtube_logo} alt='IMDb'/>
          </a>
        </div>
 
        <div>
          <a target='imdb' rel="noreferrer" href={musicbrainz_url}>
-           <img max-height='50' max-width='150' src={musicbrainz_logo} target='_blank' alt='IMDb'/>
+           <img max-height='50' max-width='150' src={musicbrainz_logo} alt='IMDb'/>
          </a>
        </div>
   </div>
@@ -32,7 +32,7 @@ const externalLinks = (dataSource, imdbid, record) => {
     const link = `https://www.imdb.com/title/${imdbid}`
     return <div>
         <a target='imdb' rel="noreferrer" href={link}>
-        <img height='50' src={logo} target='_blank' alt='IMDb'/>
+        <img height='50' src={logo} alt='IMDb'/>
       </a>
   </div>
   }

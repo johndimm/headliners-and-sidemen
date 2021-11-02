@@ -72,7 +72,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           <table><tbody>{htmlDetails}</tbody></table>
           <div style={{width:"100%", textAlign:"center"}}>
             <a target='imdb' rel="noreferrer" href={link}>
-               <img height='40' src={logo} target='_blank' alt='IMDb'/>
+               <img height='40' src={logo} alt='IMDb'/>
             </a>
           </div>
         </div>

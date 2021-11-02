@@ -67,10 +67,11 @@ const HeaderMusicbrainz = ({query}) => {
             <input type='submit' />
             <br />
 
-            <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' target='_blank' alt='musicbrainz'/></Link>
+            <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' alt='musicbrainz'/></Link>
      
             <GitHub />
-            <a className='gallery' href='/nine'>gallery</a>
+            <span className='gallery'><Link href='/nine' passHref={true}>gallery</Link></span>
+
 
         </div>
 
@@ -104,12 +105,12 @@ const HeaderIMDb = ( {query, data_source} ) => {
           <br />
           <Link href='https://imdb.com/' passHref={true}>
           <span className='link_span'>
-          <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' target='_blank' alt='IMDb'/>
+          <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' alt='IMDb'/>
           </span>
           </Link>
 
           <GitHub />
-          <a className='gallery' href='/nine'>gallery</a>
+          <span className='gallery'><Link href='/nine' passHref={true}>gallery</Link></span>
 
       </div>
 
