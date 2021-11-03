@@ -41,7 +41,7 @@ const Nine = () => {
 
     const grid = images.map ( (image, idx) => {
         if (image.src)
-        return <a href={image.url} target='_blank' rel='noreferrer'><img style={{'maxWidth':'350px'}} src={'nine/' + image.src} /></a>
+        return <a key={idx} href={image.url} target='_blank' rel='noreferrer'><img style={{'maxWidth':'350px'}} src={'nine/' + image.src} /></a>
     })
 
   return <div style={{textAlign: 'center'}}>
