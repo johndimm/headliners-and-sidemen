@@ -67,7 +67,7 @@ const HeaderMusicbrainz = ({query}) => {
             <input type='submit' />
             <br />
 
-            <Link href='https://musicbrainz.org/' passHref={true}><img width='100' src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' alt='musicbrainz'/></Link>
+            <Link href='https://musicbrainz.org/' passHref={true}><img style={{width:'100px'}} src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' alt='musicbrainz'/></Link>
      
             <GitHub />
             <span className='gallery'><Link href='/nine' passHref={true}>gallery</Link></span>
@@ -131,7 +131,7 @@ const HeaderIMDb = ( {query, data_source} ) => {
 const Header = ({ data_source, query }) => {
   if (data_source == 'musicbrainz')
     return <HeaderMusicbrainz query={query}/>
-  else if (data_source == 'imdb' || data_source == 'imdb_tv')
+  else if (data_source == 'imdb' || data_source == 'imdb_tv') 
     return <HeaderIMDb query={query} data_source={data_source}/>
   else
     return null
