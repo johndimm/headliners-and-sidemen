@@ -4,23 +4,27 @@ import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
 const externalLinks = (dataSource, imdbid, record) => {
-  const query = encodeURIComponent (`"${record.title}" OR "${record.headliner}"`)
-
+  const youtube_logo = '/youtube.png'
 
   if (dataSource == 'musicbrainz') {
-     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
-     const youtube_logo = '/youtube.png'
      const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
      const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
+
+     const queryRaw = `"${record.title}"  OR "${record.artist}"`
+     if (record.headliner != '')
+       queryRaw += ` OR "${record.headliner}"`
+     const query = encodeURIComponent(queryRaw)  
+     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+
      return <div>
        <div>
-         <a target='imdb' rel="noreferrer" href={youtube_url}>
+         <a target='musicbrainz' rel="noreferrer" href={youtube_url}>
            <img height='75' src={youtube_logo} alt='IMDb'/>
          </a>
        </div>
 
        <div>
-         <a target='imdb' rel="noreferrer" href={musicbrainz_url}>
+         <a target='musicbrainz' rel="noreferrer" href={musicbrainz_url}>
            <img max-height='50' max-width='150' src={musicbrainz_logo} alt='IMDb'/>
          </a>
        </div>
@@ -30,11 +34,32 @@ const externalLinks = (dataSource, imdbid, record) => {
   if (dataSource == 'imdb' || dataSource == 'imdb_tv') {
     const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
     const link = `https://www.imdb.com/title/${imdbid}`
+
+    const query = encodeURIComponent(`"${record.title}"`) 
+    const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+
+    const rtLogo = "https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png"
+    const rtLink = `https://www.rottentomatoes.com/search?search=${query}`
+
     return <div>
+        <div>
+         <a target='imdb' rel="noreferrer" href={youtube_url}>
+           <img height='40' src={youtube_logo} alt=''/>
+         </a>
+       </div>   
+
+       <div>
+         <a target='imdb' rel="noreferrer" href={rtLink}>
+           <img height='50' src={rtLogo} alt=''/>
+         </a>
+       </div>  
+
+      <div>
         <a target='imdb' rel="noreferrer" href={link}>
-        <img height='50' src={logo} alt='IMDb'/>
-      </a>
-  </div>
+          <img height='50' src={logo} alt='IMDb'/>
+        </a>
+     </div>
+    </div>
   }
  
 }
@@ -118,8 +143,8 @@ const Center = ( {release_group, data_source}) => {
       <div className='artists'>
       {artists}
       </div>
-      {links}
       <div className='details'><table><tbody>{details}</tbody></table></div>
+      {links}
       </div>
 }
 

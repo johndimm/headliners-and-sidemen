@@ -146,6 +146,10 @@ img {
   margin-bottom: 20px;
 }
 
+.details {
+  margin-top: 20px;
+}
+
 .artist_pix {
   max-width: 200px;
   max-height: 200px;

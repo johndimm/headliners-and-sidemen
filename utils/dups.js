@@ -1,4 +1,6 @@
 exports.removeDups =  function (records) {
+    return records
+    
     let pix = {}
     if (records && Array.isArray(records))
       records.forEach ( (record, idx) => {
