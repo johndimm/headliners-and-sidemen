@@ -167,7 +167,7 @@ img {
 }
 
 .artist_featured {
-  float:left;
+  flex: 0 0 200px;
   text-align: center;
   margin:20px;
   width: 200px;
@@ -179,11 +179,11 @@ img {
   width: 100%;
 }
 
-/*
+
 .content {
  display: flex;
 }
-*/
+
 
 .artist_featured_bio {
   margin-bottom: 30px;
@@ -234,6 +234,7 @@ img {
   margin-bottom: 10px;
   text-align: center;
   width:100%;
+  font-size:9pt;
 }
 
 .career_map_table {
@@ -247,7 +248,6 @@ img {
 }
 
 .min_date, .max_date {
-  font-size: 10pt;
   font-weight: 100;
 }
 
