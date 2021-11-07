@@ -162,14 +162,14 @@ img {
   max-width: 400px;
   max-height: 400px;
   border: 1px solid lightgray;
-  margin: 5px;
+  margin: 0px;
   padding: 3px;
 }
 
 .artist_featured {
   flex: 1;
   text-align: left;
-  width: 200px;
+  width: 400px;
   margin:20px;
 }
 
@@ -217,4 +217,49 @@ img {
   margin: 8px;
   position: relative;
   top:-0.2em;
+}
+
+.career_map td {
+  padding: 0px;
+  vertical-align: bottom;
+}
+
+.career_map {
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.career_map_table {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.career_map_bar {
+  width: 2px;
+  background-color: red;
+}
+
+.min_date, .max_date {
+  font-size: 10pt;
+  font-weight: 100;
+}
+
+.min_date {
+  float: left;
+}
+
+.max_date {
+  float: right;
+}
+
+button {
+  padding-left:4px;
+  padding-right:4px;
+  margin-left: 2px;
+  height: 25px;
+  border-radius: 7px;
+  border: 1px solid lightgray;
+  cursor: pointer;
 }

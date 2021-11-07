@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ReleasesOverYears from 'components/ReleasesOverYears'
-import dups from 'utils/dups'
 
 const ArtistReleases = ( {artist_id} ) => {
     const [records, setRecords] = useState([])
@@ -22,12 +21,10 @@ const ArtistReleases = ( {artist_id} ) => {
         // console.log(url)
         axios.get(url).then(function (response) {
             setRecords(response.data)
-            // console.log('ArtistReleases', response.data)
         }).catch(err => err)
     }
 
     const getArtistInfo = async () => {
-        // const nconst = 'nm' + artist_id.toString().padStart(7, '0')
         const nconst = artist_id
         const url = `/api/artist_info/${nconst}`
         const response = await fetch(url)
@@ -45,7 +42,7 @@ const ArtistReleases = ( {artist_id} ) => {
     return <div>
       <ReleasesOverYears 
         data_source={source} 
-        records={dups.removeDups(records)}
+        records={records}
         artist={artist} />
     </div>
 }

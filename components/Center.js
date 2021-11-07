@@ -138,7 +138,6 @@ const Center = ( {release_group, data_source}) => {
     }
 
     return <div>
-
       {release}
       <div className='artists'>
       {artists}

@@ -1,9 +1,71 @@
 import ReleaseGroup from 'components/ReleaseGroup'
 import Header from 'components/Header'
+import { useState } from 'react'
+
+const CareerMap = ( {years, zoomIn, zoomOut} ) => {
+    let minDate = 2100 
+    let maxDate = 1900
+
+    Object.keys(years).map( (year, idx) => {
+       minDate = Math.min(minDate, year)
+       if (year < 2100)
+         maxDate = Math.max(maxDate, year)
+    })
+
+    for (let date=minDate; date<=maxDate; date++) {
+        if (! (date in years)) {
+            years[date] = []
+        }
+    }
+
+    const map = Object.keys(years).map( (year, idx) => {
+       const height = years[year].length * 10
+       const style = { height: height }
+       return (
+           <td key={idx}>
+               <a title={year} href={`#${year}`}>
+               <div className='career_map_bar' style={style} ></div>
+               </a>
+            </td>
+       )
+   })
+
+   let endDate
+   if (maxDate != 1900) {
+       endDate =  <span className='max_date' style={{float:"right"}}>{maxDate}</span>
+   }
+
+   return <div className='career_map'>
+
+        <table className='career_map_table'>
+                <thead></thead>
+                <tbody><tr>{map}</tr></tbody>
+        </table>
+        <span className='min_date'>{minDate}</span>
+        <button onClick={zoomIn}>+</button>
+        <button onClick={zoomOut}>-</button>
+        {endDate}
+   </div>
+
+}
 
 const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
+    const [zoom, setZoom] = useState(1)
     let headers = []
     let cells = []
+    let years = {}
+    
+
+    const zoomIn= (e) => {
+        e.preventDefault()
+        setZoom(zoom * 1.1)
+    }
+
+    const zoomOut= (e) =>{
+        e.preventDefault()
+        setZoom(zoom * 0.9)
+    }
+
     if (records.length > 0) {
         let releases = {}
 
@@ -15,7 +77,6 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
         })
 
         // console.log("ReleasesOverYears num records:", records.length)
-        let years = {}
         if (records && Array.isArray(records))
         //records.forEach ( (record, idx) => {
         Object.keys(releases).forEach ( (release_group, idx) => {
@@ -41,7 +102,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
         })
 
         Object.keys(years).sort(function(a, b){return a-b}).forEach ( (year, idx) => {
-            headers.push(<th key={idx}>{year}</th>)  
+            headers.push(<th id={year} key={idx}>{year}</th>)  
             cells.push(<td key={idx}>{years[year]}</td>)
         })
     }
@@ -68,6 +129,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
               {artist.name}
           </div>
           <img className='artist_featured_pix' src={artist.image_url} />
+          <CareerMap years={years} zoomIn={zoomIn} zoomOut={zoomOut}/>
           <div className='artist_featured_bio'>{artist.partial_bio}</div>
           <table><tbody>{htmlDetails}</tbody></table>
           <div style={{width:"100%", textAlign:"center"}}>
@@ -79,11 +141,12 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
         
     }
 
+    const style = {zoom: zoom}
     return <div>
         <Header data_source={data_source} query={query}/>
         <div className="content">
             {htmlArtist}
-            <table className='timeline'>
+            <table className='timeline' style={style}>
                 <thead><tr>{headers}</tr></thead>
                 <tbody><tr>{cells}</tr></tbody>
             </table>
