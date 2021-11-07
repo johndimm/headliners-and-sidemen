@@ -167,24 +167,28 @@ img {
 }
 
 .artist_featured {
-  flex: 1;
-  text-align: left;
-  width: 400px;
+  float:left;
+  text-align: center;
   margin:20px;
+  width: 200px;
 }
 
 .artist_featured_name {
   font-weight: 600;
   font-size: 16pt;
+  width: 100%;
 }
 
+/*
 .content {
-  display: flex;
+ display: flex;
 }
+*/
 
 .artist_featured_bio {
   margin-bottom: 30px;
-  max-width: 300px;
+  max-width: 200px;
+  text-align: left;
 }
 
 .artists {
@@ -229,6 +233,7 @@ img {
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
+  width:100%;
 }
 
 .career_map_table {
@@ -257,7 +262,8 @@ img {
 button {
   padding-left:4px;
   padding-right:4px;
-  margin-left: 2px;
+  margin-left: 3px;
+  margin-right: 3px;
   height: 25px;
   border-radius: 7px;
   border: 1px solid lightgray;

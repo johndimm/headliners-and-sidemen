@@ -42,8 +42,9 @@ const CareerMap = ( {years, zoomIn, zoomOut} ) => {
                 <tbody><tr>{map}</tr></tbody>
         </table>
         <span className='min_date'>{minDate}</span>
-        <button onClick={zoomIn}>+</button>
         <button onClick={zoomOut}>-</button>
+        zoom
+        <button onClick={zoomIn}>+</button>
         {endDate}
    </div>
 
