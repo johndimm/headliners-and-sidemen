@@ -246,6 +246,9 @@ img {
   width: 2px;
   background-color: red;
 }
+.career_map_bar:hover {
+  background-color: blue;
+}
 
 .min_date, .max_date {
   font-weight: 100;

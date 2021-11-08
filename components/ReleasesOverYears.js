@@ -55,6 +55,34 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     let headers = []
     let cells = []
     let years = {}
+
+    let mouseX
+    let mouseY
+    let mouseDown = false
+
+    const onMouseDown = (e) => {
+        mouseDown = true
+        mouseX = e.clientX
+        mouseY = e.clientY
+    }
+
+    const onMouseUp = (e) => {
+        mouseDown = false
+    }
+
+    const onMouseMove = (e) => {
+        if (!mouseDown) return
+        // console.log(e.clientX, e.clientY)
+        const newMouseX = e.clientX
+        const newMouseY = e.clientY 
+        if (mouseX != newMouseX || mouseY != newMouseY) {
+            const dx = mouseX - newMouseX
+            const dy = mouseY - newMouseY
+            window.scrollBy(dx, dy)
+            mouseX = newMouseX
+            mouseY = newMouseY
+        }
+    }
     
 
     const zoomIn= (e) => {
@@ -145,7 +173,10 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     const style = {zoom: zoom}
     return <div>
         <Header data_source={data_source} query={query}/>
-        <div className="content">
+        <div className="content" 
+          onMouseMove={onMouseMove} 
+          onMouseDown={onMouseDown} 
+          onMouseUp={onMouseUp}>
             {htmlArtist}
             <table className='timeline' style={style}>
                 <thead><tr>{headers}</tr></thead>
