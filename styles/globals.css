@@ -239,7 +239,7 @@ img {
 
 .career_map_table {
   width: 100%;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .career_map_bar {
@@ -265,8 +265,8 @@ img {
 button {
   padding-left:4px;
   padding-right:4px;
-  margin-left: 3px;
-  margin-right: 3px;
+  margin-left: 7px;
+  margin-right: 7px;
   height: 25px;
   border-radius: 7px;
   border: 1px solid lightgray;
