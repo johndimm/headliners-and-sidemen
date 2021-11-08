@@ -2,6 +2,11 @@ import ReleaseGroup from 'components/ReleaseGroup'
 import Header from 'components/Header'
 import { useState } from 'react'
 
+function titleCase(str) {
+    return str.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
+  }
+  
+
 const CareerMap = ( {years, zoomIn, zoomOut} ) => {
     let minDate = 2100 
     let maxDate = 1900
@@ -18,8 +23,14 @@ const CareerMap = ( {years, zoomIn, zoomOut} ) => {
         }
     }
 
+    let maxYear = 0
+    for (let year in years) {
+       const nYear = years[year].length
+       maxYear = Math.max(maxYear, nYear)
+    }
+
     const map = Object.keys(years).map( (year, idx) => {
-       const height = years[year].length * 10
+       const height = years[year].length * (10 / (0.4 * maxYear))
        const style = { height: height }
        return (
            <td key={idx}>
@@ -84,7 +95,6 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
         }
     }
     
-
     const zoomIn= (e) => {
         e.preventDefault()
         setZoom(zoom * 1.1)
@@ -134,14 +144,39 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
 
     let htmlArtist
     let htmlDetails
+    if (records && records.length > 0 && artist && !('partial bio' in artist)) {
+        let mbArtistLink
+        const name = records[0].artist
+        if (data_source == 'musicbrainz') {
+            const id = records[0].artist_id
+            console.log('records[0]:', records[0])
+
+            const musicbrainz_url = `https://musicbrainz.org/artist/${id}`
+            const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
+
+            mbArtistLink =  <a target='musicbrainz' rel="noreferrer" href={musicbrainz_url}>
+            <img height='70' width='150' src={musicbrainz_logo} alt='IMDb'/>
+            </a>
+        }
+
+        htmlArtist = <div className='artist_featured'>
+          <div className='artist_featured_name'>
+              {name}
+          </div>
+          <CareerMap years={years} zoomIn={zoomIn} zoomOut={zoomOut}/>
+          {mbArtistLink}
+          </div>
+    }
+
     if (artist && artist.partial_bio) {
         const fields = 
         ['birth_date', 'birth_place']
         
         htmlDetails = fields.map( (field, idx) => {
+           const niceField = titleCase(field.replace(/_/g, ' '))
            if (artist[field] == 'N/A')
              return null
-           return <tr key={idx}><th>{field}</th><td>{artist[field]}</td></tr>
+           return <tr key={idx}><th>{niceField}</th><td>{artist[field]}</td></tr>
         })
 
         const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
@@ -154,7 +189,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           <img className='artist_featured_pix' src={artist.image_url} />
           <CareerMap years={years} zoomIn={zoomIn} zoomOut={zoomOut}/>
           <div className='artist_featured_bio'>{artist.partial_bio}</div>
-          <table><tbody>{htmlDetails}</tbody></table>
+          <table><tbody className='bio_details'>{htmlDetails}</tbody></table>
           <div style={{width:"100%", textAlign:"center"}}>
             <a target='imdb' rel="noreferrer" href={link}>
                <img height='40' src={logo} alt='IMDb'/>
@@ -167,12 +202,12 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     const style = {zoom: zoom}
     return <div>
         <Header data_source={data_source} query={query}/>
-        <div className="content" 
+        <div className="timeline" 
           onMouseMove={onMouseMove} 
           onMouseDown={onMouseDown} 
           onMouseUp={onMouseUp}>
             {htmlArtist}
-            <table className='timeline' style={style}>
+            <table  style={style}>
                 <thead><tr>{headers}</tr></thead>
                 <tbody><tr>{cells}</tr></tbody>
             </table>

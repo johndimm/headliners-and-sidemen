@@ -10,7 +10,7 @@ const externalLinks = (dataSource, imdbid, record) => {
      const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
      const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
 
-     const queryRaw = `"${record.title}"  OR "${record.artist}"`
+     let queryRaw = `"${record.title}"  OR "${record.artist}"`
      if (record.headliner != '')
        queryRaw += ` OR "${record.headliner}"`
      const query = encodeURIComponent(queryRaw)  
@@ -19,7 +19,7 @@ const externalLinks = (dataSource, imdbid, record) => {
      return <div>
        <div>
          <a target='musicbrainz' rel="noreferrer" href={youtube_url}>
-           <img height='75' src={youtube_logo} alt='IMDb'/>
+           <img height='40' src={youtube_logo} alt='IMDb'/>
          </a>
        </div>
 

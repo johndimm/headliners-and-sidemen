@@ -18,11 +18,15 @@ const ReleaseGroup = ( {record, data_source, artists}) => {
       })
     }
 
+    let begin_date
+    if (record && 'begin_date' in record && record['begin_date']) 
+      begin_date = record['begin_date'].replace('-01-01','')
+
     return <div className='linked_album'>
           <a href={link}>
               <div className="album_title">
                 <b>{record.title}</b> {hlin} 
-                <div className='date'>{record.begin_date}</div>
+                <div className='date'>{begin_date}</div>
                 <CoverArt record={record} data_source={data_source}/>
               </div>
           </a>
