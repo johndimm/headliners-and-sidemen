@@ -52,6 +52,7 @@ const CareerMap = ( {years, zoomIn, zoomOut} ) => {
 
 const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     const [zoom, setZoom] = useState(1)
+
     let headers = []
     let cells = []
     let years = {}
@@ -72,7 +73,6 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
 
     const onMouseMove = (e) => {
         if (!mouseDown) return
-        // console.log(e.clientX, e.clientY)
         const newMouseX = e.clientX
         const newMouseY = e.clientY 
         if (mouseX != newMouseX || mouseY != newMouseY) {
@@ -105,14 +105,11 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           releases[record.release_group].push(record)
         })
 
-        // console.log("ReleasesOverYears num records:", records.length)
         if (records && Array.isArray(records))
-        //records.forEach ( (record, idx) => {
         Object.keys(releases).forEach ( (release_group, idx) => {
             const record = releases[release_group][0]
             let year
             if ('begin_date' in record && record.begin_date && record.begin_date != '') {
-                //console.log('ReleasesOverYears, begin_date:', record.begin_date)
                 year = record.begin_date.substring(0,4)
             } else {
                 year = 2100
@@ -121,8 +118,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
             if (! (year in years)) {
                 years[year] = []
             }
-            //if (record.cover_url != null)
-            //  console.log('imdbid, cover_url:', record.release_group, record.cover_url)
+
             years[year].push(<ReleaseGroup 
               key={idx} 
               record={record} 
@@ -139,8 +135,6 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
     let htmlArtist
     let htmlDetails
     if (artist && artist.partial_bio) {
-        // console.log('artist', artist)
-
         const fields = 
         ['birth_date', 'birth_place']
         

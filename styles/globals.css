@@ -171,6 +171,7 @@ img {
   text-align: center;
   margin:20px;
   width: 200px;
+  cursor:default;
 }
 
 .artist_featured_name {
@@ -179,17 +180,18 @@ img {
   width: 100%;
 }
 
-
-.content {
- display: flex;
-}
-
-
 .artist_featured_bio {
   margin-bottom: 30px;
   max-width: 200px;
   text-align: left;
 }
+
+
+.content {
+ display: flex;
+ cursor:all-scroll;
+}
+
 
 .artists {
   text-align: center;
