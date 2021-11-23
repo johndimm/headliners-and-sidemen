@@ -15,9 +15,9 @@ const Variations =  ({data_source})  => {
   const tv_class = data_source == 'imdb_tv' ? 'selected_variation' : ''
   const music_class = data_source == 'musicbrainz' ? 'selected_variation' : ''
 
-  const movie_href = data_source == 'imdb' ? null : 'https://movies-and-actors.herokuapp.com/'
-  const tv_href = data_source == 'imdb_tv' ? null : 'https://cast-and-crew.herokuapp.com/'
-  const music_href = data_source == 'musicbrainz' ? null : 'https://headliners-and-sidemen.herokuapp.com/'
+  const movie_href = data_source == 'imdb' ? null : 'https://movies-and-actors.vercel.app/'
+  const tv_href = data_source == 'imdb_tv' ? null : 'https://cast-and-crew.vercel.app/'
+  const music_href = data_source == 'musicbrainz' ? null : 'https://headliners-and-sidemen.vercel.app/'
 
   console.log('music_href:', music_href)
 
