@@ -18,7 +18,7 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
 
 
     let html
-    if (records.length > 0) {
+    if (records.length > 0 && Array.isArray(records)) {
       let releases = {}
 
       records.forEach( (record, idx) => {
