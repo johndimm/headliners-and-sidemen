@@ -1,21 +1,26 @@
 import axios from "axios"
 
 const getIMDbData = async (imdbid) => {
-    const key = process.env['IMDB_RAPIDAPI_KEY']
+    const key = process.env['TMDB_KEY']
+
+    const url = 'https://api.themoviedb.org/3/find/' + imdbid
+
+    console.log('imdb url', url)
 
     var options = {
         method: 'GET',
-        url: 'https://movie-database-imdb-alternative.p.rapidapi.com/',
-        params: {r: 'json', i: imdbid},
-        headers: {
-        'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
-        'x-rapidapi-key': key
-        }
+        url: url, // 'https://movie-database-imdb-alternative.p.rapidapi.com/',
+        params: {api_key: key, language: 'en-US', external_source: 'imdb_id'} // {r: 'json', i: imdbid},
+  //      headers: {
+  //      'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
+  //      'x-rapidapi-key': key
+  //      }
     };
 
-    // console.log ('useEffect, looking for cover art')
+    console.log ('imdb, options:', options)
     const response = await axios.request(options)
     const data = await response.data
+    console.log("imdb data:", data)
     return data
 }
 

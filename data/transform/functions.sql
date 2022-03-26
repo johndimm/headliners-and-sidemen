@@ -50,7 +50,10 @@ begin
             ORDER BY c.begin_date
           ) as int) as rank
     from context as c
-    where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+    where 
+      c.artist = _query
+      or c.title = _query
+      or c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     order by c.begin_date 
     )
     select *

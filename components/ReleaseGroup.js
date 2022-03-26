@@ -27,7 +27,7 @@ const ReleaseGroup = ( {record, data_source, artists}) => {
               <div className="album_title">
                 <b>{record.title}</b> {hlin} 
                 <div className='date'>{begin_date}</div>
-                <CoverArt record={record} data_source={data_source}/>
+                <CoverArt record={record} data_source={data_source} size='small'/>
               </div>
           </a>
           {artistsHTML}

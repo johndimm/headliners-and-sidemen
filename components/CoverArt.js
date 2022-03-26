@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 
 let imgList = {}
 
-const CoverArt = ( {record, data_source} ) => {
+const CoverArt = ( {record, data_source, size} ) => {
   const [data, setData] = useState({})
 
   // const imdbid = 'tt' + record.release_group.toString().padStart(7, '0')
@@ -22,9 +22,21 @@ const CoverArt = ( {record, data_source} ) => {
      const endpoint = `/api/imdb/${imdbid}`
      const response = await fetch(endpoint)
      const data = await response.json()
-     const poster_url = data.Poster
-     if (poster_url != 'N/A' && poster_url != 'N')
-       setData(data)
+
+     const resultsField = data_source == 'imdb' 
+       ? 'movie_results' 
+       : 'tv_results'
+     const results = data[resultsField][0]
+     if (!results)
+       return
+
+     const poster_path = results['poster_path']
+     if (!poster_path)
+       return
+     const width = size == 'small' ? 'w200' : 'w500'
+     results['Poster'] = `https://image.tmdb.org/t/p/${width}/${poster_path}`
+     console.log('imdb results:', results)
+     setData(results)
   }
 
   const updateDatabase = (imdbid, cover_url) => {
@@ -62,7 +74,8 @@ const CoverArt = ( {record, data_source} ) => {
 
   if (record.cover_url && record.cover_url != 'N/A') {
     // console.log('CoverArt, record.cover', record.cover_url)
-    const bigCover = record.cover_url.replace('250.jpg', '500.jpg')
+    let bigCover = record.cover_url.replace('250.jpg', '500.jpg')
+    bigCover = bigCover.replace('w200', 'w500')
     // console.log('cover_url found!!!! :', bigCover, record)
     return <img src={bigCover} alt='Cover Art'
       onError={(e)=>{

@@ -128,11 +128,12 @@ img {
 
 .search_input {
   display: inline-block;
+  width: 300px;
 }
 
 .search_input input {
-  height: 25px;
-  font-size: 12pt;
+  font-size: 14pt;
+  margin-right:3px;
 }
 
 .search_input img {

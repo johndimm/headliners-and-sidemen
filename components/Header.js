@@ -40,15 +40,15 @@ const Variations =  ({data_source})  => {
 const titles = { 
   "imdb": {
     title: "Constellations", 
-    subtitle:'What did the actors on this movie do before and after?'
+    subtitle:'What were the actors on this movie doing before and after?'
   },
   "imdb_tv": {
     title: 'Cast and Crew',
-    subtitle:'What did the cast and crew of this TV series do before and after?'
+    subtitle:'What were the cast and crew of this TV series doing before and after?'
   },
   "musicbrainz": {
     title: 'Headliners and Sidemen',
-    subtitle: 'What did the musicians on this album do before and after?'
+    subtitle: 'What were the musicians on this album doing before and after?'
   }
 }
 
@@ -68,6 +68,8 @@ const HeaderMusicbrainz = ({query}) => {
             <br />
 
             <Link href='https://musicbrainz.org/' passHref={true}><img style={{width:'100px'}} src='https://staticbrainz.org/MB/header-logo-1f7dc2a.svg' alt='musicbrainz'/></Link>
+
+
      
             <GitHub />
             <span className='gallery'><Link href='/nine' passHref={true}>gallery</Link></span>
@@ -108,6 +110,10 @@ const HeaderIMDb = ( {query, data_source} ) => {
           <img height='30' src='https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png' alt='IMDb'/>
           </span>
           </Link>
+
+          <Link href='https://www.themoviedb.org/' passHref={true}>
+              <img style={{height:'20px',marginBottom:'-4px'}} src='https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg' alt='tmdb' />
+            </Link>
 
           <GitHub />
           <span className='gallery'><Link href='/nine' passHref={true}>gallery</Link></span>

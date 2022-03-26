@@ -6,13 +6,23 @@ import CoverArt from 'components/CoverArt'
 const externalLinks = (dataSource, imdbid, record) => {
   const youtube_logo = '/youtube.png'
 
+  const categories = {
+    'musicbrainz': 'album', 
+    'imdb': 'movie', 
+    'imdb_tv': 'tv show'
+  }
+
+  const date = record.begin_date.slice(0,4)
+
+  const category = categories[dataSource]
+
   if (dataSource == 'musicbrainz') {
      const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
      const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
 
-     let queryRaw = `"${record.title}"  OR "${record.artist}"`
+     let queryRaw = `${category} ${record.title} ${date}`
      if (record.headliner != '')
-       queryRaw += ` OR "${record.headliner}"`
+       queryRaw += ` with ${record.headliner}`
      const query = encodeURIComponent(queryRaw)  
      const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
 
@@ -35,7 +45,7 @@ const externalLinks = (dataSource, imdbid, record) => {
     const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
     const link = `https://www.imdb.com/title/${imdbid}`
 
-    const query = encodeURIComponent(`"${record.title}"`) 
+    const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date}`) 
     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
 
     const rtLogo = "https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png"
@@ -83,7 +93,10 @@ const Center = ( {release_group, data_source}) => {
           const url = `/api/imdb/${imdbid}`
           axios.get(url).then(function (response) {
             // console.log("Center, data", response.data)
-            setAlbum(response.data)
+            const resultsField = data_source == 'imdb' 
+              ? 'movie_results' 
+              : 'tv_results'
+            setAlbum(response.data[resultsField][0])
             // console.log('setAlbum:', response.data)
         }).catch(err => err)
       }
@@ -93,15 +106,15 @@ const Center = ( {release_group, data_source}) => {
 
     let plot
     let details
-    if (Object.keys(album).length > 0) {
-      if (album.Plot != 'N/A')
-        plot = album.Plot
+    if (album && Object.keys(album).length > 0) {
+      if (album.overview != 'N/A')
+        plot = album.overview
       
-      const fields = 
-        ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
+      const fields = ['original_language', 'release_date', 'popularity']
+      //  ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
         
         details = fields.map( (field, idx) => {
-           if (album[field] == 'N/A')
+           if (album[field] == 'null')
              return null
            return <tr key={idx}><th>{field}</th><td>{album[field]}</td></tr>
         })
@@ -115,7 +128,7 @@ const Center = ( {release_group, data_source}) => {
     let begin_date = '2200-01-01'
     if (Array.isArray(data) && data.length > 0) {
       // console.log('center', data[0])
-      let coverArt = <CoverArt record={data[0]} data_source={data_source} />
+      let coverArt = <CoverArt record={data[0]} data_source={data_source} size='big'/>
 
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
