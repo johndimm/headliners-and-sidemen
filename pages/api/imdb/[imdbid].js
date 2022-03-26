@@ -5,7 +5,7 @@ const getIMDbData = async (imdbid) => {
 
     const url = 'https://api.themoviedb.org/3/find/' + imdbid
 
-    console.log('imdb url', url)
+    // console.log('imdb url', url)
 
     var options = {
         method: 'GET',
@@ -17,10 +17,10 @@ const getIMDbData = async (imdbid) => {
   //      }
     };
 
-    console.log ('imdb, options:', options)
+    // console.log ('imdb, options:', options)
     const response = await axios.request(options)
     const data = await response.data
-    console.log("imdb data:", data)
+    // console.log("imdb data:", data)
     return data
 }
 

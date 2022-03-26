@@ -5,7 +5,7 @@ const pgOptions = {
     connectionString: process.env.DATABASE_URL_GCE,
     ssl: false // { rejectUnauthorized: false }
 }
-console.log(pgOptions)
+// console.log(pgOptions)
 const pool = new Pool(pgOptions);
 
 // pg will convert dates to datetimes by default, we don't want that.
@@ -13,7 +13,7 @@ var types = require('pg').types;
 types.setTypeParser(types.builtins.DATE, (str) => str);
 
 async function performSQLQuery(query) {
-    console.log('===> performSQLQuery, query: ', query);
+//    console.log('===> performSQLQuery, query: ', query);
 
     try {
         const response = await pool.query(query);

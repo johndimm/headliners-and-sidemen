@@ -35,7 +35,7 @@ const CoverArt = ( {record, data_source, size} ) => {
        return
      const width = size == 'small' ? 'w200' : 'w500'
      results['Poster'] = `https://image.tmdb.org/t/p/${width}/${poster_path}`
-     console.log('imdb results:', results)
+     // console.log('imdb results:', results)
      setData(results)
   }
 
@@ -45,11 +45,20 @@ const CoverArt = ( {record, data_source, size} ) => {
     if (!('Poster' in data))
       return
 
-    // console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
+    console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
 
-    const cover_url_esc = encodeURIComponent(cover_url)
-    const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
-    fetch(fetchUrl)
+    //const cover_url_esc = encodeURIComponent(cover_url)
+    //const fetchUrl = `/api/cover_art/update/${imdbid}/${cover_url_esc}`
+    //fetch(fetchUrl)
+    const postdata = {
+      imdbid: imdbid,
+      cover_url: cover_url
+    }
+
+    fetch('/api/cover_art/update', {
+      method: 'POST',
+      body: JSON.stringify(postdata)
+    })
   }
 
   useEffect( () => {

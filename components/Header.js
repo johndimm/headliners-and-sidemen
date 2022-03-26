@@ -19,7 +19,7 @@ const Variations =  ({data_source})  => {
   const tv_href = data_source == 'imdb_tv' ? null : 'https://cast-and-crew.vercel.app/'
   const music_href = data_source == 'musicbrainz' ? null : 'https://headliners-and-sidemen.vercel.app/'
 
-  console.log('music_href:', music_href)
+  // console.log('music_href:', music_href)
 
   return <div className='variations'>
     <ul>

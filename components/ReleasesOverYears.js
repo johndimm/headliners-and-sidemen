@@ -149,7 +149,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
         const name = records[0].artist
         if (data_source == 'musicbrainz') {
             const id = records[0].artist_id
-            console.log('records[0]:', records[0])
+            //console.log('records[0]:', records[0])
 
             const musicbrainz_url = `https://musicbrainz.org/artist/${id}`
             const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
