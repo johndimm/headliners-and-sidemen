@@ -44,16 +44,25 @@ language plpgsql
 as $$
 begin
   return query
-    with years as (
+    with exact_match as (
+      select * from context as c
+        where c.artist = _query
+        or c.title = _query
+    ),
+    fuzzy_match as (
+      select * from context as c
+        where 0 = (select count(*) from exact_match) 
+        and c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+   ),
+    hits as (
+      select * from exact_match union all select * from fuzzy_match
+    ),
+    years as (
     select c.*, 
           cast(ROW_NUMBER() OVER (PARTITION by extract(year from c.begin_date)
             ORDER BY c.begin_date
           ) as int) as rank
-    from context as c
-    where 
-      c.artist = _query
-      or c.title = _query
-      or c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
+    from hits as c
     order by c.begin_date 
     )
     select *

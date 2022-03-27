@@ -17,7 +17,8 @@ const Search = ( {query} ) => {
     }
 
     const doSearch = async () => {
-        const queryEsc = encodeURIComponent(query)
+        const querySQL = query.replace(/'/g, "''")
+        const queryEsc = encodeURIComponent(querySQL)
         const url = `/api/search/${queryEsc}`
         // console.log(url)
         axios.get(url).then(function (response) {

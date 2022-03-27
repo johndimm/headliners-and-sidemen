@@ -109,14 +109,22 @@ const Center = ( {release_group, data_source}) => {
     if (album && Object.keys(album).length > 0) {
       if (album.overview != 'N/A')
         plot = album.overview
+  
+        function titleCase(str) {
+          return str
+              .split('_')
+              .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ');
+      }
+    
       
-      const fields = ['original_language', 'release_date', 'popularity']
+      const fields = ['original_language', 'original_title', 'release_date', 'popularity']
       //  ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
         
         details = fields.map( (field, idx) => {
            if (album[field] == 'null')
              return null
-           return <tr key={idx}><th>{field}</th><td>{album[field]}</td></tr>
+           return <tr key={idx}><th>{titleCase(field)}</th><td>{album[field]}</td></tr>
         })
         
         // console.log('details:', details)
