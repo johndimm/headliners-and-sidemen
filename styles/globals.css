@@ -54,7 +54,7 @@ td, th {
   margin: 10px;
 }
 
-.linked_album img, .header img {
+.linked_album img, .header img, .external_links img {
   max-width: 200px;
   padding: 5px;
   margin: 5px;

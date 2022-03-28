@@ -26,7 +26,7 @@ const externalLinks = (dataSource, imdbid, record) => {
      const query = encodeURIComponent(queryRaw)  
      const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
 
-     return <div>
+     return <div className='external_links'>
        <div>
          <a target='musicbrainz' rel="noreferrer" href={youtube_url}>
            <img height='40' src={youtube_logo} alt='IMDb'/>
@@ -51,7 +51,7 @@ const externalLinks = (dataSource, imdbid, record) => {
     const rtLogo = "https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png"
     const rtLink = `https://www.rottentomatoes.com/search?search=${query}`
 
-    return <div>
+    return <div className='external_links'>
         <div>
          <a target='imdb' rel="noreferrer" href={youtube_url}>
            <img height='40' src={youtube_logo} alt=''/>
