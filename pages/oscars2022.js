@@ -1,5 +1,3 @@
-import BrowseLayout from 'components/BrowseLayout'
-
 export default function Index() {
   const noms = {
       'Belfast': 'tt12789558',
@@ -14,11 +12,15 @@ export default function Index() {
       "Don't Look Up": 'tt11286314'
   }  
 
+
   const pictures = Object.keys(noms).map( (title, idx) => {
+      const image = '/oscars/' + title + '.png'
+
       return ( 
           <div style={{display: 'inline-block'}} key={idx}>
-            <a target='constellations' href={'https://movies-and-actors.vercel.app/release_group/' + noms[title]}>
-              <img className='oscar_poster' src={`/oscars/${title}.png`}/>
+            <a target='constellations' 
+              href={'https://movies-and-actors.vercel.app/release_group/' + noms[title]}>
+              <img className='oscar_poster' src={image}/>
             </a>
           </div>
       )
@@ -30,13 +32,11 @@ export default function Index() {
           Best Picture Nominees 2022
           </div>
           <div style={{fontStyle:'italic'}}>
-              What were the actors in this year's Best Picture nominations doing before and after?
+              What were the actors in the Best Picture nominations doing before and after?
           </div>
           <div>
           {pictures}
           </div>
       </div>
-
-
   )
 }
