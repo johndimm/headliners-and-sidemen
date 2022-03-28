@@ -74,6 +74,13 @@ const externalLinks = (dataSource, imdbid, record) => {
  
 }
 
+function titleCase(str) {
+  return str
+      .split('_')
+      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+}
+
 const Center = ( {release_group, data_source}) => {
     const [data, setData] = useState ([])
     const [album, setAlbum] = useState({})
@@ -106,17 +113,12 @@ const Center = ( {release_group, data_source}) => {
 
     let plot
     let details
+    let title 
     if (album && Object.keys(album).length > 0) {
+      title = album['title']
+
       if (album.overview != 'N/A')
         plot = album.overview
-  
-        function titleCase(str) {
-          return str
-              .split('_')
-              .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-              .join(' ');
-      }
-    
       
       const fields = ['original_language', 'original_title', 'release_date', 'popularity']
       //  ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
@@ -126,6 +128,10 @@ const Center = ( {release_group, data_source}) => {
              return null
            return <tr key={idx}><th>{titleCase(field)}</th><td>{album[field]}</td></tr>
         })
+
+        console.log("album", album)
+
+        //title = album['original_title']
         
         // console.log('details:', details)
     }
@@ -139,6 +145,7 @@ const Center = ( {release_group, data_source}) => {
       let coverArt = <CoverArt record={data[0]} data_source={data_source} size='big'/>
 
       artists = data.map( (record, idx) => {
+        console.log("artist", record.artist)
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 
         return <Artist key={idx} record={record} withpix={true} data_source={data_source}/>
@@ -150,7 +157,7 @@ const Center = ( {release_group, data_source}) => {
 
       release = <div>
           <div className='date'>{begin_date}</div>
-          <div className='title'>{data[0].title}</div>
+          <div className='title'>{title}</div>
           <div className='headliner'>{data[0].headliner}</div>
           {coverArt}
           <div className='plot'>{plot}</div>
