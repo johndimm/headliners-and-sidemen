@@ -54,7 +54,7 @@ td, th {
   margin: 10px;
 }
 
-img {
+.linked_album img {
   max-width: 200px;
   padding: 5px;
   margin: 5px;
@@ -280,4 +280,12 @@ button {
   font-size: 10pt;
   font-weight: 100;
   margin-bottom: 10px;
+}
+
+.oscar_poster {
+  height: 400px;
+  margin: 25px;
+  padding: 20px;
+  border: 1px solid lightgray;
+  border-radius: 25px;
 }
