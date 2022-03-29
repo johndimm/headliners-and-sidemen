@@ -40,7 +40,7 @@ const Variations =  ({data_source})  => {
 const titles = { 
   "imdb": {
     title: "Constellations", 
-    subtitle:'What were the actors on this movie doing before and after?'
+    subtitle:'What were the actors in this movie doing before and after?'
   },
   "imdb_tv": {
     title: 'Cast and Crew',
