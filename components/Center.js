@@ -145,7 +145,7 @@ const Center = ( {release_group, data_source}) => {
       let coverArt = <CoverArt record={data[0]} data_source={data_source} size='big'/>
 
       artists = data.map( (record, idx) => {
-        console.log("artist", record.artist)
+        // console.log("artist", record.artist)
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 
         return <Artist key={idx} record={record} withpix={true} data_source={data_source}/>
