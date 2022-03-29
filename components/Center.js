@@ -113,9 +113,9 @@ const Center = ( {release_group, data_source}) => {
 
     let plot
     let details
-    let title 
+    let title = data && data.length >= 1 ? data[0].title : ''
     if (album && Object.keys(album).length > 0) {
-      title = album['title']
+      title = album['title'] ? album['title'] : title
 
       if (album.overview != 'N/A')
         plot = album.overview

@@ -49,7 +49,7 @@ td, th {
 
 .center {
   text-align: center;
-  max-width: 500px;
+  max-width: 550px;
   padding: 10px;
   margin: 10px;
 }
@@ -61,7 +61,7 @@ td, th {
 }
 
 .center img {
-  max-width: 480px;
+  max-width: 500px;
 }
 
 .headliner {
