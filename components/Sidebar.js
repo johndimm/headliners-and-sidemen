@@ -11,7 +11,8 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
         const url = `/api/${before_after}/${release_group}`
         // console.log(url)
         axios.get(url).then(function (response) {
-            setRecords(response.data)
+            if (response.data)
+              setRecords(response.data)
             document.body.style.cursor = 'default' 
         }).catch(err => err)
     }, [release_group])

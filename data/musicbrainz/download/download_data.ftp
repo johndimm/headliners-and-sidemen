@@ -5,6 +5,6 @@ cd data
 cd fullexport
 ls
 get  LATEST
-cd 20211013-001858
+cd 20220402-001958
 binary
-get mbdump-cover-art-archive.tar.bz2
+get mbdump.tar.bz2

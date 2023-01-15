@@ -237,3 +237,83 @@ begin
 end;
 $$
 ;
+
+
+create or replace function first_after(_artist_id text, _artist_seq int)
+returns table (
+    release_group text,
+    title character varying,
+    headliner character varying,
+    headliner_id text,
+    artist character varying,
+    artist_id text,
+    instrument text,
+    begin_date date,
+    age integer,
+    cover_url text,
+    fulltext tsvector,
+    artist_seq integer    
+)
+language plpgsql    
+as $$
+begin
+  return query
+    select *
+    from context
+    where context.artist_id = _artist_id
+    and context.artist_seq > _artist_seq
+    order by context.artist_seq asc
+    limit 1
+    ;
+end;
+$$
+;
+
+
+/*
+    Column     |       Type        | Collation | Nullable | Default 
+---------------+-------------------+-----------+----------+---------
+ release_group | text              |           |          | 
+ title         | character varying |           |          | 
+ headliner     | character varying |           |          | 
+ headliner_id  | text              |           |          | 
+ artist        | character varying |           |          | 
+ artist_id     | text              |           |          | 
+ instrument    | text              |           |          | 
+ begin_date    | date              |           |          | 
+ age           | integer           |           |          | 
+ cover_url     | text              |           |          | 
+ fulltext      | tsvector          |           |          | 
+ artist_seq    | integer           |           |          | 
+
+*/
+
+create or replace function last_before(_artist_id text, _artist_seq int)
+returns table (
+    release_group text,
+    title character varying,
+    headliner character varying,
+    headliner_id text,
+    artist character varying,
+    artist_id text,
+    instrument text,
+    begin_date date,
+    age integer,
+    cover_url text,
+    fulltext tsvector,
+    artist_seq integer  
+)
+language plpgsql    
+as $$
+begin
+  return query
+    select *
+    from context
+    where context.artist_id = _artist_id
+    and context.artist_seq < _artist_seq
+    order by context.artist_seq desc
+    limit 1
+    ;
+end;
+$$
+;

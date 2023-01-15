@@ -60,9 +60,11 @@ td, th {
   margin: 5px;
 }
 
+/*
 .center img {
   max-width: 500px;
 }
+*/
 
 .headliner {
   margin-bottom: 10px;
@@ -81,8 +83,10 @@ td, th {
 
 .artist_info {
   cursor: pointer;
-  margin: 5px;
-  padding: 0px;
+  margin: 10px;
+  padding: 3px;
+  white-space: nowrap;
+  border: 1px solid gray;
 }
 
 .linked_album:hover {
@@ -162,6 +166,7 @@ td, th {
   border: 1px solid lightgray;
   margin: 5px;
   padding: 3px;
+  display: inline-block;
 }
 
 .artist_featured_pix {

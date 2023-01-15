@@ -13,7 +13,7 @@ var types = require('pg').types;
 types.setTypeParser(types.builtins.DATE, (str) => str);
 
 async function performSQLQuery(query) {
-//    console.log('===> performSQLQuery, query: ', query);
+    console.log('===> performSQLQuery, query: ', query);
 
     try {
         const response = await pool.query(query);
@@ -53,3 +53,11 @@ exports.releaseGroupSet = function (release_group_id) {
 exports.updateIMDbCoverArt = function (imdbid, url) {
     return performSQLQuery(`select * from update_imdb_cover_art('${imdbid}', '${url}');`);   
 }
+
+exports.lastBeforeArtist = async function (artist_id, artist_seq) {
+	return await performSQLQuery(`select * from last_before('${artist_id}', ${artist_seq});`);
+};
+
+exports.firstAfterArtist = async function (artist_id, artist_seq) {
+	return await performSQLQuery(`select * from first_after('${artist_id}', ${artist_seq});`);
+};
