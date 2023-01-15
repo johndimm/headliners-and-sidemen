@@ -3,23 +3,36 @@ import axios from "axios"
 const getIMDbData = async (nconst) => {
     const key = process.env['IMDB_RAPIDAPI_KEY']
 
-    var options = {
-        method: 'GET',
-        url: `https://data-imdb1.p.rapidapi.com/actor/id/${nconst}/`,
-        headers: {
-          'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
-          'x-rapidapi-key': key
-        }
-      };
+    const options = {
+      method: 'GET',
+      url: 'https://online-movie-database.p.rapidapi.com/actors/get-bio',
+      params: {nconst: nconst},
+      headers: {
+        'x-rapidapi-key': key,
+        'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
+      }
+    };
 
-    // console.log ('useEffect, looking for cover art')
+    try {
     const response = await axios.request(options)
-    const data = await response.data
-    return data
+    const results = await response.data
+
+    // Fix up this new stuff to look like the old.
+    if ("image" in results) 
+      results.image_url = results.image.url
+    if ("miniBios" in results && results.miniBios.length > 0)
+      results.partial_bio = results.miniBios[0].text
+
+    // console.log('getIMDBData', data)
+    return results
+    } catch {
+      return {}
+    }
 }
 
 export default async function handler (req, res) {
   const { nconst } = req.query
-  const response = await getIMDbData(nconst)
+  let response = {}
+  response.results = await getIMDbData(nconst)
   res.status(200).json( response )
 }

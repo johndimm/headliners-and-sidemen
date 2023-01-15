@@ -165,8 +165,8 @@ td, th {
 }
 
 .artist_featured_pix {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 200px;
+  max-height: 200px;
   border: 1px solid lightgray;
   margin: 0px;
   padding: 3px;
