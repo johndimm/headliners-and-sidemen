@@ -18,10 +18,10 @@ const Artist =  ( { record, withpix, data_source } ) => {
       const url = `/api/artist_info/${nconst}/${artist_seq}`
       // const url = `/api/artist_info/${nconst}/${artist_seq}`
 
-      console.log('getArtistInfo, url:', url)
+      // console.log('getArtistInfo, url:', url)
       const results = await fetch(url)
       const data = await results.json()
-      console.log('getArtistInfo', data.results)
+     //  console.log('getArtistInfo', data.results)
       setArtist(data.results)
     }
 
