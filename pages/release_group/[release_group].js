@@ -1,19 +1,11 @@
-//import React, {useState, useEffect} from 'react'
-//import axios from 'axios'
 import { useRouter } from 'next/router'
-//import FirstAfter from 'components/FirstAfter'
-//import LastBefore from 'components/LastBefore'
-//import Center from 'components/Center'
-//import Header from 'components/Header'
-import BrowseLayout from 'components/BrowseLayout'
+import MovieTimeline from 'components/Sticky'
 
-// const Index = () => {
 export default function Index() {
-
   const router = useRouter()
   let { release_group } = router.query
+  if (!release_group)
+    release_group = 'tt0084777'
 
-  return <BrowseLayout release_group={release_group} />
+  return <MovieTimeline release_group={release_group} />
 }
-
-// export default Index

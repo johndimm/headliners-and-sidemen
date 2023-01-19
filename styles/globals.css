@@ -294,3 +294,13 @@ button {
   border: 1px solid lightgray;
   border-radius: 25px;
 }
+
+.year_column {
+  height: 100%;
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+
+.movie_card {
+   cursor: pointer;
+}

@@ -1,7 +1,6 @@
-import BrowseLayout from 'components/BrowseLayout'
+import MovieTimeline from 'components/MovieTimeline'
 
 export default function Index() {
-  return <BrowseLayout />
+  return <MovieTimeline  release_group='tt0071562'/>
 }
 
-// export default Index

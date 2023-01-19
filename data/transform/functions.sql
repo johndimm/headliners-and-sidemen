@@ -204,11 +204,12 @@ returns table (
     headliner_id text,
     artist character varying,
     artist_id text,
-    instrument character varying(255),
+    instrument text,
     begin_date date,
-    end_date date,
     age int,
     cover_url text,
+    fulltext tsvector,
+    artist_seq int,
     rank int,
     page_section page_section_enum 
 )
