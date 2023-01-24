@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const getIMDbData = async (imdbid) => {
+const getTheMovieDatabase = async (imdbid) => {
     const key = process.env['TMDB_KEY']
 
     const url = 'https://api.themoviedb.org/3/find/' + imdbid
@@ -26,6 +26,6 @@ const getIMDbData = async (imdbid) => {
 
 export default async function handler (req, res) {
   const { imdbid } = req.query
-  const response = await getIMDbData(imdbid)
+  const response = await getTheMovieDatabase(imdbid)
   res.status(200).json( response )
 }

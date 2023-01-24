@@ -168,9 +168,8 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           </div>
     }
 
-    if (artist && artist.partial_bio) {
-        const fields = 
-        ['birth_date', 'birth_place']
+    if (artist && artist.image_url) {
+        const fields = ['birth_date', 'birth_place']
         
         htmlDetails = fields.map( (field, idx) => {
            const niceField = titleCase(field.replace(/_/g, ' '))
@@ -186,10 +185,12 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           <div className='artist_featured_name'>
               {artist.name}
           </div>
-          <img className='artist_featured_pix' src={artist.image_url} />
+          <img className='artist_featured_pix' src={artist.image_url} alt={artist.name} />
           <CareerMap years={years} zoomIn={zoomIn} zoomOut={zoomOut}/>
           <div className='artist_featured_bio'>{artist.partial_bio}</div>
+
           <table><tbody className='bio_details'>{htmlDetails}</tbody></table>
+
           <div style={{width:"100%", textAlign:"center"}}>
             <a target='imdb' rel="noreferrer" href={link}>
                <img height='40' src={logo} alt='IMDb'/>
@@ -207,10 +208,12 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
           onMouseDown={onMouseDown} 
           onMouseUp={onMouseUp}>
             {htmlArtist}
+
             <table  style={style}>
                 <thead><tr>{headers}</tr></thead>
                 <tbody><tr>{cells}</tr></tbody>
             </table>
+
         </div>
     </div>
 }

@@ -165,18 +165,17 @@ td, th {
 }
 
 .artist_featured_pix {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 300px;
   border: 1px solid lightgray;
   margin: 0px;
   padding: 3px;
 }
 
 .artist_featured {
-  flex: 0 0 200px;
+  flex: 0 0 300px;
   text-align: center;
   margin:20px;
-  width: 200px;
+  width: 300px;
   cursor:default;
 }
 
@@ -189,7 +188,7 @@ td, th {
 
 .artist_featured_bio {
   margin-bottom: 30px;
-  max-width: 200px;
+  max-width: 300px;
   text-align: left;
 }
 
