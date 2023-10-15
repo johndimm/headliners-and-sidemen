@@ -51,5 +51,22 @@ exports.releaseGroupSet = function (release_group_id) {
 };
 
 exports.updateIMDbCoverArt = function (imdbid, url) {
-    return performSQLQuery(`select * from update_imdb_cover_art('${imdbid}', '${url}');`);   
+    const cmd = `call update_imdb_cover_art('${imdbid}', '${url}');`
+    console.log('updateIMDBCoverArt', cmd)
+    return performSQLQuery(cmd);
+}
+
+exports.getMovies = function (year, genres, title_type, has_cover, max_local_rank, num_years) {
+
+    const cmd = `select * from get_movies(
+        ${year || 'null'}, 
+        ${genres || 'null'}, 
+        ${title_type || 'null'}, 
+        ${has_cover || 'null'},
+        ${max_local_rank || 10},
+        ${num_years || 5}
+        );`
+
+        
+    return performSQLQuery(cmd);  
 }

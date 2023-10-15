@@ -2,3 +2,6 @@
 *.dat
 *.out
 job.txt
+*.zip
+*.csv
+*.tgz

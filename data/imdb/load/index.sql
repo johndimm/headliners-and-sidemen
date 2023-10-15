@@ -9,3 +9,4 @@ create index idx_tc_tconst on title_crew(tconst);
 create index idx_tb_primaryTitle on title_basics(primaryTitle);
 create index idx_nb_primaryName on name_basics(primaryName);
 
+create index idx_tr_tconst on title_ratings(tconst);

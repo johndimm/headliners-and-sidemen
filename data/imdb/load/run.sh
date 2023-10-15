@@ -1,20 +1,23 @@
-cat title.akas.tsv | sed 's/"/""/g' > title.akas.clean.tsv 
+cat ../download/title.akas.tsv | sed 's/"/""/g' > title.akas.clean.tsv 
 psql -f title.akas.sql
 
-cat title.basics.tsv | sed 's/"/""/g' > title.basics.clean.tsv
+cat ../download/title.basics.tsv | sed 's/"/""/g' > title.basics.clean.tsv
 psql -f title.basics.sql 
 
-cat name.basics.tsv | sed 's/"/""/g' > name.basics.clean.tsv
+cat ../download/name.basics.tsv | sed 's/"/""/g' > name.basics.clean.tsv
 psql -f name.basics.sql 
 
-cat title.principals.tsv | sed 's/"/""/g' > title.principals.clean.tsv
+cat ../download/title.principals.tsv | sed 's/"/""/g' > title.principals.clean.tsv
 psql -f title.principals.sql 
 
-cat title.crew.tsv | sed 's/"/""/g' > title.crew.clean.tsv
+cat ../download/title.crew.tsv | sed 's/"/""/g' > title.crew.clean.tsv
 psql -f title.crew.sql 
 
-cat title.episode.tsv | sed 's/"/""/g' > title.episode.clean.tsv
+cat ../download/title.episode.tsv | sed 's/"/""/g' > title.episode.clean.tsv
 psql -f title.episode.sql 
+
+cat ../download/title.ratings.tsv | sed 's/"/""/g' > title.ratings.clean.tsv
+psql -f title.ratings.sql 
 
 psql -f index.sql
 

@@ -52,7 +52,7 @@ const Artist =  ( { record, withpix, data_source } ) => {
 
   //            <div className='date'>{begin_date}</div>
 
-    return <Link href={link} passHref={true}>
+    return <Link legacyBehavior href={link} passHref={true}>
       <a title={title}>
       <div className='artist_info'>
           <div>{pix}</div>
