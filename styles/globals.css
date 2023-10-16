@@ -299,8 +299,8 @@ button {
 .movie_page {
   position:relative;
   white-space: nowrap;
-  height: 90%;
   width: fit-content;
+  height: fit-content;
 
   overflow: hidden;
   margin: 20px;
