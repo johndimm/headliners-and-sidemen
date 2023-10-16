@@ -296,14 +296,40 @@ button {
 
 
 
+
+
 .movie_page {
   position:relative;
   white-space: nowrap;
-  width: fit-content;
 
+  height: 100vh;
   overflow: hidden;
-  margin: 20px;
-  border: 1px solid black;
+  padding: 10px;
+  margin: 0px;
+
+}
+
+.movie_div {
+  position: relative;
+  display: inline-block;
+  height: 95%;
+  overflow: auto;
+  font-size: 10pt;
+
+}
+
+.filterpanel {
+  vertical-align: top;
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  border: 1px solid gray;
+  margin: 10px;
+  padding: 10px;
+  overflow: hidden;
+  font-size: 10pt;
+  white-space: wrap;
+  display: inline-block;
 }
 
 .year_cell {
@@ -324,7 +350,9 @@ button {
   margin-bottom: 12px;
 }
 
-.genres { font-size: 8pt;}
+.movie img {
+  width: 100%;
+}
 
 .movie_table a { 
   color: inherit;  
@@ -334,34 +362,7 @@ button {
 
 .movie_table th { position: sticky; top: 0; background-color: white}
 
-.xmovie_table td {
-  width: 2%;
-}
-
-
-.filterpanel {
-  vertical-align: top;
-  width: fit-content;
-  height: fit-content;
-  position: relative;
-  border: 1px solid gray;
-  margin: 10px;
-  padding: 10px;
-  overflow: hidden;
-  font-size: 10pt;
-  white-space: wrap;
-  display: inline-block;
-}
-
-
-.movie_div {
-  position: relative;
-  display: inline-block;
-
-  overflow: auto;
-  font-size: 10pt;
-}
-
+.genres { font-size: 8pt;}
 
 .range_input {
   margin: 2px;
@@ -372,10 +373,6 @@ button {
 
   display: inline-block;
   letter-spacing: -1px;
-}
-
-.movie img {
-  width: 100%;
 }
 
 .timeline_div {

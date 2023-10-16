@@ -303,6 +303,7 @@ const Movies = () => {
 
 	return (
 		<div className='movie_page'>
+
 			<FilterPanel />
 			<div className='movie_div'>
 				<div className='timeline_div'>
