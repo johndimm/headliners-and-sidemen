@@ -300,7 +300,7 @@ button {
   position:relative;
   white-space: nowrap;
   width: fit-content;
-  height: 2000px;
+
   overflow: hidden;
   margin: 20px;
   border: 1px solid black;
@@ -357,7 +357,7 @@ button {
 .movie_div {
   position: relative;
   display: inline-block;
-  height: 95%;
+
   overflow: auto;
   font-size: 10pt;
 }
