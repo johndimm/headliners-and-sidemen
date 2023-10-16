@@ -114,6 +114,21 @@ const Movies = () => {
 		setParams({ ...params, year: year })
 	}
 
+	const numYearsChanged = (num_years) => {
+		const zoomValues = [500, 500, 380, 281, 224, 181, 156, 136, 121, 105]
+		//const factors = [0.42, 0.84, 0.96, 0.95, 0.95, 0.92, 0.92, 0.92, 0.92, 0.89]
+		//const baseWidth = 100.0 // 1179
+		//const movieWidth = (baseWidth / params.num_years) * factors[val-1]
+		//console.log(movieWidth)
+
+		//const pc = 50.0 / parseInt(val)
+		//zoom(pc, "movie_table td", "pc")
+		//zoom (pc, "movie", "pc")
+
+		const movieWidth = zoomValues[num_years - 1]
+		zoom('movie', movieWidth, 'px')
+	}
+
 	const FilterPanel = () => {
 		const handleSubmit = (event) => {
 			// event.preventDefault()
@@ -144,8 +159,12 @@ const Movies = () => {
 		const genreSelector = genres.map((val, idx) => {
 			const checked = params.genres.includes(val)
 			const genre = checked ? (
-				<span>
-					<b>{val}</b>
+				<span
+					className='selected'
+					style={{ cursor: 'pointer' }}
+					onClick={() => setParams({ ...params, genres: '' })}
+				>
+					{val}
 				</span>
 			) : (
 				<span className='genre' onClick={(e) => setParams({ ...params, genres: val })}>
@@ -159,8 +178,8 @@ const Movies = () => {
 		const maxLocalRankSelector = [3, 10, 20, 50, 100, 200].map((val, idx) => {
 			if (val == params.max_local_rank) {
 				return (
-					<span key={idx}>
-						<b>{val}</b>&nbsp;
+					<span key={idx} className='selected'>
+						{val}&nbsp;
 					</span>
 				)
 			} else
@@ -178,8 +197,8 @@ const Movies = () => {
 		const numYearsSelector = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val, idx) => {
 			if (val == params.num_years)
 				return (
-					<span key={idx}> 
-						<b>{val}</b>&nbsp;
+					<span key={idx} className='selected'>
+						{val}&nbsp;
 					</span>
 				)
 			else
@@ -189,18 +208,7 @@ const Movies = () => {
 						className='rank_selector'
 						onClick={() => {
 							setParams({ ...params, num_years: val })
-							const zoomValues = [500, 500, 380, 281, 224, 181, 156, 136, 121, 105]
-							//const factors = [0.42, 0.84, 0.96, 0.95, 0.95, 0.92, 0.92, 0.92, 0.92, 0.89]
-							//const baseWidth = 100.0 // 1179
-							//const movieWidth = (baseWidth / params.num_years) * factors[val-1]
-							//console.log(movieWidth)
-
-							const pc = 100.0 / parseInt(val)
-							zoom(pc, "movie_table td", "pc")
-							//zoom (pc, "movie", "pc")
-
-							//const movieWidth = zoomValues[val - 1]
-							//zoom("movie", movieWidth, 'px')
+							numYearsChanged(val)
 						}}
 					>
 						{val}
@@ -210,7 +218,7 @@ const Movies = () => {
 
 		return (
 			<div className='filterpanel'>
-				<div className='page_title'>Wall of Movies</div>
+				<div className='page_title'>Best Movies Ever</div>
 
 				<input
 					width='240'
@@ -225,9 +233,9 @@ const Movies = () => {
 				<form onChange={handleSubmit}>
 					<hr />
 					<div className='selectors'>
-						down: {maxLocalRankSelector}
+						<a title='the number of years to show at once'>across</a>: {numYearsSelector}
 						<br />
-						across: {numYearsSelector}
+						<a title='the number of movies for each year'>down</a>: {maxLocalRankSelector}
 					</div>
 					<hr />
 
@@ -250,6 +258,10 @@ const Movies = () => {
 			})
 			.catch((err) => err)
 	}
+
+	useEffect(() => {
+		numYearsChanged(params.num_years)
+	}, [])
 
 	useEffect(() => {
 		getData()

@@ -295,11 +295,13 @@ button {
 }
 
 
+
 .movie_page {
   position:relative;
   white-space: nowrap;
   height: 90vh;
   width: fit-content;
+
   overflow: hidden;
   margin: 20px;
   border: 1px solid black;
@@ -327,10 +329,15 @@ button {
 
 .movie_table a { 
   color: inherit;  
-  text-decoration: none; 
+  text-decoration: none;
+  table-layout: fixed; 
 }
 
 .movie_table th { position: sticky; top: 0; background-color: white}
+
+.xmovie_table td {
+  width: 2%;
+}
 
 
 .filterpanel {
@@ -410,4 +417,11 @@ button {
 .page_title {
   font-family: 'Copperplate';
   font-size: 14pt;
+}
+
+.selected {
+  font-size:12pt;
+  color: blue;
+  font-weight: 600;
+
 }

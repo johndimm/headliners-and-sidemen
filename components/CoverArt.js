@@ -85,7 +85,7 @@ const CoverArt = ({ record, data_source, size }) => {
         src={bigCover}
         type="image/jpeg"
 				alt={record.release_group}
-        width="200"
+
 				onError={(e) => {
           console.log('cover image error', bigCover)
           e.target.style.display = 'none'
