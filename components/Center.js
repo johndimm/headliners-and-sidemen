@@ -35,7 +35,7 @@ const externalLinks = (dataSource, imdbid, record) => {
 
        <div>
          <a target='musicbrainz' rel="noreferrer" href={musicbrainz_url}>
-           <img max-height='50' max-width='150' src={musicbrainz_logo} alt='IMDb'/>
+           <img height='50' width='150' src={musicbrainz_logo} alt='IMDb'/>
          </a>
        </div>
   </div>

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
+
+export const metadata = { viewport: 
+    `width=device-width, height='device-height', initial-scale: 1.0`
+  }
+  
 // import NoSSR from 'react-no-ssr';
 
 const genres = [
@@ -35,7 +40,7 @@ const genres = [
 	'Western'
 ]
 
-const renderMovie = (movie, idx) => {
+const renderMovie = (movie, idx, num_years) => {
 	//return <>{JSON.stringify(movie, null, 2)}</>
 	// return <img width="200" src={movie.cover_url} />
 
@@ -53,10 +58,12 @@ const renderMovie = (movie, idx) => {
 		cover_url: movie.cover_url
 	}
 
+	const size = num_years < 5 ? 'big' : 'small'
+
 	return (
 		<div key={idx} className='movie'>
-			<a href={url} target='_blank'>
-				<CoverArt record={record} data_source='imdb' size='small' />
+			<a href={url} target='_blank' rel="noreferrer">
+				<CoverArt record={record} data_source='imdb' size={size} />
 				<div>{primaryTitle}</div>
 				<div className='genres'>
 					#{rank} -- {genres.replace(',', ', ')}
@@ -78,7 +85,6 @@ const Movies = () => {
 	const zoom = (className, width, unit) => {
 		console.log('zoom:', width)
 		if (typeof window === 'undefined') return
-
 		for (var i = 0; i < document.styleSheets.length; i++) {
 			var sheet = document.styleSheets[i]
 
@@ -114,6 +120,11 @@ const Movies = () => {
 		setParams({ ...params, year: year })
 	}
 
+	const getDivWidth = (id) => {
+		const element = document.getElementById(id);
+		return element ? element.offsetWidth : null
+	}
+
 	const numYearsChanged = (num_years) => {
 		const zoomValues = [500, 500, 380, 281, 224, 181, 156, 136, 121, 105]
 		//const factors = [0.42, 0.84, 0.96, 0.95, 0.95, 0.92, 0.92, 0.92, 0.92, 0.89]
@@ -125,7 +136,14 @@ const Movies = () => {
 		//zoom(pc, "movie_table td", "pc")
 		//zoom (pc, "movie", "pc")
 
-		const movieWidth = zoomValues[num_years - 1]
+		const mw = getDivWidth('movie_page')
+		const fw = getDivWidth('filterpanel')
+		const w = mw - fw - 45
+		const movieWidth = Math.floor(w / num_years) - 10 // 60 + num_years * 6
+
+		console.log(`w:${w}, movieWidth:${movieWidth}}`)
+
+		//const movieWidth = zoomValues[num_years - 1]
 		zoom('movie', movieWidth, 'px')
 	}
 
@@ -217,15 +235,15 @@ const Movies = () => {
 		})
 
 		return (
-			<div className='filterpanel'>
+			<div id='filterpanel' className='filterpanel'>
 				<div className='page_title'>Best Movies Ever</div>
 
 				<input
 					width='240'
 					type='range'
 					step='1'
-					min='50'
-					max='500'
+					min='25'
+					max='1000'
 					defaultValue={getZoom()}
 					onChange={(e) => zoom('movie', e.currentTarget.value, 'px')}
 				/>
@@ -270,7 +288,8 @@ const Movies = () => {
 	const years = {}
 	if (Array.isArray(data) && data.length > 0) {
 		data.forEach((val, idx) => {
-			if (years[val.startyear] == undefined) {
+			// if (years[val.startyear] == undefined) {
+			if (! years.hasOwnProperty(val.startyear)) {
 				years[val.startyear] = []
 			}
 			years[val.startyear].push(val)
@@ -287,7 +306,7 @@ const Movies = () => {
 
 	const moviesYears = Object.keys(years).map((val, idx) => {
 		const movieColumn = years[val].map((val2, idx2) => {
-			return renderMovie(val2, idx2)
+			return renderMovie(val2, idx2, params.num_years)
 		})
 
 		return <td key={idx}>{movieColumn}</td>
@@ -301,9 +320,10 @@ const Movies = () => {
 		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
 	}
 
-	return (
-		<div className='movie_page'>
+	
 
+	return (
+		<div id="movie_page" className='movie_page'>
 			<FilterPanel />
 			<div className='movie_div'>
 				<div className='timeline_div'>
