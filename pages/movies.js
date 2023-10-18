@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
@@ -6,7 +6,7 @@ import CoverArt from '../components/CoverArt'
 export const metadata = { viewport: 
     `width=device-width, height='device-height', initial-scale: 1.0`
   }
-  
+
 // import NoSSR from 'react-no-ssr';
 
 const genres = [
@@ -285,6 +285,13 @@ const Movies = () => {
 		getData()
 	}, [params])
 
+	useLayoutEffect(() => {
+		//const { height } = ref.current.getBoundingClientRect();
+		// setTooltipHeight(height);
+		numYearsChanged(params.num_years)
+	}, []);
+
+  
 	const years = {}
 	if (Array.isArray(data) && data.length > 0) {
 		data.forEach((val, idx) => {
@@ -320,7 +327,6 @@ const Movies = () => {
 		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
 	}
 
-	
 
 	return (
 		<div id="movie_page" className='movie_page'>

@@ -301,11 +301,11 @@ button {
 .movie_page {
   position:relative;
   white-space: nowrap;
-
   height: 100vh;
   overflow: hidden;
   padding: 10px;
   margin: 0px;
+  width:100%;
 
 }
 
@@ -370,18 +370,21 @@ button {
 
 .timeline {
   font-size:9pt;
-
   display: inline-block;
   letter-spacing: -1px;
+  word-break: break-all; 
+  word-wrap: break-word;
+}
+
+.timeline_tick {
+  font-size:7pt;
 }
 
 .timeline_div {
-  width: 100%;
   text-align: center;
   border: 1px solid lightgray;
-  height: 30px;
-  white-space: nowrap;
-
+  right:0;
+  margin: 10px;
 }
 
 .selectors {

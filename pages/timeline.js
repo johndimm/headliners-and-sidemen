@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 const Timeline = ({ setSelectedYear, display_year, num_years }) => {
-	const timeline = []
+  const timeline = []
   const yearInt = parseInt(display_year)
   const left = Math.floor(yearInt - (num_years / 2))
   const right = Math.ceil(yearInt + ( num_years - (num_years / 2)))
@@ -13,7 +13,9 @@ const Timeline = ({ setSelectedYear, display_year, num_years }) => {
 				? { color: 'blue' }
 				: { color: 'darkgray' }
 
+
 		if (year % 10 === 0) {
+			timeline.push((<wbr />))
 			timeline.push(
 				<a
 					key={year}
@@ -24,14 +26,13 @@ const Timeline = ({ setSelectedYear, display_year, num_years }) => {
 						setSelectedYear(year)
 					}}
 					title={year}
-				>
-					&nbsp;{year}&nbsp;
-				</a>
+				> {year} </a>
 			)
 		} else {
 			timeline.push(
 				<a
 					key={year}
+					className="timeline_tick"
 					style={style}
 					href=''
 					onClick={(e) => {
@@ -39,10 +40,7 @@ const Timeline = ({ setSelectedYear, display_year, num_years }) => {
 						setSelectedYear(year)
 					}}
 					title={year}
-				>
-					{' '}
-					|{' '}
-				</a>
+				> | </a>
 			)
 		}
 	}
