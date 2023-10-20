@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
@@ -6,8 +6,6 @@ import CoverArt from '../components/CoverArt'
 export const metadata = { viewport: 
     `width=device-width, height='device-height', initial-scale: 1.0`
   }
-
-// import NoSSR from 'react-no-ssr';
 
 const genres = [
 	'Action',
@@ -41,9 +39,6 @@ const genres = [
 ]
 
 const renderMovie = (movie, idx, num_years) => {
-	//return <>{JSON.stringify(movie, null, 2)}</>
-	// return <img width="200" src={movie.cover_url} />
-
 	const rank = movie.rank
 	const primaryTitle = movie.primarytitle
 	const cover_url = movie.cover_url
@@ -126,31 +121,33 @@ const Movies = () => {
 	}
 
 	const numYearsChanged = (num_years) => {
-		const zoomValues = [500, 500, 380, 281, 224, 181, 156, 136, 121, 105]
-		//const factors = [0.42, 0.84, 0.96, 0.95, 0.95, 0.92, 0.92, 0.92, 0.92, 0.89]
-		//const baseWidth = 100.0 // 1179
-		//const movieWidth = (baseWidth / params.num_years) * factors[val-1]
-		//console.log(movieWidth)
-
-		//const pc = 50.0 / parseInt(val)
-		//zoom(pc, "movie_table td", "pc")
-		//zoom (pc, "movie", "pc")
-
 		const mw = getDivWidth('movie_page')
 		const fw = getDivWidth('filterpanel')
 		const w = mw - fw - 45
-		const movieWidth = Math.floor(w / num_years) - 10 // 60 + num_years * 6
-
-		console.log(`w:${w}, movieWidth:${movieWidth}}`)
-
-		//const movieWidth = zoomValues[num_years - 1]
+		const movieWidth = Math.floor(w / num_years) - 10 
+		//console.log(`w:${w}, movieWidth:${movieWidth}}`)
 		zoom('movie', movieWidth, 'px')
+	}
+
+	const repaint = () => {
+		numYearsChanged(params.num_years) 
+	}
+
+	const HideFilterpanelButton = () => {
+		const onMouseDown = (e) => {
+			setParams({...params, hide_filterpanel: ! params.hide_filterpanel})
+			setTimeout( repaint, 1)
+		}
+
+		const char = params.hide_filterpanel ? <span>&#8594;</span> : <span>&#8592;</span>
+		return <span 
+		    className="hide_filterpanel_button"
+			onClick={onMouseDown}
+		>{char}</span>
 	}
 
 	const FilterPanel = () => {
 		const handleSubmit = (event) => {
-			// event.preventDefault()
-
 			const form = document.forms[0] // e.target
 			const formData = new FormData(form)
 			const formProps = Object.fromEntries(formData)
@@ -166,7 +163,8 @@ const Movies = () => {
 				year: year,
 				genres: genres,
 				max_local_rank: max_local_rank,
-				num_years: num_years
+				num_years: num_years,
+				hide_filterpanel: false
 			})
 
 			//if (num_years != params.num_years) {
@@ -175,17 +173,24 @@ const Movies = () => {
 		}
 
 		const genreSelector = genres.map((val, idx) => {
-			const checked = params.genres.includes(val)
+			const pattern = `${val}(,|$)`
+			var re = new RegExp(pattern);
+			const checked = params.genres.match(re)
 			const genre = checked ? (
 				<span
 					className='selected'
+					key={idx}
 					style={{ cursor: 'pointer' }}
 					onClick={() => setParams({ ...params, genres: '' })}
 				>
 					{val}
 				</span>
 			) : (
-				<span className='genre' onClick={(e) => setParams({ ...params, genres: val })}>
+				<span 
+					className='genre' 
+					key={idx}
+					onClick={(e) => setParams({ ...params, genres: val })}
+				>
 					{val}
 				</span>
 			)
@@ -212,7 +217,7 @@ const Movies = () => {
 				)
 		})
 
-		const numYearsSelector = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val, idx) => {
+		const numYearsSelector = [1, 2, 3, 4, 5, 6, 7, 8].map((val, idx) => {
 			if (val == params.num_years)
 				return (
 					<span key={idx} className='selected'>
@@ -234,8 +239,19 @@ const Movies = () => {
 				)
 		})
 
+		const style = params.hide_filterpanel ? {
+			"width": "30px", 
+			"paddingRight": "0", 
+			"paddingTop": "1000px",
+			"border": "none",
+			"height": "10px"
+		} : {
+			"width": "fit-content"
+		}
+
 		return (
-			<div id='filterpanel' className='filterpanel'>
+			<div id='filterpanel' className='filterpanel' style={style}>
+			    <HideFilterpanelButton />
 				<div className='page_title'>Best Movies Ever</div>
 
 				<input
@@ -266,8 +282,6 @@ const Movies = () => {
 	const getData = async () => {
 		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}`
 
-		//min_year=${params.min_year}&max_year=${params.max_year}&min_rank=${params.min_rank}&max_rank=${params.max_rank}&genres='${params.genres}'&,max_local_rank=${params.max_local_rank}`
-
 		axios
 			.get(url)
 			.then(function (response) {
@@ -284,13 +298,6 @@ const Movies = () => {
 	useEffect(() => {
 		getData()
 	}, [params])
-
-	useLayoutEffect(() => {
-		//const { height } = ref.current.getBoundingClientRect();
-		// setTooltipHeight(height);
-		numYearsChanged(params.num_years)
-	}, []);
-
   
 	const years = {}
 	if (Array.isArray(data) && data.length > 0) {

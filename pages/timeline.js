@@ -15,7 +15,7 @@ const Timeline = ({ setSelectedYear, display_year, num_years }) => {
 
 
 		if (year % 10 === 0) {
-			timeline.push((<wbr />))
+			timeline.push((<wbr key={year + 'wbr'} />))
 			timeline.push(
 				<a
 					key={year}

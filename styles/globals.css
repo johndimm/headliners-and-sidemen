@@ -326,10 +326,13 @@ button {
   border: 1px solid gray;
   margin: 10px;
   padding: 10px;
+  padding-top: 20px;
+
   overflow: hidden;
   font-size: 10pt;
   white-space: wrap;
   display: inline-block;
+
 }
 
 .year_cell {
@@ -416,6 +419,7 @@ button {
 .page_title {
   font-family: 'Copperplate';
   font-size: 14pt;
+
 }
 
 .selected {
@@ -423,4 +427,20 @@ button {
   color: blue;
   font-weight: 600;
 
+}
+
+.hide_filterpanel_button {
+  position: absolute;
+  display: inline-block;
+  margin:0;
+  top:0;
+  left: 10px;
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+}
+
+.hide_filterpanel_button:hover {
+  font-size: 14pt;
+  color: blue;
 }
