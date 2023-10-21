@@ -3,9 +3,9 @@ import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
 
-export const metadata = { viewport: 
-    `width=device-width, height='device-height', initial-scale: 1.0`
-  }
+export const metadata = {
+	viewport: `width=device-width, height='device-height', initial-scale: 1.0`
+}
 
 const genres = [
 	'Action',
@@ -57,7 +57,7 @@ const renderMovie = (movie, idx, num_years) => {
 
 	return (
 		<div key={idx} className='movie'>
-			<a href={url} target='_blank' rel="noreferrer">
+			<a href={url} target='_blank' rel='noreferrer'>
 				<CoverArt record={record} data_source='imdb' size={size} />
 				<div>{primaryTitle}</div>
 				<div className='genres'>
@@ -71,10 +71,10 @@ const renderMovie = (movie, idx, num_years) => {
 const Movies = () => {
 	const [data, setMovies] = useState([])
 	const [params, setParams] = useState({
-		year: 2020,
+		year: 2018,
 		genres: '',
-		max_local_rank: 3,
-		num_years: 7
+		max_local_rank: 10,
+		num_years: 5
 	})
 
 	const zoom = (className, width, unit) => {
@@ -116,7 +116,7 @@ const Movies = () => {
 	}
 
 	const getDivWidth = (id) => {
-		const element = document.getElementById(id);
+		const element = document.getElementById(id)
 		return element ? element.offsetWidth : null
 	}
 
@@ -124,26 +124,13 @@ const Movies = () => {
 		const mw = getDivWidth('movie_page')
 		const fw = getDivWidth('filterpanel')
 		const w = mw - fw - 45
-		const movieWidth = Math.floor(w / num_years) - 10 
+		const movieWidth = Math.floor(w / num_years) - 10
 		//console.log(`w:${w}, movieWidth:${movieWidth}}`)
-		zoom('movie', movieWidth, 'px')
+		// zoom('movie', movieWidth, 'px')
 	}
 
 	const repaint = () => {
-		numYearsChanged(params.num_years) 
-	}
-
-	const HideFilterpanelButton = () => {
-		const onMouseDown = (e) => {
-			setParams({...params, hide_filterpanel: ! params.hide_filterpanel})
-			setTimeout( repaint, 1)
-		}
-
-		const char = params.hide_filterpanel ? <span>&#8594;</span> : <span>&#8592;</span>
-		return <span 
-		    className="hide_filterpanel_button"
-			onClick={onMouseDown}
-		>{char}</span>
+		numYearsChanged(params.num_years)
 	}
 
 	const FilterPanel = () => {
@@ -163,8 +150,7 @@ const Movies = () => {
 				year: year,
 				genres: genres,
 				max_local_rank: max_local_rank,
-				num_years: num_years,
-				hide_filterpanel: false
+				num_years: num_years
 			})
 
 			//if (num_years != params.num_years) {
@@ -174,7 +160,7 @@ const Movies = () => {
 
 		const genreSelector = genres.map((val, idx) => {
 			const pattern = `${val}(,|$)`
-			var re = new RegExp(pattern);
+			var re = new RegExp(pattern)
 			const checked = params.genres.match(re)
 			const genre = checked ? (
 				<span
@@ -186,11 +172,7 @@ const Movies = () => {
 					{val}
 				</span>
 			) : (
-				<span 
-					className='genre' 
-					key={idx}
-					onClick={(e) => setParams({ ...params, genres: val })}
-				>
+				<span className='genre' key={idx} onClick={(e) => setParams({ ...params, genres: val })}>
 					{val}
 				</span>
 			)
@@ -239,19 +221,10 @@ const Movies = () => {
 				)
 		})
 
-		const style = params.hide_filterpanel ? {
-			"width": "30px", 
-			"paddingRight": "0", 
-			"paddingTop": "1000px",
-			"border": "none",
-			"height": "10px"
-		} : {
-			"width": "fit-content"
-		}
+	
 
 		return (
-			<div id='filterpanel' className='filterpanel' style={style}>
-			    <HideFilterpanelButton />
+			<div id='filterpanel' className='filterpanel'>
 				<div className='page_title'>Best Movies Ever</div>
 
 				<input
@@ -296,14 +269,16 @@ const Movies = () => {
 	}, [])
 
 	useEffect(() => {
+		const mw = getDivWidth('body')
+		console.log('useEffect: mw', mw)
 		getData()
 	}, [params])
-  
+
 	const years = {}
 	if (Array.isArray(data) && data.length > 0) {
 		data.forEach((val, idx) => {
 			// if (years[val.startyear] == undefined) {
-			if (! years.hasOwnProperty(val.startyear)) {
+			if (!years.hasOwnProperty(val.startyear)) {
 				years[val.startyear] = []
 			}
 			years[val.startyear].push(val)
@@ -334,29 +309,17 @@ const Movies = () => {
 		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
 	}
 
-
 	return (
-		<div id="movie_page" className='movie_page'>
+		<div className="movie_page">
 			<FilterPanel />
-			<div className='movie_div'>
-				<div className='timeline_div'>
-					<button onClick={goleft}>&lt;</button>
-					<Timeline
-						display_year={params.year}
-						setSelectedYear={setSelectedYear}
-						num_years={params.num_years}
-					/>
-					<button onClick={goright}>&gt;</button>
-				</div>
-				<table className='movie_table'>
-					<thead>
-						<tr>{yearHeading}</tr>
-					</thead>
-					<tbody>
-						<tr>{moviesYears}</tr>
-					</tbody>
-				</table>
-			</div>
+			<table className='movie_table'>
+				<thead>
+					<tr>{yearHeading}</tr>
+				</thead>
+				<tbody>
+					<tr>{moviesYears}</tr>
+				</tbody>
+			</table>
 		</div>
 	)
 }

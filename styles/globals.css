@@ -301,12 +301,10 @@ button {
 .movie_page {
   position:relative;
   white-space: nowrap;
-  height: 100vh;
-  overflow: hidden;
   padding: 10px;
   margin: 0px;
   width:100%;
-
+  text-align: center;
 }
 
 .movie_div {
@@ -399,7 +397,7 @@ button {
   height: fit-content;
   display: inline-block;
   width: 100%;
-  columns: 2;
+  columns: 4;
 }
 
 .rank_selector {
@@ -429,18 +427,4 @@ button {
 
 }
 
-.hide_filterpanel_button {
-  position: absolute;
-  display: inline-block;
-  margin:0;
-  top:0;
-  left: 10px;
-  height: 15px;
-  width: 15px;
-  cursor: pointer;
-}
 
-.hide_filterpanel_button:hover {
-  font-size: 14pt;
-  color: blue;
-}
