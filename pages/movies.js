@@ -75,7 +75,7 @@ const Movies = () => {
 		year: 2018,
 		genres: '',
 		max_local_rank: 10,
-		num_years: 5
+		num_years: 4
 	})
 
 	const zoom = (className, width, unit) => {
@@ -309,10 +309,13 @@ const Movies = () => {
 					<tr>{moviesYears}</tr>
 				</tbody>
 			</table>
-			<h2>Settings</h2>
-			across: {numYearsSelector}
-			<br />
-			down: {maxLocalRankSelector}
+			<div className="settings">
+				<h2>Settings</h2>
+				across: {numYearsSelector}
+				<br />
+				down: {maxLocalRankSelector}
+			</div>
+
 
 
 

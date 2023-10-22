@@ -445,3 +445,12 @@ button {
   text-align:center;
   white-space: nowrap;
 }
+
+.settings {
+  display: inline-block;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: left;
+  width: fit-content;
+}
