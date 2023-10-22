@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
+import TimeScrubber from '../components/TimeScrubber'
 
 export const metadata = {
 	viewport: `width=device-width, height='device-height', initial-scale: 1.0`
@@ -180,46 +181,7 @@ const Movies = () => {
 			return <div key={idx}>{genre}</div>
 		})
 
-		const maxLocalRankSelector = [3, 10, 20, 50, 100, 200].map((val, idx) => {
-			if (val == params.max_local_rank) {
-				return (
-					<span key={idx} className='selected'>
-						{val}&nbsp;
-					</span>
-				)
-			} else
-				return (
-					<span
-						key={idx}
-						className='rank_selector'
-						onClick={() => setParams({ ...params, max_local_rank: val })}
-					>
-						{val}
-					</span>
-				)
-		})
 
-		const numYearsSelector = [1, 2, 3, 4, 5, 6, 7, 8].map((val, idx) => {
-			if (val == params.num_years)
-				return (
-					<span key={idx} className='selected'>
-						{val}&nbsp;
-					</span>
-				)
-			else
-				return (
-					<span
-						key={idx}
-						className='rank_selector'
-						onClick={() => {
-							setParams({ ...params, num_years: val })
-							numYearsChanged(val)
-						}}
-					>
-						{val}
-					</span>
-				)
-		})
 
 	
 
@@ -227,25 +189,10 @@ const Movies = () => {
 			<div id='filterpanel' className='filterpanel'>
 				<div className='page_title'>Best Movies Ever</div>
 
-				<input
-					width='240'
-					type='range'
-					step='1'
-					min='25'
-					max='1000'
-					defaultValue={getZoom()}
-					onChange={(e) => zoom('movie', e.currentTarget.value, 'px')}
-				/>
+
+				<TimeScrubber params={params} setParams={setParams} />
 
 				<form onChange={handleSubmit}>
-					<hr />
-					<div className='selectors'>
-						<a title='the number of years to show at once'>across</a>: {numYearsSelector}
-						<br />
-						<a title='the number of movies for each year'>down</a>: {maxLocalRankSelector}
-					</div>
-					<hr />
-
 					<div className='genre_selector'>{genreSelector}</div>
 				</form>
 			</div>
@@ -309,6 +256,48 @@ const Movies = () => {
 		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
 	}
 
+	const numYearsSelector = [1, 2, 3, 4, 5, 6, 7, 8].map((val, idx) => {
+		if (val == params.num_years)
+			return (
+				<span key={idx} className='selected'>
+					{val}&nbsp;
+				</span>
+			)
+		else
+			return (
+				<span
+					key={idx}
+					className='rank_selector'
+					onClick={() => {
+						setParams({ ...params, num_years: val })
+						numYearsChanged(val)
+					}}
+				>
+					{val}
+				</span>
+			)
+	})
+
+	const maxLocalRankSelector = [3, 10, 20, 50, 100, 200].map((val, idx) => {
+		if (val == params.max_local_rank) {
+			return (
+				<span key={idx} className='selected'>
+					{val}&nbsp;
+				</span>
+			)
+		} else
+			return (
+				<span
+					key={idx}
+					className='rank_selector'
+					onClick={() => setParams({ ...params, max_local_rank: val })}
+				>
+					{val}
+				</span>
+			)
+	})
+
+
 	return (
 		<div className="movie_page">
 			<FilterPanel />
@@ -320,6 +309,16 @@ const Movies = () => {
 					<tr>{moviesYears}</tr>
 				</tbody>
 			</table>
+			<h2>Settings</h2>
+			across: {numYearsSelector}
+			<br />
+			down: {maxLocalRankSelector}
+
+
+
+
+
+
 		</div>
 	)
 }

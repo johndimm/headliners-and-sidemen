@@ -296,8 +296,6 @@ button {
 
 
 
-
-
 .movie_page {
   position:relative;
   white-space: nowrap;
@@ -398,6 +396,7 @@ button {
   display: inline-block;
   width: 100%;
   columns: 4;
+  text-align: left;
 }
 
 .rank_selector {
@@ -428,3 +427,21 @@ button {
 }
 
 
+
+#scrubber {
+  width: 70%;
+  text-align: center;
+  display: inline-block;
+}
+#tooltip {
+  position:relative;
+  display: inline-block;
+  margin: 4px;
+  padding: 5px;
+  border: 1px solid black;
+}
+#scrubberContainer {
+  overflow:hidden;
+  text-align:center;
+  white-space: nowrap;
+}
