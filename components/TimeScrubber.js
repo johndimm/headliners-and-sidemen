@@ -9,11 +9,15 @@ const TimeScrubber = ( {params, setParams}) => {
     }
 
     const goleft = (e) => {
-		setParams({ ...params, year: parseInt(params.year) - parseInt(params.num_years) })
+        const newYear = parseInt(params.year) - parseInt(params.num_years)
+		setParams({ ...params, year: newYear })
+        setDate(newYear)
 	}
 
-	const goright = (e) => {
-		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
+    const goright = (e) => {
+        const newYear = parseInt(params.year) + parseInt(params.num_years)
+		setParams({ ...params, year: newYear })
+        setDate(newYear)
 	}
 
 	return (

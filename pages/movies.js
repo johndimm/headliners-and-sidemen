@@ -189,9 +189,6 @@ const Movies = () => {
 			<div id='filterpanel' className='filterpanel'>
 				<div className='page_title'>Best Movies Ever</div>
 
-
-				<TimeScrubber params={params} setParams={setParams} />
-
 				<form onChange={handleSubmit}>
 					<div className='genre_selector'>{genreSelector}</div>
 				</form>
@@ -301,6 +298,9 @@ const Movies = () => {
 	return (
 		<div className="movie_page">
 			<FilterPanel />
+
+			<TimeScrubber params={params} setParams={setParams} />
+			
 			<table className='movie_table'>
 				<thead>
 					<tr>{yearHeading}</tr>
