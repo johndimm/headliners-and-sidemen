@@ -52,10 +52,10 @@ const CoverArt = ({ record, data_source, size }) => {
 	const imageSized = (cover_url, size) => {
 		// return cover_url
 		if (size === 'big') {
-			return cover_url.replace('250.jpg', '500.jpg').replace('w200', 'w500')
+			return cover_url.replace('250.jpg', '500.jpg').replace('w200', 'w500').replace('SX300', 'SX600')
 		}
 		if (size === 'small') {
-			return cover_url.replace('500.jpg', '250.jpg').replace('w500', 'w200')
+			return cover_url.replace('500.jpg', '250.jpg').replace('w500', 'w200').replace("SX300", "SX200")
 		}
 	}
 

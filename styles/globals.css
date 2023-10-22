@@ -311,9 +311,7 @@ button {
   height: fit-content;
   position: relative;
   border: 1px solid gray;
-  margin: 10px;
   padding: 10px;
-  padding-top: 20px;
 
   overflow: hidden;
   font-size: 10pt;
@@ -389,15 +387,15 @@ button {
 
 .page_title {
   font-family: 'Copperplate';
-  font-size: 14pt;
+  font-size: 24pt;
+  margin-bottom: 5px;
 
 }
 
 .selected {
-  font-size:12pt;
+  font-size:18pt;
   color: blue;
   font-weight: 600;
-
 }
 
 
@@ -427,6 +425,8 @@ button {
   text-align: left;
   width: fit-content;
   height: 300px;
+  font-size: 16pt;
+  letter-spacing: 3px;
 }
 
 .arrow {

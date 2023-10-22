@@ -75,7 +75,7 @@ const Movies = () => {
 		year: 2018,
 		genres: '',
 		max_local_rank: 10,
-		num_years: 4
+		num_years: 3
 	})
 
 	const zoom = (className, width, unit) => {
@@ -180,15 +180,11 @@ const Movies = () => {
 
 			return <div key={idx}>{genre}</div>
 		})
-
-
-
 	
 
 		return (
 			<div id='filterpanel' className='filterpanel'>
 				<div className='page_title'>Best Movies Ever</div>
-
 				<form onChange={handleSubmit}>
 					<div className='genre_selector'>{genreSelector}</div>
 				</form>
@@ -300,7 +296,7 @@ const Movies = () => {
 			<FilterPanel />
 
 			<TimeScrubber params={params} setParams={setParams} />
-			
+
 			<table className='movie_table'>
 				<thead>
 					<tr>{yearHeading}</tr>
