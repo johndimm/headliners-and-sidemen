@@ -8,16 +8,6 @@ const TimeScrubber = ( {params, setParams}) => {
         setParams({...params, year:year})
     }
 
-	const showTooltip = (e) => {
-		let scrubber = document.getElementById('scrubber')
-		let w = scrubber.clientWidth
-		let x = e.nativeEvent.offsetX
-		let percent = x / w
-        let date = parseInt(1894 + (percent * (2023 - 1894)))
-        if (date != 0 && date != null)
-          setDate(date)
-	}
-
 	return (
 		<div id='scrubberContainer'>
 	
@@ -26,7 +16,7 @@ const TimeScrubber = ( {params, setParams}) => {
 				<input
 					type='range'
 					id='scrubber'
-					onMouseMove={showTooltip}
+                    onChange={(e) => setDate(e.currentTarget.value)}
 					step='1'
 					min='1894'
 					max='2023'
