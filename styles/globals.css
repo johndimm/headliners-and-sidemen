@@ -337,6 +337,7 @@ button {
   font-family: sans-serif; 
   margin-bottom: 12px;
   font-size: 10pt;
+  cursor: pointer;
 }
 
 .movie img {
@@ -433,4 +434,8 @@ button {
   font-size:20pt;
   cursor: pointer;
   margin: 10px;
+}
+
+.content {
+  white-space: wrap;
 }

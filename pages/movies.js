@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
 import TimeScrubber from '../components/TimeScrubber'
+import BrowseLayout from 'components/BrowseLayout'
 
 export const metadata = {
 	viewport: `width=device-width, height='device-height', initial-scale: 1.0`
@@ -39,7 +40,7 @@ const genres = [
 	'Western'
 ]
 
-const renderMovie = (movie, idx, num_years) => {
+const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 	const rank = movie.rank
 	const primaryTitle = movie.primarytitle
 	const cover_url = movie.cover_url
@@ -57,14 +58,14 @@ const renderMovie = (movie, idx, num_years) => {
 	const size = num_years < 5 ? 'big' : 'small'
 
 	return (
-		<div key={idx} className='movie'>
-			<a href={url} target='_blank' rel='noreferrer'>
+		<div key={idx} className='movie' onClick={ () => setReleaseGroup(tconst) }>
+			
 				<CoverArt record={record} data_source='imdb' size={size} />
 				<div>{primaryTitle}</div>
 				<div className='genres'>
 					#{rank} -- {genres.replace(',', ', ')}
 				</div>
-			</a>
+
 		</div>
 	)
 }
@@ -75,8 +76,10 @@ const Movies = () => {
 		year: 2018,
 		genres: '',
 		max_local_rank: 10,
-		num_years: 3
+		num_years: 3,
+		release_group: 'tt7286456'
 	})
+	const movieRef = useRef(null);
 
 	const zoom = (className, width, unit) => {
 		console.log('zoom:', width)
@@ -180,7 +183,6 @@ const Movies = () => {
 
 			return <div key={idx}>{genre}</div>
 		})
-	
 
 		return (
 			<div id='filterpanel' className='filterpanel'>
@@ -233,9 +235,17 @@ const Movies = () => {
 		)
 	})
 
+	const setReleaseGroup = (release_group) => {
+		setParams({...params, release_group: release_group})
+		movieRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          })
+	}
+
 	const moviesYears = Object.keys(years).map((val, idx) => {
 		const movieColumn = years[val].map((val2, idx2) => {
-			return renderMovie(val2, idx2, params.num_years)
+			return renderMovie(val2, idx2, params.num_years, setReleaseGroup)
 		})
 
 		return <td key={idx}>{movieColumn}</td>
@@ -290,12 +300,11 @@ const Movies = () => {
 			)
 	})
 
-
 	return (
-		<div className="movie_page">
-			<FilterPanel />
+		<div className='movie_page'>
+			<FilterPanel setReleaseGroup={setReleaseGroup}/>
 
-			<TimeScrubber params={params} setParams={setParams} />
+			<TimeScrubber params={params} setParams={setParams}/>
 
 			<table className='movie_table'>
 				<thead>
@@ -305,18 +314,17 @@ const Movies = () => {
 					<tr>{moviesYears}</tr>
 				</tbody>
 			</table>
-			<div className="settings">
+
+            <div ref={movieRef}>
+				<BrowseLayout release_group={params.release_group}/>
+			</div>
+
+			<div className='settings'>
 				<h2>Settings</h2>
 				across: {numYearsSelector}
 				<br />
 				down: {maxLocalRankSelector}
 			</div>
-
-
-
-
-
-
 
 		</div>
 	)

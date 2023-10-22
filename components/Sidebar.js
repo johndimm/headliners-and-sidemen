@@ -29,7 +29,6 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
       })
 
       // console.log('releases', releases)
-
       html = Object.keys(releases).map ( (release_group, idx) => {
         const record = releases[release_group][0]
         const artists = releases[release_group]
@@ -41,7 +40,11 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
       })
     }
 
-    return <div>{html}</div>
+    const title = (before_after == 'last_before')
+    ? "before" 
+    : "after"
+
+    return <div><h3>{title}</h3> {html}</div>
 }
 
 export default Sidebar
