@@ -8,11 +8,20 @@ const TimeScrubber = ( {params, setParams}) => {
         setParams({...params, year:year})
     }
 
+    const goleft = (e) => {
+		setParams({ ...params, year: parseInt(params.year) - parseInt(params.num_years) })
+	}
+
+	const goright = (e) => {
+		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
+	}
+
 	return (
 		<div id='scrubberContainer'>
 	
 			<form>
                 <div id='tooltip'>{date}</div>
+                <span className='arrow' onClick={goleft}>&larr;</span>
 				<input
 					type='range'
 					id='scrubber'
@@ -24,7 +33,7 @@ const TimeScrubber = ( {params, setParams}) => {
                     onMouseUp={(e) => setYear(e)} 
                     onTouchEnd={(e) => setYear(e)}
 				/>
-		
+                <span className='arrow' onClick={goright}>&rarr;</span>
 			</form>
 		</div>
 	)
