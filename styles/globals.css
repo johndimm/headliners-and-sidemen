@@ -163,8 +163,7 @@ td, th {
 }
 
 .artist_pix {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 10vw;
   border: 1px solid lightgray;
   margin: 5px;
   padding: 3px;
@@ -380,7 +379,7 @@ button {
 }
 
 .rank_selector {
-  margin-right: 5px;
+  margin: 10px;
   cursor: pointer;
 }
 
@@ -433,8 +432,7 @@ button {
   text-align: left;
   width: fit-content;
   height: 300px;
-  font-size: 16pt;
-  letter-spacing: 3px;
+  font-size: 14pt;
 }
 
 .arrow {
@@ -457,5 +455,5 @@ button {
 }
 
 .sidebar {
-  width: 15vw;
+  width: 20vw;
 }

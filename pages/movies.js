@@ -321,9 +321,11 @@ const Movies = () => {
 
 			<div className='settings'>
 				<h2>Settings</h2>
-				across: {numYearsSelector}
+				Years on a page: 
+				{numYearsSelector}
 				<br />
-				down: {maxLocalRankSelector}
+				Movies in a year: 
+				{maxLocalRankSelector}
 			</div>
 
 		</div>

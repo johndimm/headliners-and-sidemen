@@ -51,7 +51,7 @@ exports.releaseGroupSet = function (release_group_id) {
 };
 
 exports.updateIMDbCoverArt = function (imdbid, url) {
-    const cmd = `call update_imdb_cover_art('${imdbid}', '${url}');`
+    const cmd = `select update_imdb_cover_art('${imdbid}', '${url}');`
     console.log('updateIMDBCoverArt', cmd)
     return performSQLQuery(cmd);
 }
