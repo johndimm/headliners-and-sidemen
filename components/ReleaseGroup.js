@@ -2,7 +2,7 @@
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const ReleaseGroup = ( {record, data_source, artists}) => {
+const ReleaseGroup = ( {record, data_source, artists, setReleaseGroup}) => {
     const link = `/release_group/${record.release_group}`
     const hlin = record.headliner
       ? <span> by {record.headliner}</span>
@@ -23,13 +23,13 @@ const ReleaseGroup = ( {record, data_source, artists}) => {
       begin_date = record['begin_date'].replace('-01-01','')
 
     return <div className='linked_album'>
-          <a href={link}>
-              <div className="album_title">
+  
+              <div className="album_title" onClick={() => setReleaseGroup(record.release_group)}>
                 <b>{record.title}</b> {hlin} 
                 <div className='date'>{begin_date}</div>
                 <CoverArt record={record} data_source={data_source} size='small'/>
               </div>
-          </a>
+
           {artistsHTML}
         </div>
 }

@@ -316,7 +316,7 @@ const Movies = () => {
 			</table>
 
             <div ref={movieRef}>
-				<BrowseLayout release_group={params.release_group}/>
+				<BrowseLayout release_group={params.release_group} setReleaseGroup={setReleaseGroup}/>
 			</div>
 
 			<div className='settings'>

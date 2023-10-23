@@ -52,10 +52,16 @@ const CoverArt = ({ record, data_source, size }) => {
 	const imageSized = (cover_url, size) => {
 		// return cover_url
 		if (size === 'big') {
-			return cover_url.replace('250.jpg', '500.jpg').replace('w200', 'w500').replace('SX300', 'SX600')
+			return cover_url
+				.replace('250.jpg', '500.jpg')
+				.replace('w200', 'w500')
+				.replace('SX300', 'SX600')
 		}
 		if (size === 'small') {
-			return cover_url.replace('500.jpg', '250.jpg').replace('w500', 'w200').replace("SX300", "SX200")
+			return cover_url
+				.replace('500.jpg', '250.jpg')
+				.replace('w500', 'w200')
+				.replace('SX300', 'SX200')
 		}
 	}
 
@@ -69,31 +75,28 @@ const CoverArt = ({ record, data_source, size }) => {
 			return
 		}
 
-    // Request info about this title from the omdb API.
+		// Request info about this title from the omdb API.
 		setTimeout(() => getPoster(imdbid), Math.random() * 100)
 	}, [imdbid])
-
 
 	if (record.cover_url && record.cover_url != 'N/A') {
 		const bigCover = imageSized(record.cover_url, size)
 
 		return (
-
 			<img
 				id={record.release_group}
-        data={bigCover}
-        src={bigCover}
-        type="image/jpeg"
+				data={bigCover}
+				src={bigCover}
+				type='image/jpeg'
 				alt={record.release_group}
-
 				onError={(e) => {
-          console.log('cover image error', bigCover)
-          e.target.style.display = 'none'
-          }}
-        onLoad={(e) => {
-          //console.log('cover image loaded!', bigCover)
-          e.target.style.display = 'block'
-          }}
+					console.log('cover image error', bigCover)
+					e.target.style.display = 'none'
+				}}
+				onLoad={(e) => {
+					//console.log('cover image loaded!', bigCover)
+					e.target.style.display = 'block'
+				}}
 			/>
 		)
 	} else {
@@ -104,21 +107,21 @@ const CoverArt = ({ record, data_source, size }) => {
 	if (data && 'Poster' in data && data.Poster !== 'N/A' && data.Poster !== 'N') {
 		// console.log('Cover Art using downloaded image, data.Poster', data.Poster)
 
-    // Displaying an image downloaded from the omdb API.
+		// Displaying an image downloaded from the omdb API.
 		const coverImg = imageSized(data.Poster, size)
 		image = (
 			<img
 				src={coverImg}
 				alt='cover_art'
-				onError={(e) => { 
-          console.log('poster image error', coverImg, e)
+				onError={(e) => {
+					console.log('poster image error', coverImg, e)
 					e.target.style.display = 'none'
-		  	}}
+				}}
 				onLoad={(e) => {
-          //console.log('poster image loaded!', coverImg, e)
-          updateDatabase(imdbid, coverImg)
-          e.target.style.display = 'block'
-          }}
+					//console.log('poster image loaded!', coverImg, e)
+					updateDatabase(imdbid, coverImg)
+					e.target.style.display = 'block'
+				}}
 			/>
 		)
 	} else {

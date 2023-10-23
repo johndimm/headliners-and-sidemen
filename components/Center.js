@@ -12,7 +12,7 @@ const externalLinks = (dataSource, imdbid, record) => {
     'imdb_tv': 'tv show'
   }
 
-  const date = record.begin_date.slice(0,4)
+  const date = record?.begin_date?.slice(0,4)
 
   const category = categories[dataSource]
 
@@ -81,7 +81,7 @@ function titleCase(str) {
       .join(' ');
 }
 
-const Center = ( {release_group, data_source}) => {
+const Center = ( {release_group, data_source, setReleaseGroup}) => {
     const [data, setData] = useState ([])
     const [album, setAlbum] = useState({})
     // console.log('data_source', data_source)

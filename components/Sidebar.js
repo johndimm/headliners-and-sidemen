@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReleaseGroup from 'components/ReleaseGroup'
 // import dups from 'utils/dups'
 
-const Sidebar = ( {release_group, data_source, before_after} ) => {
+const Sidebar = ( {release_group, data_source, before_after, setReleaseGroup} ) => {
     const [records, setRecords] = useState([])
 
     useEffect( () => {
@@ -36,7 +36,8 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
           key={idx} 
           record={record} 
           data_source={data_source} 
-          artists={artists} />
+          artists={artists} 
+          setReleaseGroup={setReleaseGroup}/>
       })
     }
 

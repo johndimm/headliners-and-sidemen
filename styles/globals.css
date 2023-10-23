@@ -49,19 +49,19 @@ td, th {
 
 .center {
   text-align: center;
-  max-width: 550px;
+  max-width: 40vw;
   padding: 10px;
   margin: 10px;
 }
 
 .linked_album img, .header img, .external_links img {
-  max-width: 200px;
+  max-width: 100%;
   padding: 5px;
   margin: 5px;
 }
 
 .center img {
-  max-width: 500px;
+  max-width: 100%
 }
 
 .headliner {
@@ -72,8 +72,8 @@ td, th {
   padding: 10px;
   margin: 10px;
   border: 1px solid lightgray;
-  max-width: 250px;
-  min-width: 200px;
+  max-width: 25vw;
+  min-width: 15vw;
   border: 1px solid lightgray;
   border-radius: 5px;
   cursor:pointer;
@@ -95,6 +95,10 @@ td, th {
 
 .xalbum_title:hover {
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
+}
+
+.album_title {
+  cursor: pointer;
 }
 
 .header {
@@ -143,7 +147,7 @@ td, th {
 .plot, .details {
   display: inline-block;
   text-align: left;
-  width: 400px;
+  width: 35vw;
   margin: 20px;
   background-color: #EEEEEE;
   border: 1px solid lightgray;
@@ -349,6 +353,7 @@ button {
   text-decoration: none;
   table-layout: fixed; 
   margin-right: 10px;
+  width: 100%;
 }
 
 .movie_table th { position: sticky; top: 0; background-color: white}
@@ -438,4 +443,5 @@ button {
 
 .content {
   white-space: wrap;
+  width: 100%;
 }
