@@ -105,7 +105,7 @@ td, th {
   position: relative;
   top: 0;
   padding: 20px;
-  white-space: nowrap;
+  white-space: wrap;
   background-color: white;
   width: 100%
 }
@@ -215,6 +215,7 @@ td, th {
   font-size: 10pt;
   margin-right: 20px;
   top:-100px;
+  white-space: nowrap;
 }
 
 .age {
