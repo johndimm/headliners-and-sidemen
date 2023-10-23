@@ -84,6 +84,7 @@ const CoverArt = ({ record, data_source, size }) => {
 
 		return (
 			<img
+			    className='center_img'
 				id={record.release_group}
 				data={bigCover}
 				src={bigCover}

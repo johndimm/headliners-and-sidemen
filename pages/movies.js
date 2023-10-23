@@ -73,10 +73,10 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 const Movies = () => {
 	const [data, setMovies] = useState([])
 	const [params, setParams] = useState({
-		year: 2018,
+		year: 2021,
 		genres: '',
 		max_local_rank: 10,
-		num_years: 3,
+		num_years: 4,
 		release_group: 'tt7286456'
 	})
 	const movieRef = useRef(null);

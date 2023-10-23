@@ -45,7 +45,10 @@ const Sidebar = ( {release_group, data_source, before_after, setReleaseGroup} ) 
     ? "before" 
     : "after"
 
-    return <div><h3>{title}</h3> {html}</div>
+    return <div className="sidebar">
+       <div className="sidebar_title">{title}</div>
+       {html}
+       </div>
 }
 
 export default Sidebar
