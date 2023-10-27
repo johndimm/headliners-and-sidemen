@@ -86,7 +86,7 @@ const Movies = () => {
 	const topMovieTable = { settings: 1, context: 2, movie_table: 3 }
 	const topContext = { settings: 1, context: 3, movie_table: 2 }
 
-	const [zindex, setZindex] = useState(topSettings)
+	const [zindex, setZindex] = useState(topMovieTable)
 
 	const zoom = (className, width, unit) => {
 		console.log('zoom:', width)
