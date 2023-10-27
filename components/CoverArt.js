@@ -50,19 +50,23 @@ const CoverArt = ({ record, data_source, size }) => {
 	}
 
 	const imageSized = (cover_url, size) => {
-		// return cover_url
+		let url = ''
 		if (size === 'big') {
-			return cover_url
+			url = cover_url
 				.replace('250.jpg', '500.jpg')
 				.replace('w200', 'w500')
 				.replace('SX300', 'SX600')
+				.replace('SX200', 'SX600')
 		}
 		if (size === 'small') {
-			return cover_url
+			url =  cover_url
 				.replace('500.jpg', '250.jpg')
 				.replace('w500', 'w200')
 				.replace('SX300', 'SX200')
+				.replace('SX600', 'SX200')
 		}
+		// console.log(`${size} ${url} ${cover_url}`)
+		return url
 	}
 
 	useEffect(() => {

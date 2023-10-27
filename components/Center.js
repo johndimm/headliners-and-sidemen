@@ -3,14 +3,30 @@ import axios from 'axios'
 import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
+const categories = {
+  'musicbrainz': 'album', 
+  'imdb': 'movie', 
+  'imdb_tv': 'tv show'
+}
+
+const youTube = (dataSource, imdbid, record) => {
+  const youtube_logo = '/youtube.png'
+  const date = record?.begin_date?.slice(0,4)
+  const category = categories[dataSource]
+  const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date} trailer`) 
+  const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+  return (
+
+            <div>
+         <a target='imdb' rel="noreferrer" href={youtube_url}>
+           <img height='40' src={youtube_logo} alt=''/>
+         </a>
+       </div> 
+  )
+}
+
 const externalLinks = (dataSource, imdbid, record) => {
   const youtube_logo = '/youtube.png'
-
-  const categories = {
-    'musicbrainz': 'album', 
-    'imdb': 'movie', 
-    'imdb_tv': 'tv show'
-  }
 
   const date = record?.begin_date?.slice(0,4)
 
@@ -45,7 +61,7 @@ const externalLinks = (dataSource, imdbid, record) => {
     const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
     const link = `https://www.imdb.com/title/${imdbid}`
 
-    const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date}`) 
+    const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date} trailer`) 
     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
 
     const rtLogo = "https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png"
@@ -154,8 +170,10 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
       begin_date = begin_date.toString().replace('-01-01','')
 
       links = externalLinks(data_source, imdbid, data[0])
+      let youtube = youTube(data_source, imdbid, data[0])
 
       release = <div>
+         {youtube}
           <div className='date'>{begin_date}</div>
           <div className='title'>{title}</div>
           <div className='headliner'>{data[0].headliner}</div>

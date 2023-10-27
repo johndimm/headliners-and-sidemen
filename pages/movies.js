@@ -55,17 +55,18 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 		cover_url: movie.cover_url
 	}
 
-	const size = num_years < 5 ? 'big' : 'small'
+	const td_width = (1.0 / num_years) * 100
+	const size = td_width > 25 ? 'small' : 'big'
+
+	console.log('td_width', td_width)
 
 	return (
-		<div key={idx} className='movie' onClick={ () => setReleaseGroup(tconst) }>
-			
-				<CoverArt record={record} data_source='imdb' size={size} />
-				<div>{primaryTitle}</div>
-				<div className='genres'>
-					#{rank} -- {genres.replace(',', ', ')}
-				</div>
-
+		<div key={idx} className='movie' onClick={() => setReleaseGroup(tconst)}>
+			<CoverArt record={record} data_source='imdb' size={size} />
+			<div>{primaryTitle}</div>
+			<div className='genres'>
+				#{rank} -- {genres.replace(',', ', ')}
+			</div>
 		</div>
 	)
 }
@@ -75,11 +76,17 @@ const Movies = () => {
 	const [params, setParams] = useState({
 		year: 2021,
 		genres: '',
-		max_local_rank: 10,
+		max_local_rank: 3,
 		num_years: 4,
 		release_group: 'tt7286456'
 	})
-	const movieRef = useRef(null);
+	const movieRef = useRef(null)
+
+	const topSettings = { settings: 3, context: 1, movie_table: 2 }
+	const topMovieTable = { settings: 1, context: 2, movie_table: 3 }
+	const topContext = { settings: 1, context: 3, movie_table: 2 }
+
+	const [zindex, setZindex] = useState(topSettings)
 
 	const zoom = (className, width, unit) => {
 		console.log('zoom:', width)
@@ -171,12 +178,22 @@ const Movies = () => {
 					className='selected'
 					key={idx}
 					style={{ cursor: 'pointer' }}
-					onClick={() => setParams({ ...params, genres: '' })}
+					onClick={() => {
+						setParams({ ...params, genres: '' })
+						setZindex(topMovieTable)
+					}}
 				>
 					{val}
 				</span>
 			) : (
-				<span className='genre' key={idx} onClick={(e) => setParams({ ...params, genres: val })}>
+				<span
+					className='genre'
+					key={idx}
+					onClick={(e) => {
+						setParams({ ...params, genres: val })
+						setZindex(topMovieTable)
+					}}
+				>
 					{val}
 				</span>
 			)
@@ -217,30 +234,43 @@ const Movies = () => {
 	}, [params])
 
 	const years = {}
+	let firstYear = '3000'
+	let lastYear = '1900'
 	if (Array.isArray(data) && data.length > 0) {
 		data.forEach((val, idx) => {
-			// if (years[val.startyear] == undefined) {
-			if (!years.hasOwnProperty(val.startyear)) {
+			const year = val.startyear
+			if (year < firstYear) firstYear = year
+			if (year > lastYear) lastYear = year
+
+			if (!years.hasOwnProperty(year)) {
 				years[val.startyear] = []
 			}
 			years[val.startyear].push(val)
 		})
 	}
 
-	const yearHeading = Object.keys(years).map((val, idx) => {
+	const yearHeading = Object.keys(years).map((year, idx) => {
+		const onClick =
+			year == firstYear || year == lastYear
+				? () => setParams({ ...params, year: year })
+				: () => setZindex(topSettings)
 		return (
 			<th key={idx}>
-				<div className='year_cell'>{val}</div>
+				<div className='year_cell' onClick={onClick}>
+					{year}
+				</div>
 			</th>
 		)
 	})
 
 	const setReleaseGroup = (release_group) => {
-		setParams({...params, release_group: release_group})
-		movieRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          })
+		setParams({ ...params, release_group: release_group })
+		setZindex(topContext)
+
+		//movieRef.current.scrollIntoView({
+		//	behavior: 'smooth',
+		//	block: 'start'
+		///})
 	}
 
 	const moviesYears = Object.keys(years).map((val, idx) => {
@@ -248,7 +278,14 @@ const Movies = () => {
 			return renderMovie(val2, idx2, params.num_years, setReleaseGroup)
 		})
 
-		return <td key={idx}>{movieColumn}</td>
+		const width = (1.0 / params.num_years) * 100
+		const style = { width: `${width}%` }
+
+		return (
+			<td style={style} key={idx}>
+				{movieColumn}
+			</td>
+		)
 	})
 
 	const goleft = (e) => {
@@ -302,11 +339,20 @@ const Movies = () => {
 
 	return (
 		<div className='movie_page'>
-			<FilterPanel setReleaseGroup={setReleaseGroup}/>
+			<div className='settings' style={{ zIndex: zindex['settings'] }}>
+				<div>
+					<a onClick={() => setZindex(topMovieTable)}>back</a>
+				</div>
+				<FilterPanel setReleaseGroup={setReleaseGroup} />
+				<TimeScrubber params={params} setParams={setParams} />
+				Years on a page:
+				{numYearsSelector}
+				<br />
+				Movies in a year:
+				{maxLocalRankSelector}
+			</div>
 
-			<TimeScrubber params={params} setParams={setParams}/>
-
-			<table className='movie_table'>
+			<table className='movie_table' style={{ zIndex: zindex['movie_table'] }}>
 				<thead>
 					<tr>{yearHeading}</tr>
 				</thead>
@@ -315,19 +361,14 @@ const Movies = () => {
 				</tbody>
 			</table>
 
-            <div ref={movieRef}>
-				<BrowseLayout release_group={params.release_group} setReleaseGroup={setReleaseGroup}/>
+			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
+				<a onClick={() => setZindex(topMovieTable)}>back</a>
+				<BrowseLayout
+					release_group={params.release_group}
+					setReleaseGroup={setReleaseGroup}
+					noHeader={true}
+				/>
 			</div>
-
-			<div className='settings'>
-				<h2>Settings</h2>
-				Years on a page: 
-				{numYearsSelector}
-				<br />
-				Movies in a year: 
-				{maxLocalRankSelector}
-			</div>
-
 		</div>
 	)
 }

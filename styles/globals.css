@@ -100,6 +100,11 @@ td, th {
 .album_title {
   cursor: pointer;
   font-size: 10pt;
+  text-align: center;
+}
+
+.album_title img {
+  display: inline-block;
 }
 
 .header {
@@ -357,7 +362,12 @@ button {
   width: 100%;
 }
 
-.movie_table th { position: sticky; top: 0; background-color: white}
+
+.movie_table th { 
+  position: sticky; 
+  top: 0; 
+  background-color: white
+}
 
 .genres { font-size: 8pt;}
 
@@ -456,4 +466,38 @@ button {
 
 .sidebar {
   width: 20vw;
+}
+
+.context {
+  position: fixed;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.movie_table {
+  position: relative;
+  z-index: 2;
+  background-color: white;
+  overflow-y: hidden;
+}
+
+body {
+  overflow-y: auto;
+}
+
+.settings {
+  position: fixed;
+  top: calc(50vh - 175px);
+  left: calc(50vw - 250px);
+  width: 575px;
+  height: 350px;
+  z-index: 3;
+  border: 1px solid black;
+  background-color: white;
+  text-align: center;
 }

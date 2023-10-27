@@ -7,7 +7,7 @@ import Center from 'components/Center'
 import Header from 'components/Header'
 
 // const Index = () => {
-export default function BrowseLayout( { release_group, setReleaseGroup }) {
+export default function BrowseLayout( { release_group, setReleaseGroup, noHeader }) {
   const [dataSource, setDataSource] = React.useState('')
 
   useEffect( () => {
@@ -34,8 +34,12 @@ export default function BrowseLayout( { release_group, setReleaseGroup }) {
       return null
   }
 
+  const header = noHeader 
+    ? <div></div>
+    : <Header data_source={dataSource}/>
+
     return <div>
-    <Header data_source={dataSource}/>
+    {header}
     <div className="content">
       <table>
       <tbody><tr>

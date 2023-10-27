@@ -24,8 +24,8 @@ const TimeScrubber = ( {params, setParams}) => {
 		<div id='scrubberContainer'>
 	
 			<form>
-                <div id='tooltip'>{date}</div>
                 <span className='arrow' onClick={goleft}>&larr;</span>
+                <div id='tooltip'>{date}</div>
 				<input
 					type='range'
 					id='scrubber'
