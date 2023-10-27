@@ -76,7 +76,7 @@ const Movies = () => {
 	const [params, setParams] = useState({
 		year: 2021,
 		genres: '',
-		max_local_rank: 3,
+		max_local_rank: 10,
 		num_years: 4,
 		release_group: 'tt7286456'
 	})
@@ -203,7 +203,7 @@ const Movies = () => {
 
 		return (
 			<div id='filterpanel' className='filterpanel'>
-				<div className='page_title'>Best Movies Ever</div>
+				<div className='page_title'>Wall of Movies</div>
 				<form onChange={handleSubmit}>
 					<div className='genre_selector'>{genreSelector}</div>
 				</form>
@@ -250,13 +250,22 @@ const Movies = () => {
 	}
 
 	const yearHeading = Object.keys(years).map((year, idx) => {
-		const onClick =
-			year == firstYear || year == lastYear
-				? () => setParams({ ...params, year: year })
-				: () => setZindex(topSettings)
+		let onClick = null
+		let style = {}
+		if (year == firstYear) {
+           onClick = () => setParams({ ...params, year: year })
+           style = {"cursor": "w-resize"}
+		} else if (year == lastYear) {
+		   onClick = () => setParams({ ...params, year: year })	
+           style = {"cursor": "e-resize"}
+		} else {
+			onClick = () => setZindex(topSettings)
+			style = {"cursor": "n-resize"}
+		}
+
 		return (
 			<th key={idx}>
-				<div className='year_cell' onClick={onClick}>
+				<div className='year_cell' onClick={onClick} style={style}>
 					{year}
 				</div>
 			</th>
@@ -352,15 +361,6 @@ const Movies = () => {
 				{maxLocalRankSelector}
 			</div>
 
-			<table className='movie_table' style={{ zIndex: zindex['movie_table'] }}>
-				<thead>
-					<tr>{yearHeading}</tr>
-				</thead>
-				<tbody>
-					<tr>{moviesYears}</tr>
-				</tbody>
-			</table>
-
 			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
 				<a onClick={() => setZindex(topMovieTable)}>back</a>
 				<BrowseLayout
@@ -368,6 +368,17 @@ const Movies = () => {
 					setReleaseGroup={setReleaseGroup}
 					noHeader={true}
 				/>
+			</div>
+
+			<div className='movie_table_div' style={{ zIndex: zindex['movie_table'] }}>
+				<table className='movie_table' >
+					<thead>
+						<tr>{yearHeading}</tr>
+					</thead>
+					<tbody>
+						<tr>{moviesYears}</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	)
