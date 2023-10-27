@@ -72,6 +72,8 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 }
 
 const Movies = () => {
+
+
 	const [data, setMovies] = useState([])
 	const [params, setParams] = useState({
 		year: 2021,
@@ -224,12 +226,14 @@ const Movies = () => {
 	}
 
 	useEffect(() => {
-		numYearsChanged(params.num_years)
+		const mw = document.body.clientWidth;
+		const num_years = Math.max(parseInt(mw / 200), 3)
+		console.log('num_years', num_years)
+		setParams({...params, num_years:num_years})
+		numYearsChanged(num_years)
 	}, [])
 
 	useEffect(() => {
-		const mw = getDivWidth('body')
-		console.log('useEffect: mw', mw)
 		getData()
 	}, [params])
 

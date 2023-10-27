@@ -122,7 +122,7 @@ td, th {
 
 .page_title_div {
   display: inline-block;
-  margin-left: 40px;
+  margin-left: 200px;
   width: 50vw;
 }
 .page_title {
@@ -492,9 +492,7 @@ button {
 
 .movie_table {
   position: relative;
-
-
-  z-index: 2;
+  width:100%;
   background-color: white;
   overflow-y: scroll;
 }
