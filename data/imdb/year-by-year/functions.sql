@@ -59,7 +59,7 @@ with movies as (
     and
     ( _skim is null or _skim = false
       or
-      abs(tmy.startYear - _year) < _num_years / 2
+      abs(tmy.startYear - _year) < _num_years
     )
     and 
     (
@@ -117,7 +117,7 @@ end $$;
 select
   *
 from
-  get_movies(2018, '', null, null, 2, 5, 'Killers', true)
+  get_movies(2018, '', null, null, 2, 5, '', true)
 limit
   10;
 
