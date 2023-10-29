@@ -1,6 +1,4 @@
 drop function if exists array_intersect_count;
-
-drop function if exists array_intersect_count;
 CREATE FUNCTION array_intersect_count(anyarray, anyarray)
   RETURNS int
   language sql
@@ -21,7 +19,8 @@ or replace function get_movies(
   _has_cover boolean,
   _max_local_rank int,
   _num_years int,
-  _query text
+  _query text,
+  _skim boolean
 ) returns table (
   startyear int,
   cover_url text,
@@ -53,14 +52,17 @@ with movies as (
   from
     top_movie_year as tmy
   where
-    tmy.rank < 6000 - (5000 / 113) * (tmy.startYear - 1910)
+    ( _skim is null or _skim = false
+      or 
+      tmy.rank < 6000 - (5000 / 113) * (tmy.startYear - 1910)
+    )
+    and
+    ( _skim is null or _skim = false
+      or
+      abs(tmy.startYear - _year) < _num_years / 2
+    )
     and 
     (
-      _year is null
-      or tmy.startYear between _year - floor((_num_years) / 2)
-      and _year + _num_years - 1 - floor((_num_years) / 2)
-    )
-    and (
       _title_type is null
       or tmy.titleType = _title_type
     )
@@ -84,11 +86,19 @@ with movies as (
     ) desc,
     abs(length(tmy.genres) - length(_genres)) asc,
     rank
+), start_years as (
+  select movies.startYear, count(*)
+  from movies
+  group by 1
+  order by abs(movies.startYear - _year)
+  limit _num_years
 )
 select
-  *
+  movies.*
 from
-  movies
+  start_years as sy
+join  
+  movies on movies.startYear = sy.startYear
 where
   movies.local_rank between 1
   and _max_local_rank
@@ -107,7 +117,15 @@ end $$;
 select
   *
 from
-  get_movies(2018, '', null, null, 2, 5, 'Killers')
+  get_movies(2018, '', null, null, 2, 5, 'Killers', true)
 limit
   10;
 
+/*
+    and 
+    (
+      _year is null
+      or tmy.startYear between _year - floor((_num_years) / 2)
+      and _year + _num_years - 1 - floor((_num_years) / 2)
+    )
+*/

@@ -214,7 +214,8 @@ const Movies = () => {
 	}
 
 	const getData = async () => {
-		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'`
+		const skim = ! params.query || params.query == ''
+		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
 
 		console.log(url)
 
@@ -354,7 +355,7 @@ const Movies = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault()
 
-		const form = document.forms[1] // e.target
+		const form = document.forms[0] // e.target
 		const formData = new FormData(form)
 		const formProps = Object.fromEntries(formData)
 
@@ -387,7 +388,7 @@ const Movies = () => {
 		<div className='movie_page'>
 			<div className='menu'>
 
-				<TimeScrubber params={params} setParams={setParams} />
+
 
 
 				<form className='top_form' onSubmit={handleSubmit}>
@@ -398,11 +399,14 @@ const Movies = () => {
 					<input name='query' defaultValue={params.query} />
 					<input type='submit' value='&#128269;' />
 				</form>
+				<br />
+
+				<TimeScrubber params={params} setParams={setParams} />
 
 			</div>
 
 			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
-				<a onClick={() => setZindex(topMovieTable)}>back</a>
+				<a onClick={() => setZindex(topMovieTable)} style={{"cursor":"pointer", "fontSize": "18pt"}}> &larr; back</a>
 				<BrowseLayout
 					release_group={params.release_group}
 					setReleaseGroup={setReleaseGroup}

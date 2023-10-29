@@ -68,11 +68,6 @@ const externalLinks = (dataSource, imdbid, record) => {
     const rtLink = `https://www.rottentomatoes.com/search?search=${query}`
 
     return <div className='external_links'>
-        <div>
-         <a target='imdb' rel="noreferrer" href={youtube_url}>
-           <img height='40' src={youtube_logo} alt=''/>
-         </a>
-       </div>   
 
        <div>
          <a target='imdb' rel="noreferrer" href={rtLink}>

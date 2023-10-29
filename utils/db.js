@@ -56,7 +56,7 @@ exports.updateIMDbCoverArt = function (imdbid, url) {
     return performSQLQuery(cmd);
 }
 
-exports.getMovies = function (year, genres, title_type, has_cover, max_local_rank, num_years, query) {
+exports.getMovies = function (year, genres, title_type, has_cover, max_local_rank, num_years, query, skim) {
 
     const cmd = `select * from get_movies(
         ${year || 'null'}, 
@@ -65,10 +65,11 @@ exports.getMovies = function (year, genres, title_type, has_cover, max_local_ran
         ${has_cover || 'null'},
         ${max_local_rank || 10},
         ${num_years || 5},
-        ${query || 'null'}
+        ${query || 'null'},
+        ${skim || 'null'}
         );`
 
-    //console.log(cmd)
+    console.log(cmd)
     return performSQLQuery(cmd);  
 }
 
