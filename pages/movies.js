@@ -84,8 +84,8 @@ const Movies = () => {
 	})
 	const movieRef = useRef(null)
 
-	const topSettings = { settings: 3, context: 1, movie_table: 2 }
-	const topMovieTable = { settings: 1, context: 2, movie_table: 3 }
+	// const topSettings = { settings: 3, context: 1, movie_table: 2 }
+	const topMovieTable = { settings: 2, context: 1, movie_table: 3 }
 	const topContext = { settings: 1, context: 3, movie_table: 2 }
 
 	const [zindex, setZindex] = useState(topMovieTable)
@@ -140,10 +140,6 @@ const Movies = () => {
 		const movieWidth = Math.floor(w / num_years) - 10
 		//console.log(`w:${w}, movieWidth:${movieWidth}}`)
 		// zoom('movie', movieWidth, 'px')
-	}
-
-	const repaint = () => {
-		numYearsChanged(params.num_years)
 	}
 
 	const FilterPanel = () => {
@@ -386,10 +382,7 @@ const Movies = () => {
 
 	return (
 		<div className='movie_page'>
-			<div className='menu'>
-
-
-
+			<div className='menu' style={{ zIndex: zindex['settings'] }}>
 
 				<form className='top_form' onSubmit={handleSubmit}>
 					<select className='genre' name='genre' onChange={handleSubmit}>
@@ -421,18 +414,17 @@ const Movies = () => {
 					</thead>
 					<tbody>
 						<tr>{moviesYears}</tr>
-						<tr>
-							<td colSpan="2" style={{"height":"200px"}}>
+					</tbody>
+				</table>
 
+                <div style={{"height":"200px"}}>
 				Years on a page:
 				{numYearsSelector}
 				<br />
 				Movies in a year:
 				{maxLocalRankSelector}
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				</div>
+	
 			</div>
 
 		</div>

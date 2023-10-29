@@ -66,8 +66,8 @@ const CoverArt = ({ record, data_source, size }) => {
 				.replace('SX600', 'SX200')
 		}
 
-		console.log(`imageSized:  ${size} ${cover_url}`)
-		console.log(`             ${url}`)
+		//console.log(`imageSized:  ${size} ${cover_url}`)
+		//console.log(`             ${url}`)
 		return url
 	}
 
@@ -87,7 +87,7 @@ const CoverArt = ({ record, data_source, size }) => {
 
 	if (record.cover_url && record.cover_url != 'N/A') {
 		const bigCover = imageSized(record.cover_url, size)
-		console.log('Cover Art using image from database')
+		// console.log('Cover Art using image from database')
 
 		return (
 			<img
