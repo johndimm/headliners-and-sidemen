@@ -1,5 +1,5 @@
-drop table if exists context;
-create table context as
+drop table if exists context_base;
+create table context_base as
 select 
     cast (tb.tconst as text) as release_group,
     cast (tb.primaryTitle as character varying) as title, 
@@ -10,7 +10,6 @@ select
     cast(tp.characters as text) as instrument,
     make_date(tb.startYear,1,1) as begin_date,
     cast(tb.startYear as int) - cast(nb.birthYear as int) as age,
-    rc.cover_url as cover_url,
     to_tsvector('english', tb.primaryTitle || ' ' || nb.primaryName) as fulltext,
     cast(ROW_NUMBER() OVER (PARTITION by tp.nconst
     ORDER BY tb.startYear
@@ -19,8 +18,26 @@ select
 from public.title_basics as tb
 join public.title_principals as tp on tp.tconst = tb.tconst
 join public.name_basics as nb on nb.nconst = tp.nconst
-left join release_cover as rc on rc.release_group = tb.tconst
 where tb.titleType = 'movie'
+;
+
+drop view if exists context;
+create view context as
+select
+    cb.release_group,
+    title,        
+    headliner,    
+    headliner_id, 
+    artist,       
+    artist_id,    
+    instrument,   
+    begin_date,   
+    age,   
+    rc.cover_url,       
+    fulltext,     
+    artist_seq
+from context_base as cb
+left join release_cover as rc on rc.release_group = cb.release_group
 ;
 
 

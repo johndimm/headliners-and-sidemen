@@ -13,7 +13,6 @@ as $FUNCTION$
 $FUNCTION$;
 
 drop function if exists get_movies;
-
 create
 or replace function get_movies(
   _year int,
@@ -21,7 +20,8 @@ or replace function get_movies(
   _title_type text,
   _has_cover boolean,
   _max_local_rank int,
-  _num_years int
+  _num_years int,
+  _query text
 ) returns table (
   startyear int,
   cover_url text,
@@ -33,7 +33,9 @@ or replace function get_movies(
   --combo text,
   --included boolean,
   --overlap_count int
-) language plpgsql as $$ begin return query with movies as (
+) language plpgsql as $$ begin return query 
+
+with movies as (
   select
     tmy.startYear,
     tmy.cover_url,
@@ -47,14 +49,7 @@ or replace function get_movies(
         ORDER BY
           tmy.rank
       ) as int
-    ) as local_rank -- ,
-    --array_to_string(
-    --    string_to_array(tmy.genres, ',') || string_to_array(_genres, ','), ',') as combo,
-    --string_to_array(tmy.genres, ',') @> string_to_array(_genres, ',') as included,
-    --array_intersect_count(
-    --    string_to_array(tmy.genres, ','),
-    --    string_to_array(_genres, ',')
-    --)
+    ) as local_rank 
   from
     top_movie_year as tmy
   where
@@ -77,6 +72,10 @@ or replace function get_movies(
       _genres is null
       or _genres = ''
       or string_to_array(tmy.genres, ',') && string_to_array(_genres, ',') -- or position(_genre in tmy.genres) > 0 
+    )
+    and (
+      _query is null or _query = ''
+      or position (_query in tmy.primaryTitle) > 0
     )
   order by
     array_intersect_count(
@@ -108,6 +107,7 @@ end $$;
 select
   *
 from
-  get_movies(2018, '', null, null, 2, 5)
+  get_movies(2018, '', null, null, 2, 5, 'Killers')
 limit
   10;
+

@@ -25,18 +25,19 @@ const TimeScrubber = ( {params, setParams}) => {
 	
 			<form>
                 <span className='arrow' onClick={goleft}>&larr;</span>
-                <div id='tooltip'>{date}</div>
+
 				<input
 					type='range'
 					id='scrubber'
                     onChange={(e) => setDate(e.currentTarget.value)}
 					step='1'
 					min='1894'
-					max='2023'
+					max='2024'
 					defaultValue={params.year}
                     onMouseUp={(e) => setYear(e)} 
                     onTouchEnd={(e) => setYear(e)}
 				/>
+                <div id='tooltip'>{date}</div>
                 <span className='arrow' onClick={goright}>&rarr;</span>
 			</form>
 		</div>

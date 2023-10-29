@@ -1,9 +1,8 @@
-drop table if exists top_movie_year;
+drop table if exists tmy;
 
-create table top_movie_year as
+create table tmy as
 select
     tb.startYear,
-    rc.cover_url,
     tb.primaryTitle,
     tb.genres,
     tb.tconst,
@@ -18,14 +17,29 @@ select
 from
     title_basics as tb
     join title_ratings as tr on tr.tconst = tb.tconst 
-    left join release_cover as rc on rc.release_group = tb.tconst
 where
     tb.titleType = 'movie'
 ;
 
-create index idx_tmy_start on top_movie_year(startYear);
-create index idx_tmy_rank on top_movie_year(rank);
-create index idx_tmy_genres on top_movie_year(genres);
-create index idx_tmy_type on top_movie_year(titleType);
+drop table if exists top_movie_year;
+drop view if exists top_movie_year;
+create view top_movie_year as
+select 
+    startYear,
+    rc.cover_url,
+    primaryTitle,
+    genres,
+    tmy.tconst,
+    titleType,
+    rank
+from tmy
+join release_cover as rc on rc.release_group = tmy.tconst
+;
+
+
+create index idx_tmy_start on tmy(startYear);
+create index idx_tmy_rank on tmy(rank);
+create index idx_tmy_genres on tmy(genres);
+create index idx_tmy_type on tmy(titleType);
 
 -- \copy top_movie_year to 'top_movie_year.tsv' delimiter E'\t' csv header;

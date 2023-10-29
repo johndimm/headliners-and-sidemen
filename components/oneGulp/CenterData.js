@@ -11,7 +11,7 @@ const CenterData = ( {records}) => {
     let coverArt
     if (Array.isArray(data) && data.length > 0) {
       console.log(data[0], data[0].release_group_gid)
-      coverArt = <CoverArt release_group_gid={data[0].release_group_gid} />
+      coverArt = <CoverArt release_group_gid={data[0].release_group_gid} size='small' />
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 

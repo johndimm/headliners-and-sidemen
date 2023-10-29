@@ -10,6 +10,7 @@ export const metadata = {
 }
 
 const genres = [
+	'All Genres',
 	'Action',
 	'Adult',
 	'Adventure',
@@ -55,8 +56,8 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 		cover_url: movie.cover_url
 	}
 
-	const td_width = (1.0 / num_years) * 100
-	const size = td_width > 25 ? 'small' : 'big'
+	const td_width = parseInt ((1.0 / num_years) * 100 )
+	const size = td_width > 25 ? 'big' : 'small'
 
 	console.log('td_width', td_width)
 
@@ -72,15 +73,14 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 }
 
 const Movies = () => {
-
-
 	const [data, setMovies] = useState([])
 	const [params, setParams] = useState({
 		year: 2021,
 		genres: '',
 		max_local_rank: 10,
 		num_years: 4,
-		release_group: 'tt7286456'
+		release_group: 'tt7286456',
+		query: ''
 	})
 	const movieRef = useRef(null)
 
@@ -214,7 +214,9 @@ const Movies = () => {
 	}
 
 	const getData = async () => {
-		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}`
+		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'`
+
+		console.log(url)
 
 		axios
 			.get(url)
@@ -226,10 +228,10 @@ const Movies = () => {
 	}
 
 	useEffect(() => {
-		const mw = document.body.clientWidth;
+		const mw = document.body.clientWidth
 		const num_years = Math.max(parseInt(mw / 200), 3)
 		console.log('num_years', num_years)
-		setParams({...params, num_years:num_years})
+		setParams({ ...params, num_years: num_years })
 		numYearsChanged(num_years)
 	}, [])
 
@@ -254,22 +256,10 @@ const Movies = () => {
 	}
 
 	const yearHeading = Object.keys(years).map((year, idx) => {
-		let onClick = null
-		let style = {}
-		if (year == firstYear) {
-           onClick = () => setParams({ ...params, year: year })
-           style = {"cursor": "w-resize"}
-		} else if (year == lastYear) {
-		   onClick = () => setParams({ ...params, year: year })	
-           style = {"cursor": "e-resize"}
-		} else {
-			onClick = () => setZindex(topSettings)
-			style = {"cursor": "n-resize"}
-		}
 
 		return (
 			<th key={idx}>
-				<div className='year_cell' onClick={onClick} style={style}>
+				<div className='year_cell' onClick={ () => setParams({ ...params, year: year })} >
 					{year}
 				</div>
 			</th>
@@ -350,19 +340,65 @@ const Movies = () => {
 			)
 	})
 
+	const genreDropdown = genres.map((val, idx) => {
+		const pattern = `${val}(,|$)`
+		var re = new RegExp(pattern)
+		//const checked = params.genres.match(re)
+		return (
+			<option key={idx} value={val}>
+				{val}
+			</option>
+		)
+	})
+
+	const handleSubmit = (event) => {
+		event.preventDefault()
+
+		const form = document.forms[1] // e.target
+		const formData = new FormData(form)
+		const formProps = Object.fromEntries(formData)
+
+		//const year = formData.get('year') || params.year
+		let genres = formData.get('genre')
+
+		if (genres == 'All Genres') {
+			genres = ''
+		}
+		//const genres = g.join(',')
+		//const max_local_rank = formData.get('max_local_rank')
+		//const num_years = formData.get('num_years')
+		const query = formData.get('query')
+
+		setParams({
+			...params,
+			//year: year,
+			genres: genres,
+			query: query
+			//max_local_rank: max_local_rank,
+			//num_years: num_years
+		})
+
+		//if (num_years != params.num_years) {
+		//	setTimeout(() => zoom(num_years), 100)
+		//}
+	}
+
 	return (
 		<div className='movie_page'>
-			<div className='settings' style={{ zIndex: zindex['settings'] }}>
-				<div>
-					<a onClick={() => setZindex(topMovieTable)}>back</a>
-				</div>
-				<FilterPanel setReleaseGroup={setReleaseGroup} />
+			<div className='menu'>
+
 				<TimeScrubber params={params} setParams={setParams} />
-				Years on a page:
-				{numYearsSelector}
-				<br />
-				Movies in a year:
-				{maxLocalRankSelector}
+
+
+				<form className='top_form' onSubmit={handleSubmit}>
+					<select className='genre' name='genre' onChange={handleSubmit}>
+						{genreDropdown}
+					</select>
+					
+					<input name='query' defaultValue={params.query} />
+					<input type='submit' value='&#128269;' />
+				</form>
+
 			</div>
 
 			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
@@ -375,15 +411,26 @@ const Movies = () => {
 			</div>
 
 			<div className='movie_table_div' style={{ zIndex: zindex['movie_table'] }}>
-				<table className='movie_table' >
+				<table className='movie_table'>
 					<thead>
 						<tr>{yearHeading}</tr>
 					</thead>
 					<tbody>
 						<tr>{moviesYears}</tr>
+						<tr>
+							<td colSpan="2" style={{"height":"200px"}}>
+
+				Years on a page:
+				{numYearsSelector}
+				<br />
+				Movies in a year:
+				{maxLocalRankSelector}
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
+
 		</div>
 	)
 }

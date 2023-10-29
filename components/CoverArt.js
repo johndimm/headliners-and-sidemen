@@ -39,7 +39,7 @@ const CoverArt = ({ record, data_source, size }) => {
 		console.log('updateDatabase, imdbid, cover_url', imdbid, cover_url)
 
 		const postdata = {
-			imdbid: imdbid.replace('tt', ''),
+			imdbid: imdbid, // .replace('tt', ''),
 			cover_url: cover_url
 		}
 
@@ -65,7 +65,9 @@ const CoverArt = ({ record, data_source, size }) => {
 				.replace('SX300', 'SX200')
 				.replace('SX600', 'SX200')
 		}
-		// console.log(`${size} ${url} ${cover_url}`)
+
+		console.log(`imageSized:  ${size} ${cover_url}`)
+		console.log(`             ${url}`)
 		return url
 	}
 
@@ -85,6 +87,7 @@ const CoverArt = ({ record, data_source, size }) => {
 
 	if (record.cover_url && record.cover_url != 'N/A') {
 		const bigCover = imageSized(record.cover_url, size)
+		console.log('Cover Art using image from database')
 
 		return (
 			<img
@@ -110,7 +113,7 @@ const CoverArt = ({ record, data_source, size }) => {
 
 	let image
 	if (data && 'Poster' in data && data.Poster !== 'N/A' && data.Poster !== 'N') {
-		// console.log('Cover Art using downloaded image, data.Poster', data.Poster)
+		console.log('Cover Art using downloaded image, data.Poster', data.Poster)
 
 		// Displaying an image downloaded from the omdb API.
 		const coverImg = imageSized(data.Poster, size)

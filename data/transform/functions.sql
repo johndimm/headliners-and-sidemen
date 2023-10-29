@@ -27,9 +27,10 @@ returns boolean
 language plpgsql    
 as $$
 begin
-    update context 
-    set cover_url = _url 
-    where release_group = _release_group;
+    insert into release_cover 
+    (release_group, cover_url)
+    values (_release_group, _url)
+    ;
 
     return 1;
 end;
