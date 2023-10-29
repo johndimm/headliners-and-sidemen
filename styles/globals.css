@@ -128,6 +128,7 @@ td, th {
 .page_title {
   font-size:24pt;
   font-weight: 600;
+  margin-left: 10px;
 }
 
 .page_subtitle {
@@ -406,9 +407,10 @@ button {
 .page_title {
   font-family: 'Copperplate';
   font-size: 18pt;
-  width: fit-content;
+
   float: left;
-  margin-left: 200px;
+  text-align: center;
+
 }
 
 .selected {
@@ -529,6 +531,7 @@ body {
   background-color: white;
   height: 70px;
   overflow: hidden;
+  text-align: center;
 
 }
 

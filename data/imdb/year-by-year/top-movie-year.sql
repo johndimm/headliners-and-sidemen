@@ -13,7 +13,8 @@ select
             ORDER BY
                 tr.averageRating * tr.numVotes DESC
         ) as int
-    ) as rank
+    ) as rank,
+    to_tsvector('english', tb.primaryTitle) as fulltext
 from
     title_basics as tb
     join title_ratings as tr on tr.tconst = tb.tconst 
@@ -31,7 +32,8 @@ select
     genres,
     tmy.tconst,
     titleType,
-    rank
+    rank,
+    fulltext
 from tmy
 join release_cover as rc on rc.release_group = tmy.tconst
 ;
@@ -41,5 +43,6 @@ create index idx_tmy_start on tmy(startYear);
 create index idx_tmy_rank on tmy(rank);
 create index idx_tmy_genres on tmy(genres);
 create index idx_tmy_type on tmy(titleType);
+create index ON tmy USING GIN (fulltext);
 
 -- \copy top_movie_year to 'top_movie_year.tsv' delimiter E'\t' csv header;

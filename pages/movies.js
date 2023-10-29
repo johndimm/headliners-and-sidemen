@@ -384,12 +384,13 @@ const Movies = () => {
 		<div className='movie_page'>
 			<div className='menu' style={{ zIndex: zindex['settings'] }}>
 
+			    <div className='page_title'>History of Cinema</div>
 				<form className='top_form' onSubmit={handleSubmit}>
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
 					
-					<input name='query' defaultValue={params.query} />
+					<input name='query' defaultValue={params.query} type="search" placeholder="search movie titles" size="18"/>
 					<input type='submit' value='&#128269;' />
 				</form>
 				<br />

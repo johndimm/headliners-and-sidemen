@@ -77,7 +77,8 @@ with movies as (
     )
     and (
       _query is null or _query = ''
-      or position (_query in tmy.primaryTitle) > 0
+      -- or position (_query in tmy.primaryTitle) > 0
+      or tmy.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     )
   order by
     array_intersect_count(
@@ -89,8 +90,10 @@ with movies as (
 ), start_years as (
   select movies.startYear, count(*)
   from movies
+  where movies.startYear >= _year - (_num_years / 2)
   group by 1
-  order by abs(movies.startYear - _year)
+  order by -- abs(movies.startYear - _year)
+    movies.startYear - _year
   limit _num_years
 )
 select
