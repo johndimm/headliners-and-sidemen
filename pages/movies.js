@@ -313,10 +313,10 @@ const Movies = () => {
 		const isLeftSwipe = distance > minSwipeDistance
 		const isRightSwipe = distance < -minSwipeDistance
 		if (isLeftSwipe) {
-			goleft()
+			goright()
 		}
 		if (isRightSwipe) {
-			goright()
+			goleft()
 		}
 	}
 
