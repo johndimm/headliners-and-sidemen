@@ -490,7 +490,7 @@ button {
 
 .movie_table_div {
   position: fixed;
-  top: 70px;
+  top: 72px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -530,7 +530,7 @@ body {
   display: inline-block;
   position: relative;
   background-color: white;
-  height: 70px;
+  height: 72px;
   overflow: hidden;
   text-align: center;
 
