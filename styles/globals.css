@@ -442,9 +442,9 @@ button {
 }
 
 .arrow {
-  font-size:18pt;
+  font-size:14pt;
   cursor: pointer;
-  margin: 2px;
+  margin: 1px;
   margin-left: 10px;
   margin-right: 10px;
 }
