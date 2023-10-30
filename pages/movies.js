@@ -56,7 +56,7 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 		cover_url: movie.cover_url
 	}
 
-	const td_width = parseInt ((1.0 / num_years) * 100 )
+	const td_width = parseInt((1.0 / num_years) * 100)
 	const size = td_width > 25 ? 'big' : 'small'
 
 	console.log('td_width', td_width)
@@ -86,6 +86,8 @@ const Movies = () => {
 		min_year: null,
 		max_year: null
 	})
+	const [touchStart, setTouchStart] = useState(null)
+	const [touchEnd, setTouchEnd] = useState(null)
 
 	const movieRef = useRef(null)
 
@@ -114,7 +116,7 @@ const Movies = () => {
 	}
 
 	const getData = async () => {
-		const skim = ! params.query || params.query == ''
+		const skim = !params.query || params.query == ''
 		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
 
 		console.log(url)
@@ -126,15 +128,15 @@ const Movies = () => {
 
 				let min_year = null
 				let max_year = null
-				data.forEach ( (movie, idx) => {
+				data.forEach((movie, idx) => {
 					if (!min_year || min_year > movie.startyear) {
-                        min_year = movie.startyear
+						min_year = movie.startyear
 					}
 					if (!max_year || max_year < movie.startyear) {
 						max_year = movie.startyear
 					}
 				})
-				setYearRange({min_year:min_year, max_year: max_year})
+				setYearRange({ min_year: min_year, max_year: max_year })
 				setMovies(data)
 			})
 			.catch((err) => err)
@@ -165,15 +167,13 @@ const Movies = () => {
 				years[val.startyear] = []
 			}
 			years[val.startyear].push(val)
-
 		})
 	}
 
 	const yearHeading = Object.keys(years).map((year, idx) => {
-
 		return (
 			<th key={idx}>
-				<div className='year_cell' onClick={ () => setParams({ ...params, year: year })} >
+				<div className='year_cell' onClick={() => setParams({ ...params, year: year })}>
 					{year}
 				</div>
 			</th>
@@ -205,11 +205,11 @@ const Movies = () => {
 		)
 	})
 
-	const goleft = (e) => {
+	const goleft = () => {
 		setParams({ ...params, year: parseInt(params.year) - parseInt(params.num_years) })
 	}
 
-	const goright = (e) => {
+	const goright = () => {
 		setParams({ ...params, year: parseInt(params.year) + parseInt(params.num_years) })
 	}
 
@@ -297,27 +297,62 @@ const Movies = () => {
 		//}
 	}
 
-	return (
-		<div className='movie_page'>
-			<div className='menu' style={{ zIndex: zindex['settings'] }}>
+	// the required distance between touchStart and touchEnd to be detected as a swipe
+	const minSwipeDistance = 50
 
-			    <div className='page_title'>Movies</div>
+	const onTouchStart = (e) => {
+		setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+		setTouchStart(e.targetTouches[0].clientX)
+	}
+
+	const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+
+	const onTouchEnd = () => {
+		if (!touchStart || !touchEnd) return
+		const distance = touchStart - touchEnd
+		const isLeftSwipe = distance > minSwipeDistance
+		const isRightSwipe = distance < -minSwipeDistance
+		if (isLeftSwipe) {
+			goleft()
+		}
+		if (isRightSwipe) {
+			goright()
+		}
+	}
+
+	return (
+		<div
+			className='movie_page'
+			onTouchStart={onTouchStart}
+			onTouchMove={onTouchMove}
+			onTouchEnd={onTouchEnd}
+		>
+			<div className='menu' style={{ zIndex: zindex['settings'] }}>
+				<div className='page_title'>Movies</div>
 				<form className='top_form' onSubmit={handleSubmit}>
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
-					
-					<input name='query' defaultValue={params.query} type="search" placeholder="search titles" size="12"/>
+
+					<input
+						name='query'
+						defaultValue={params.query}
+						type='search'
+						placeholder='search titles'
+						size='12'
+					/>
 					<input type='submit' value='&#128269;' />
 				</form>
 				<br />
 
 				<TimeScrubber params={params} setParams={setParams} />
-
 			</div>
 
 			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
-				<a onClick={() => setZindex(topMovieTable)} style={{"cursor":"pointer", "fontSize": "18pt"}}> &larr; back</a>
+				<a onClick={() => setZindex(topMovieTable)} style={{ cursor: 'pointer', fontSize: '18pt' }}>
+					{' '}
+					&larr; back
+				</a>
 				<BrowseLayout
 					release_group={params.release_group}
 					setReleaseGroup={setReleaseGroup}
@@ -335,16 +370,14 @@ const Movies = () => {
 					</tbody>
 				</table>
 
-                <div style={{"height":"200px"}}>
-				Years on a page:
-				{numYearsSelector}
-				<br />
-				Movies in a year:
-				{maxLocalRankSelector}
+				<div style={{ height: '200px' }}>
+					Years on a page:
+					{numYearsSelector}
+					<br />
+					Movies in a year:
+					{maxLocalRankSelector}
 				</div>
-	
 			</div>
-
 		</div>
 	)
 }
