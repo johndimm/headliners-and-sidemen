@@ -321,12 +321,7 @@ const Movies = () => {
 	}
 
 	return (
-		<div
-			className='movie_page'
-			onTouchStart={onTouchStart}
-			onTouchMove={onTouchMove}
-			onTouchEnd={onTouchEnd}
-		>
+		<div className='movie_page'>
 			<div className='menu' style={{ zIndex: zindex['settings'] }}>
 				<div className='page_title'>Movies</div>
 				<form className='top_form' onSubmit={handleSubmit}>
@@ -360,7 +355,13 @@ const Movies = () => {
 				/>
 			</div>
 
-			<div className='movie_table_div' style={{ zIndex: zindex['movie_table'] }}>
+			<div
+				className='movie_table_div'
+				style={{ zIndex: zindex['movie_table'] }}
+				onTouchStart={onTouchStart}
+				onTouchMove={onTouchMove}
+				onTouchEnd={onTouchEnd}
+			>
 				<table className='movie_table'>
 					<thead>
 						<tr>{yearHeading}</tr>
