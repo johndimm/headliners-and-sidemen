@@ -410,6 +410,7 @@ button {
 
   float: left;
   text-align: center;
+  width: calc(100% - 300px);
 
 }
 

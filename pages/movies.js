@@ -82,6 +82,11 @@ const Movies = () => {
 		release_group: 'tt7286456',
 		query: ''
 	})
+	const [yearRange, setYearRange] = useState({
+		min_year: null,
+		max_year: null
+	})
+
 	const movieRef = useRef(null)
 
 	// const topSettings = { settings: 3, context: 1, movie_table: 2 }
@@ -89,40 +94,6 @@ const Movies = () => {
 	const topContext = { settings: 1, context: 3, movie_table: 2 }
 
 	const [zindex, setZindex] = useState(topMovieTable)
-
-	const zoom = (className, width, unit) => {
-		console.log('zoom:', width)
-		if (typeof window === 'undefined') return
-		for (var i = 0; i < document.styleSheets.length; i++) {
-			var sheet = document.styleSheets[i]
-
-			for (let j = 0; j < sheet.cssRules.length; j++) {
-				const rule = sheet.cssRules[j]
-				const selector = rule.selectorText
-				const style = rule.style
-				if (selector == '.' + className) {
-					style.width = width + unit
-					return
-				}
-			}
-		}
-	}
-
-	const getZoom = () => {
-		if (typeof window === 'undefined') return
-		for (var i = 0; i < document.styleSheets.length; i++) {
-			var sheet = document.styleSheets[i]
-
-			for (let j = 0; j < sheet.cssRules.length; j++) {
-				const rule = sheet.cssRules[j]
-				const selector = rule.selectorText
-				const style = rule.style
-				if (selector == '.movie') {
-					return parseInt(style.width.replace('px', ''))
-				}
-			}
-		}
-	}
 
 	const setSelectedYear = (year) => {
 		setParams({ ...params, year: year })
@@ -142,73 +113,6 @@ const Movies = () => {
 		// zoom('movie', movieWidth, 'px')
 	}
 
-	const FilterPanel = () => {
-		const handleSubmit = (event) => {
-			const form = document.forms[0] // e.target
-			const formData = new FormData(form)
-			const formProps = Object.fromEntries(formData)
-
-			const year = formData.get('year') || params.year
-			const g = formData.getAll('genre') || params.genre
-			const genres = g.join(',')
-			const max_local_rank = formData.get('max_local_rank')
-			const num_years = formData.get('num_years')
-
-			setParams({
-				...params,
-				year: year,
-				genres: genres,
-				max_local_rank: max_local_rank,
-				num_years: num_years
-			})
-
-			//if (num_years != params.num_years) {
-			//	setTimeout(() => zoom(num_years), 100)
-			//}
-		}
-
-		const genreSelector = genres.map((val, idx) => {
-			const pattern = `${val}(,|$)`
-			var re = new RegExp(pattern)
-			const checked = params.genres.match(re)
-			const genre = checked ? (
-				<span
-					className='selected'
-					key={idx}
-					style={{ cursor: 'pointer' }}
-					onClick={() => {
-						setParams({ ...params, genres: '' })
-						setZindex(topMovieTable)
-					}}
-				>
-					{val}
-				</span>
-			) : (
-				<span
-					className='genre'
-					key={idx}
-					onClick={(e) => {
-						setParams({ ...params, genres: val })
-						setZindex(topMovieTable)
-					}}
-				>
-					{val}
-				</span>
-			)
-
-			return <div key={idx}>{genre}</div>
-		})
-
-		return (
-			<div id='filterpanel' className='filterpanel'>
-				<div className='page_title'>Wall of Movies</div>
-				<form onChange={handleSubmit}>
-					<div className='genre_selector'>{genreSelector}</div>
-				</form>
-			</div>
-		)
-	}
-
 	const getData = async () => {
 		const skim = ! params.query || params.query == ''
 		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
@@ -219,6 +123,18 @@ const Movies = () => {
 			.get(url)
 			.then(function (response) {
 				const data = response['data']
+
+				let min_year = null
+				let max_year = null
+				data.forEach ( (movie, idx) => {
+					if (!min_year || min_year > movie.startyear) {
+                        min_year = movie.startyear
+					}
+					if (!max_year || max_year < movie.startyear) {
+						max_year = movie.startyear
+					}
+				})
+				setYearRange({min_year:min_year, max_year: max_year})
 				setMovies(data)
 			})
 			.catch((err) => err)
@@ -249,6 +165,7 @@ const Movies = () => {
 				years[val.startyear] = []
 			}
 			years[val.startyear].push(val)
+
 		})
 	}
 
