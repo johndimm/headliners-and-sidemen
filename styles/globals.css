@@ -395,14 +395,13 @@ button {
 }
 
 
-.page_title {
+.movie_page_title {
   font-family: 'Copperplate';
   font-size: 18pt;
 
   float: left;
   text-align: center;
   width: calc(100% - 500px);
-
 }
 
 .selected {
@@ -557,7 +556,7 @@ body {
 }
 
 
-.menu, body, .movie_table_div, .content, html, __next{
+.menu, body, .movie_table_div, .content, html, __next, .header{
   background-color: black;
   color: white;
 }
