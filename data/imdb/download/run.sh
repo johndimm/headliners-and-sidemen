@@ -5,3 +5,4 @@ curl -o title.crew.tsv.gz "https://datasets.imdbws.com/title.crew.tsv.gz"
 curl -o title.episode.tsv.gz "https://datasets.imdbws.com/title.episode.tsv.gz"
 curl -o title.principals.tsv.gz "https://datasets.imdbws.com/title.principals.tsv.gz"
 curl -o title.ratings.tsv.gz "https://datasets.imdbws.com/title.ratings.tsv.gz"
+./unpack.sh

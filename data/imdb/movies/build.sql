@@ -1,3 +1,4 @@
+drop view if exists context;
 drop table if exists context_base;
 create table context_base as
 select 
@@ -18,10 +19,11 @@ select
 from public.title_basics as tb
 join public.title_principals as tp on tp.tconst = tb.tconst
 join public.name_basics as nb on nb.nconst = tp.nconst
-where tb.titleType = 'movie'
+-- where tb.titleType = 'movie'
+where tb.titleType = 'tvSeries'
+-- like 'tv%' and tb.titleType != 'tvEpisode'
 ;
 
-drop view if exists context;
 create view context as
 select
     cb.release_group,

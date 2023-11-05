@@ -22,6 +22,7 @@ a {
 
 .artist_name {
   font-weight: 600;
+  display: inline-block;
 }
 
 .instrument {
@@ -83,6 +84,7 @@ td, th {
   cursor: pointer;
   margin: 5px;
   padding: 0px;
+  height: fit-content;
 }
 
 .linked_album:hover {
@@ -307,6 +309,7 @@ button {
 
 
 
+
 .movie_page {
   position:relative;
   white-space: nowrap;
@@ -341,6 +344,7 @@ button {
 
 .movie img {
   width: 100%;
+  max-width:600px;
 }
 
 .movie_table a { 
@@ -540,4 +544,42 @@ body {
   height: 24px;
   margin-right: 5px;
   margin-top: 0px;
+}
+
+
+.movie {
+  background-color: black;
+}
+
+.movie_table td, .movie_table th {
+  background-color: black;
+  color: white;
+}
+
+
+.menu, body, .movie_table_div, .content, html, __next{
+  background-color: black;
+  color: white;
+}
+
+.plot, .details {
+  background-color: darkgray;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 8px;
+  background: #969696;
+  color: white;
+  -webkit-border-radius: 1ex;
+}
+
+.youtube_logo {
+  background-color: white;
+  padding-right:2px;
+  border-radius: 10px;
+}
+
+.artist_div {
+  -webkit-column-break-inside: avoid; 
 }

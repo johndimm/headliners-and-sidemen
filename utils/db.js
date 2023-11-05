@@ -69,7 +69,7 @@ exports.getMovies = function (year, genres, title_type, has_cover, max_local_ran
         ${skim || 'null'}
         );`
 
-    console.log(cmd)
+    // console.log(cmd)
     return performSQLQuery(cmd);  
 }
 

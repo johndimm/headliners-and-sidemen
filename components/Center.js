@@ -17,9 +17,9 @@ const youTube = (dataSource, imdbid, record) => {
   const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
   return (
 
-            <div>
+          <div>
          <a target='imdb' rel="noreferrer" href={youtube_url}>
-           <img height='40' src={youtube_logo} alt=''/>
+           <img className='youtube_logo' height='40' src={youtube_logo} alt=''/>
          </a>
        </div> 
   )
@@ -140,7 +140,7 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
            return <tr key={idx}><th>{titleCase(field)}</th><td>{album[field]}</td></tr>
         })
 
-        console.log("album", album)
+        // console.log("album", album)
 
         //title = album['original_title']
         
@@ -180,7 +180,7 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
 
     return <div>
       {release}
-      <div className='artists'>
+      <div className='artists' style={{'columnCount':3, 'paddingBottom': '50px'}}>
       {artists}
       </div>
       <div className='details'><table><tbody>{details}</tbody></table></div>

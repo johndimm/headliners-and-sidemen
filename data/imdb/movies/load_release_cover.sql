@@ -1,5 +1,5 @@
 drop table if exists rc;
-create table rc (
+create temporary table rc (
     release_group text,
     cover_url text
 );

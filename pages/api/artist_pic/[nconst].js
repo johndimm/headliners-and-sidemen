@@ -5,7 +5,7 @@ const getTheMovieDatabase = async (nconst) => {
 
   const url = 'https://api.themoviedb.org/3/find/' + nconst
 
-  // console.log('imdb url', url)
+  console.log('imdb url', url)
 
   var options = {
       method: 'GET',
@@ -21,15 +21,15 @@ const getTheMovieDatabase = async (nconst) => {
 
   const size='small'
   const person = results.person_results[0]
-  // console.log ("person", person)
-  if (person && 'profile_path' in Object.keys(person)) {
-    const profile_path = person.profile_path
-    // const tmdb_id = person.id
-  
+
+  // if (person && 'profile_path' in Object.keys(person)) {
+  if (person && person['profile_path']) {
+    const profile_path = person['profile_path']
+
     const width = size == 'small' ? 'w200' : 'w500'
     results.image_url = `https://image.tmdb.org/t/p/${width}/${profile_path}`
   }
-  // console.log("imdb data:", data)
+
   return results
 }
 

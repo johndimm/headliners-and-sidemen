@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
-import Timeline from './timeline'
 import CoverArt from '../components/CoverArt'
 import TimeScrubber from '../components/TimeScrubber'
 import BrowseLayout from 'components/BrowseLayout'
@@ -41,15 +40,11 @@ const genres = [
 	'Western'
 ]
 
-const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
+const Movie = ({ movie, idx, num_years, setReleaseGroup }) => {
 	const rank = movie.rank
 	const primaryTitle = movie.primarytitle
-	const cover_url = movie.cover_url
 	const tconst = movie.tconst
 	const genres = movie.genres || ''
-	const startYear = movie.startyear
-
-	const url = `https://movies-and-actors.vercel.app/release_group/${tconst}`
 
 	const record = {
 		release_group: tconst,
@@ -58,8 +53,6 @@ const renderMovie = (movie, idx, num_years, setReleaseGroup) => {
 
 	const td_width = parseInt((1.0 / num_years) * 100)
 	const size = td_width > 25 ? 'big' : 'small'
-
-	console.log('td_width', td_width)
 
 	return (
 		<div key={idx} className='movie' onClick={() => setReleaseGroup(tconst)}>
@@ -89,31 +82,21 @@ const Movies = () => {
 	const [touchStart, setTouchStart] = useState(null)
 	const [touchEnd, setTouchEnd] = useState(null)
 
-	const movieRef = useRef(null)
-
-	// const topSettings = { settings: 3, context: 1, movie_table: 2 }
 	const topMovieTable = { settings: 2, context: 1, movie_table: 3 }
 	const topContext = { settings: 1, context: 3, movie_table: 2 }
 
 	const [zindex, setZindex] = useState(topMovieTable)
 
-	const setSelectedYear = (year) => {
-		setParams({ ...params, year: year })
-	}
+	useEffect(() => {
+		const mw = document.body.clientWidth
+		const num_years = Math.max(parseInt(mw / 200), 3)
+		console.log('num_years', num_years)
+		setParams({ ...params, num_years: num_years })
+	}, [])
 
-	const getDivWidth = (id) => {
-		const element = document.getElementById(id)
-		return element ? element.offsetWidth : null
-	}
-
-	const numYearsChanged = (num_years) => {
-		const mw = getDivWidth('movie_page')
-		const fw = getDivWidth('filterpanel')
-		const w = mw - fw - 45
-		const movieWidth = Math.floor(w / num_years) - 10
-		//console.log(`w:${w}, movieWidth:${movieWidth}}`)
-		// zoom('movie', movieWidth, 'px')
-	}
+	useEffect(() => {
+		getData()
+	}, [params])
 
 	const getData = async () => {
 		const skim = !params.query || params.query == ''
@@ -141,18 +124,6 @@ const Movies = () => {
 			})
 			.catch((err) => err)
 	}
-
-	useEffect(() => {
-		const mw = document.body.clientWidth
-		const num_years = Math.max(parseInt(mw / 200), 3)
-		console.log('num_years', num_years)
-		setParams({ ...params, num_years: num_years })
-		numYearsChanged(num_years)
-	}, [])
-
-	useEffect(() => {
-		getData()
-	}, [params])
 
 	const years = {}
 	let firstYear = '3000'
@@ -183,16 +154,19 @@ const Movies = () => {
 	const setReleaseGroup = (release_group) => {
 		setParams({ ...params, release_group: release_group })
 		setZindex(topContext)
-
-		//movieRef.current.scrollIntoView({
-		//	behavior: 'smooth',
-		//	block: 'start'
-		///})
 	}
 
 	const moviesYears = Object.keys(years).map((val, idx) => {
 		const movieColumn = years[val].map((val2, idx2) => {
-			return renderMovie(val2, idx2, params.num_years, setReleaseGroup)
+			// return RenderMovie(val2, idx2, params.num_years, setReleaseGroup)
+			return (
+				<Movie
+					movie={val2}
+					idx={idx2}
+					num_years={params.num_years}
+					setReleaseGroup={setReleaseGroup}
+				/>
+			)
 		})
 
 		const width = (1.0 / params.num_years) * 100
@@ -227,7 +201,6 @@ const Movies = () => {
 					className='rank_selector'
 					onClick={() => {
 						setParams({ ...params, num_years: val })
-						numYearsChanged(val)
 					}}
 				>
 					{val}
@@ -255,9 +228,6 @@ const Movies = () => {
 	})
 
 	const genreDropdown = genres.map((val, idx) => {
-		const pattern = `${val}(,|$)`
-		var re = new RegExp(pattern)
-		//const checked = params.genres.match(re)
 		return (
 			<option key={idx} value={val}>
 				{val}
@@ -270,34 +240,23 @@ const Movies = () => {
 
 		const form = document.forms[0] // e.target
 		const formData = new FormData(form)
-		const formProps = Object.fromEntries(formData)
 
-		//const year = formData.get('year') || params.year
 		let genres = formData.get('genre')
 
 		if (genres == 'All Genres') {
 			genres = ''
 		}
-		//const genres = g.join(',')
-		//const max_local_rank = formData.get('max_local_rank')
-		//const num_years = formData.get('num_years')
+
 		const query = formData.get('query')
 
 		setParams({
 			...params,
-			//year: year,
 			genres: genres,
 			query: query
-			//max_local_rank: max_local_rank,
-			//num_years: num_years
 		})
-
-		//if (num_years != params.num_years) {
-		//	setTimeout(() => zoom(num_years), 100)
-		//}
 	}
 
-	// the required distance between touchStart and touchEnd to be detected as a swipe
+	// The required distance between touchStart and touchEnd to be detected as a swipe
 	const minSwipeDistance = 50
 
 	const onTouchStart = (e) => {
@@ -328,7 +287,6 @@ const Movies = () => {
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
-
 					<input
 						name='query'
 						defaultValue={params.query}
@@ -339,11 +297,10 @@ const Movies = () => {
 					<input type='submit' value='&#128269;' />
 				</form>
 				<br />
-
 				<TimeScrubber params={params} setParams={setParams} />
 			</div>
 
-			<div className='context' ref={movieRef} style={{ zIndex: zindex['context'] }}>
+			<div className='context' style={{ zIndex: zindex['context'] }}>
 				<a onClick={() => setZindex(topMovieTable)} style={{ cursor: 'pointer', fontSize: '18pt' }}>
 					{' '}
 					&larr; back

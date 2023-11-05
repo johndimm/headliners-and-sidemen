@@ -1,3 +1,4 @@
+drop view if exists top_movie_year;
 drop table if exists tmy;
 
 create table tmy as
@@ -19,7 +20,9 @@ from
     title_basics as tb
     join title_ratings as tr on tr.tconst = tb.tconst 
 where
-    tb.titleType = 'movie'
+--    tb.titleType = 'movie'
+    tb.titleType = 'tvSeries'
+-- like 'tv%'
 ;
 
 drop table if exists top_movie_year;
@@ -35,7 +38,7 @@ select
     rank,
     fulltext
 from tmy
-join release_cover as rc on rc.release_group = tmy.tconst
+left join release_cover as rc on rc.release_group = tmy.tconst
 ;
 
 

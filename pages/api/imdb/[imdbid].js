@@ -9,12 +9,8 @@ const getTheMovieDatabase = async (imdbid) => {
 
     var options = {
         method: 'GET',
-        url: url, // 'https://movie-database-imdb-alternative.p.rapidapi.com/',
-        params: {api_key: key, language: 'en-US', external_source: 'imdb_id'} // {r: 'json', i: imdbid},
-  //      headers: {
-  //      'x-rapidapi-host': 'movie-database-imdb-alternative.p.rapidapi.com',
-  //      'x-rapidapi-key': key
-  //      }
+        url: url, 
+        params: {api_key: key, language: 'en-US', external_source: 'imdb_id'} 
     };
 
     // console.log ('imdb, options:', options)
