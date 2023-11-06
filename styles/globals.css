@@ -21,13 +21,13 @@ a {
 }
 
 .artist_name {
-  font-weight: 600;
+  font-size: 9pt;
   display: inline-block;
 }
 
 .instrument {
   margin-left: 20px;
-  font-size: 10pt;
+  font-size: 8pt;
   margin-bottom: 10px;
 }
 .title {
@@ -62,7 +62,7 @@ td, th {
 }
 
 .center_img {
-  max-width: 100%;
+  max-width: min(600px, 100%);
 }
 
 .img_holder {
@@ -104,7 +104,7 @@ td, th {
 
 .album_title {
   cursor: pointer;
-  font-size: 10pt;
+  font-size: 8pt;
   text-align: center;
 }
 

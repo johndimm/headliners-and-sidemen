@@ -48,6 +48,10 @@ const Artist = ({ record, withpix, data_source }) => {
 	if (record && 'age' in record && record['age'] && record['age'] > 0)
 		age = <span className='age'>({record['age']})</span>
 
+	let instrument = ''
+	if (record.instrument)
+	  instrument = record.instrument.replace(/,/g, ', ')
+
 	return (
 		<Link legacyBehavior href={link} passHref={true}>
 			<div className='artist_div'>
@@ -57,7 +61,7 @@ const Artist = ({ record, withpix, data_source }) => {
 						<div className='artist_name'>
 							{record.artist} {age}
 						</div>
-						<div className='instrument'>{record.instrument}</div>
+						<div className='instrument'>{instrument}</div>
 					</div>
 				</a>
 			</div>

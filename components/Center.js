@@ -182,7 +182,7 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
 
     return <div>
       {release}
-      <div className='artists' style={{'columnCount':3, 'paddingBottom': '50px'}}>
+      <div className='artists' style={{'columnCount':2, 'paddingBottom': '50px'}}>
       {artists}
       </div>
       <div className='details'><table><tbody>{details}</tbody></table></div>
