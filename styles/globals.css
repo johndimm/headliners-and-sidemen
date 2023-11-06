@@ -74,8 +74,8 @@ td, th {
 }
 
 .linked_album {
-  padding: 10px;
-  margin: 5px;
+  padding: 2px;
+  margin: 2px;
   border: 1px solid lightgray;
   width: 100%;
   border: 1px solid lightgray;
@@ -162,11 +162,12 @@ td, th {
   text-align: left;
   width: 35vw;
   margin: 20px;
-  background-color: #EEEEEE;
   border: 1px solid lightgray;
   border-radius: 10px;
   padding: 10px;
   clear: both;
+  font-size: 9pt;
+  background-color: #666666;
 }
 
 .details {
@@ -174,10 +175,10 @@ td, th {
 }
 
 .artist_pix {
-  max-width: 10vw;
+  max-width: 20vw;
   border: 1px solid lightgray;
-  margin: 5px;
-  padding: 3px;
+  margin: 2px;
+  padding: 2px;
 }
 
 .artist_featured_pix {
@@ -565,9 +566,6 @@ body {
   color: white;
 }
 
-.plot, .details {
-  background-color: darkgray;
-}
 
 ::-webkit-scrollbar {
   height: 12px;
