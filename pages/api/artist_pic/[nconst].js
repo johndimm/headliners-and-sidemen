@@ -5,7 +5,7 @@ const getTheMovieDatabase = async (nconst) => {
 
   const url = 'https://api.themoviedb.org/3/find/' + nconst
 
-  console.log('imdb url', url)
+  // console.log('imdb url', url)
 
   var options = {
       method: 'GET',

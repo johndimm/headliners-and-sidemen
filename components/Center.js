@@ -172,7 +172,9 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
           <div className='date'>{begin_date}</div>
           <div className='title'>{title}</div>
           <div className='headliner'>{data[0].headliner}</div>
+          <div className='img_holder'>
           {coverArt}
+          </div>
           <div className='plot'>{plot}</div>
  
         </div>

@@ -57,7 +57,9 @@ const Movie = ({ movie, num_years, setReleaseGroup }) => {
 
 	return (
 		<div className='movie' onClick={() => setReleaseGroup(tconst)}>
-			<CoverArt record={record} data_source='imdb' size={size} />
+			<div className='img_holder'>
+				<CoverArt record={record} data_source='imdb' size={size} />
+			</div>
 			<div>{primaryTitle}</div>
 			<div className='genres'>
 				#{rank} -- {genres.replace(',', ', ')}
@@ -88,10 +90,35 @@ const Movies = () => {
 
 	const [zindex, setZindex] = useState(topMovieTable)
 
+	const [dataSource, setDataSource] = React.useState('')
+
+	useEffect( () => {
+	  const url = `/api/env/DATA_SOURCE/`
+	  axios.get(url).then(function (response) {
+		  const data_source = response.data['DATA_SOURCE']
+		  if (data_source)
+			setDataSource(data_source)
+	  }).catch(err => err)
+	}, [])
+
 	useEffect(() => {
+
+		const searchEl = document.getElementById("query")
+		if (searchEl) {
+		  searchEl.addEventListener("search", function(event) {
+			setParams({...params, query: event.currentTarget.value})
+		  });
+		}
+
+		/*
+		document.body.onkeydown = function(e){
+			onKeyDown(e)
+		};
+		*/
+
 		const mw = document.body.clientWidth
 		const num_years = Math.max(parseInt(mw / 200), 3)
-		console.log('num_years', num_years)
+		// console.log('num_years', num_years)
 		setParams({ ...params, num_years: num_years })
 	}, [])
 
@@ -103,7 +130,7 @@ const Movies = () => {
 		const skim = !params.query || params.query == ''
 		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
 
-		console.log(url)
+		// console.log(url)
 
 		axios
 			.get(url)
@@ -292,39 +319,44 @@ const Movies = () => {
 				top: -350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
 				behavior: 'smooth',
 			});
-			console.log("up arrow pressed");
+			// console.log("up arrow pressed");
 		} else if (e.keyCode === 40) {
 			const div = document.getElementById('movie_table_div')
 			div.scrollBy({
 				top: 350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
 				behavior: 'smooth',
 			});			
-			console.log("down arrow pressed");
+			// console.log("down arrow pressed");
 		} else if (e.keyCode === 37) {
 			goleft()
-			console.log("left arrow pressed");
+			// console.log("left arrow pressed");
 		} else if (e.keyCode === 39) {
 			goright()
-			console.log("right arrow pressed");
+			// console.log("right arrow pressed");
 		}
 
 	}
 
+	const titles = {"imdb": "Movies", "imdb_tv": "TV Series"}
+	const title = titles[dataSource]
+
 	return (
 		<div className='movie_page'>
 			<div className='menu' style={{ zIndex: zindex['settings'] }}>
-				<div className='movie_page_title'>TeeVee</div>
+				<div className='movie_page_title'>{title}</div>
 				<form className='top_form' onSubmit={handleSubmit}>
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
 					<input
+					    id="query"
 						name='query'
 						defaultValue={params.query}
 						type='search'
 						placeholder='search titles'
 						size='12'
 						onKeyDown={onKeyDown}
+						autoFocus
 					/>
 					<input type='submit' value='&#128269;' />
 				</form>
@@ -333,8 +365,8 @@ const Movies = () => {
 			</div>
 
 			<div className='context' style={{ zIndex: zindex['context'] }}>
-				<div style={{"float":"left", "margin-left":"30px"}}>
-				<a onClick={() => setZindex(topMovieTable)} style={{ cursor: 'pointer', fontSize: '18pt' }}>
+				<div className='back_button_div'>
+				<a onClick={() => setZindex(topMovieTable)} className='back_button'>
 					{' '}
 					&larr; back
 				</a>
@@ -349,9 +381,9 @@ const Movies = () => {
 			<div
 				className='movie_table_div'
 				style={{ zIndex: zindex['movie_table'] }}
-				onTouchStart={onTouchStart}
-				onTouchMove={onTouchMove}
-				onTouchEnd={onTouchEnd}
+				//onTouchStart={onTouchStart}
+				//onTouchMove={onTouchMove}
+				//onTouchEnd={onTouchEnd}
 				id='movie_table_div'
 			>
 				<table className='movie_table' id='movie_table'>

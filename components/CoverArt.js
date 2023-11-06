@@ -11,7 +11,7 @@ const CoverArt = ({ record, data_source, size }) => {
 	}
 
 	const getPoster = async (imdbid) => {
-		log('downloading cover for')
+		// log('downloading cover for')
 
 		setImage({'url': null, 'source': 'initialize'})
 		const url = `/api/imdb/${imdbid}`

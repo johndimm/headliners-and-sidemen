@@ -62,9 +62,12 @@ td, th {
 }
 
 .center_img {
-  width: 100%;
+  max-width: 100%;
 }
 
+.img_holder {
+  display: inline-block;
+}
 
 .headliner {
   margin-bottom: 10px;
@@ -340,11 +343,12 @@ button {
   margin-bottom: 12px;
   font-size: 10pt;
   cursor: pointer;
+  text-align: center;
 }
 
 .movie img {
   width: 100%;
-  max-width:600px;
+  max-width:300px;
 }
 
 .movie_table a { 
@@ -581,4 +585,14 @@ body {
 
 .artist_div {
   -webkit-column-break-inside: avoid; 
+}
+
+.back_button {
+  cursor: pointer;
+  font-size: 18pt;
+}
+
+.back_button_div {
+  float: left;
+  margin-left: 30px;
 }

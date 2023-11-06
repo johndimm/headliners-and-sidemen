@@ -25,7 +25,7 @@ async function performSQLQuery(query) {
 }
 
 exports.releaseGroup = function (release_group_id) {
-    console.log('releaseGroup:', release_group_id)
+    // console.log('releaseGroup:', release_group_id)
 	return performSQLQuery(`select * from release_group('${release_group_id}');`);
 };
 

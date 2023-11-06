@@ -33,7 +33,9 @@ const TimeScrubber = ( {params, setParams}) => {
 					step='1'
 					min='1894'
 					max='2024'
-					defaultValue={params.year}
+					// defaultValue={params.year}
+					value={date}
+					orient='horizontal'
                     onMouseUp={(e) => setYear(e)} 
                     onTouchEnd={(e) => setYear(e)}
 				/>
