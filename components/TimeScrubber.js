@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const TimeScrubber = ( {params, setParams}) => {
+const TimeScrubber = ( {params, setParams, yearRange}) => {
     const [date, setDate] = useState(params.year)
 
     const setYear = (e) => {
@@ -9,13 +9,14 @@ const TimeScrubber = ( {params, setParams}) => {
     }
 
     const goleft = (e) => {
-        const newYear = parseInt(params.year) - parseInt(params.num_years)
+        // const newYear = parseInt(params.year) - parseInt(params.num_years)
+		const newYear = parseInt(parseInt(yearRange.min_year) - 0.6 * parseInt(params.num_years))
 		setParams({ ...params, year: newYear })
         setDate(newYear)
 	}
 
     const goright = (e) => {
-        const newYear = parseInt(params.year) + parseInt(params.num_years)
+        const newYear = parseInt(parseInt(yearRange.max_year) + 0.6 * parseInt(params.num_years))
 		setParams({ ...params, year: newYear })
         setDate(newYear)
 	}

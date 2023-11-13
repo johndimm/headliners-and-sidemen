@@ -1,3 +1,3 @@
-export DATA_SOURCE=imdb_tv
+export DATA_SOURCE=imdb
 yarn dev
 

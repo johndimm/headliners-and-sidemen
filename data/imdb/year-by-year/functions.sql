@@ -117,12 +117,16 @@ end $$;
 --from get_movies(1968, 1969, 1, 2000, 'Romance,Thriller', 'movie', true)
 --;
 \x
+
+
+
 select
   *
 from
   get_movies(2018, '', null, null, 2, 5, '', true)
 limit
-  10;
+  2;
+
 
 /*
     and 
@@ -132,3 +136,47 @@ limit
       and _year + _num_years - 1 - floor((_num_years) / 2)
     )
 */
+
+
+
+
+drop function if exists get_artist;
+create
+or replace function get_artist(
+  _nconst text)
+returns table (
+  startyear int,
+  cover_url text,
+  primaryTitle text,
+  genres text,
+  tconst text,
+  rank int,
+  local_rank int 
+) language plpgsql as $$ begin return query 
+
+  select
+    tmy.startYear,
+    tmy.cover_url,
+    tmy.primaryTitle,
+    tmy.genres,
+    tmy.tconst,
+    tmy.rank,
+    cast(
+      rank() OVER (
+        PARTITION BY tmy.startYear
+        ORDER BY
+          tmy.rank
+      ) as int
+    ) as local_rank 
+  from
+    top_movie_year as tmy
+    join context as c on c.release_group = tmy.tconst
+  where c.artist_id = _nconst
+
+limit
+  1000;
+
+end $$;
+
+select * from
+  get_artist('nm0001980');

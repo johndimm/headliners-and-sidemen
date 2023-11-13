@@ -13,7 +13,7 @@ var types = require('pg').types;
 types.setTypeParser(types.builtins.DATE, (str) => str);
 
 async function performSQLQuery(query) {
-//    console.log('===> performSQLQuery, query: ', query);
+    console.log('===> performSQLQuery, query: ', query);
 
     try {
         const response = await pool.query(query);
@@ -31,6 +31,10 @@ exports.releaseGroup = function (release_group_id) {
 
 exports.artistReleases = function (artist_id) {
 	return performSQLQuery(`select * from artist_releases('${artist_id}');`);
+};
+
+exports.artistReleasesYear = function (artist_id) {
+	return performSQLQuery(`select * from get_artist('${artist_id}');`);
 };
 
 exports.lastBefore = function (release_group_id) {

@@ -74,7 +74,7 @@ const Movies = () => {
 		year: 2021,
 		genres: '',
 		max_local_rank: 10,
-		num_years: 4,
+		num_years: 0,
 		release_group: 'tt7286456',
 		query: ''
 	})
@@ -90,45 +90,67 @@ const Movies = () => {
 
 	const [zindex, setZindex] = useState(topMovieTable)
 
-	const [dataSource, setDataSource] = React.useState('')
+	const [dataSource, setDataSource] = useState('')
 
-	useEffect( () => {
-	  const url = `/api/env/DATA_SOURCE/`
-	  axios.get(url).then(function (response) {
-		  const data_source = response.data['DATA_SOURCE']
-		  if (data_source)
-			setDataSource(data_source)
-	  }).catch(err => err)
+	const [nconst, setNconst] = useState('')
+
+	useEffect(() => {
+		const url = `/api/env/DATA_SOURCE/`
+		axios
+			.get(url)
+			.then(function (response) {
+				const data_source = response.data['DATA_SOURCE']
+				if (data_source) setDataSource(data_source)
+			})
+			.catch((err) => err)
 	}, [])
 
 	useEffect(() => {
-
+		/*
 		const searchEl = document.getElementById("query")
 		if (searchEl) {
-		  searchEl.addEventListener("search", function(event) {
-			setParams({...params, query: event.currentTarget.value})
-		  });
+			searchEl.addEventListener("search", (event) => {
+				event.preventDefault()
+				setParams({ ...params, query: event.currentTarget.value })
+			});
 		}
-
-		/*
-		document.body.onkeydown = function(e){
-			onKeyDown(e)
-		};
 		*/
 
 		const mw = document.body.clientWidth
 		const num_years = Math.max(parseInt(mw / 200), 3)
 		// console.log('num_years', num_years)
-		setParams({ ...params, num_years: num_years })
+		const center_year = parseInt(2023 - num_years / 2)
+		console.log('center_year', center_year)
+		setParams({
+			...params,
+			num_years: num_years,
+			year: Math.min(params.year, center_year)
+		})
 	}, [])
 
 	useEffect(() => {
-		getData()
+		if (params.num_years != 0) {
+			if (nconst != '') {
+				getArtist()
+			} else {
+				getData()
+			}
+		}
 	}, [params])
 
-	const getData = async () => {
+	const getArtist = () => {
+		const url = `api/artist_releases_year/${nconst}`
+		getYears(url)
+	}
+
+	const getData = () => {
 		const skim = !params.query || params.query == ''
 		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
+
+		getYears(url)
+	}
+
+	const getYears = async (url) => {
 
 		// console.log(url)
 
@@ -197,19 +219,17 @@ const Movies = () => {
 					setReleaseGroup={setReleaseGroup}
 				/>
 			)
-			
 		})
 
 		const width = (1.0 / params.num_years) * 100
 		const style = { width: `${width}%` }
-        // return null
-		
+		// return null
+
 		return (
 			<td style={style} key={year}>
 				{movieColumn}
 			</td>
 		)
-		
 	})
 
 	const goleft = () => {
@@ -233,7 +253,11 @@ const Movies = () => {
 					key={idx}
 					className='rank_selector'
 					onClick={() => {
-						setParams({ ...params, num_years: val })
+						setParams({
+							...params,
+							num_years: val,
+							year: Math.min(params.year, parseInt(2023 - params.num_years / 2))
+						})
 					}}
 				>
 					{val}
@@ -299,7 +323,7 @@ const Movies = () => {
 
 	const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
 
-	const onTouchEnd = () => {
+	const onTouchEnd = (e) => {
 		if (!touchStart || !touchEnd) return
 		const distance = touchStart - touchEnd
 		const isLeftSwipe = distance > minSwipeDistance
@@ -317,15 +341,15 @@ const Movies = () => {
 			const div = document.getElementById('movie_table_div')
 			div.scrollBy({
 				top: -350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
-				behavior: 'smooth',
-			});
+				behavior: 'smooth'
+			})
 			// console.log("up arrow pressed");
 		} else if (e.keyCode === 40) {
 			const div = document.getElementById('movie_table_div')
 			div.scrollBy({
 				top: 350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
-				behavior: 'smooth',
-			});			
+				behavior: 'smooth'
+			})
 			// console.log("down arrow pressed");
 		} else if (e.keyCode === 37) {
 			goleft()
@@ -334,10 +358,9 @@ const Movies = () => {
 			goright()
 			// console.log("right arrow pressed");
 		}
-
 	}
 
-	const titles = {"imdb": "Movies", "imdb_tv": "TV Series"}
+	const titles = { imdb: 'Movies', imdb_tv: 'TV Series' }
 	const title = titles[dataSource]
 
 	return (
@@ -348,8 +371,9 @@ const Movies = () => {
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
+
 					<input
-					    id="query"
+						id='query'
 						name='query'
 						defaultValue={params.query}
 						type='search'
@@ -358,18 +382,20 @@ const Movies = () => {
 						onKeyDown={onKeyDown}
 						autoFocus
 					/>
+
 					<input type='submit' value='&#128269;' />
 				</form>
+
 				<br />
-				<TimeScrubber params={params} setParams={setParams} />
+				<TimeScrubber params={params} setParams={setParams} yearRange={yearRange} />
 			</div>
 
 			<div className='context' style={{ zIndex: zindex['context'] }}>
 				<div className='back_button_div'>
-				<a onClick={() => setZindex(topMovieTable)} className='back_button'>
-					{' '}
-					&larr; back
-				</a>
+					<a onClick={() => setZindex(topMovieTable)} className='back_button'>
+						{' '}
+						&larr; back
+					</a>
 				</div>
 				<BrowseLayout
 					release_group={params.release_group}
