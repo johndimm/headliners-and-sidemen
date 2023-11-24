@@ -61,7 +61,7 @@ const CareerMap = ( {years, zoomIn, zoomOut} ) => {
 
 }
 
-const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
+const ReleasesOverYears = ( {records, data_source, artist, query, setReleaseGroup, callSetArtistId} ) => {
     const [zoom, setZoom] = useState(1)
 
     let headers = []
@@ -133,12 +133,15 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
               key={idx} 
               record={record} 
               data_source={data_source}
-              artists={releases[release_group]} />)
+              artists={releases[release_group]} 
+              setReleaseGroup={setReleaseGroup}
+              callSetArtistId={callSetArtistId}/>)
         })
 
         Object.keys(years).sort(function(a, b){return a-b}).forEach ( (year, idx) => {
-            headers.push(<th id={year} key={idx}>{year}</th>)  
-            cells.push(<td key={idx}>{years[year]}</td>)
+            const style = {"width":"200px"}
+            headers.push(<th id={year} key={idx} style={style}>{year}</th>)  
+            cells.push(<td key={idx} style={style}>{years[year]}</td>)
         })
     }
 
@@ -202,7 +205,7 @@ const ReleasesOverYears = ( {records, data_source, artist, query} ) => {
 
     const style = {zoom: zoom}
     return <div>
-        <Header data_source={data_source} query={query}/>
+
         <div className="timeline" 
           onMouseMove={onMouseMove} 
           onMouseDown={onMouseDown} 

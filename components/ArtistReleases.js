@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import ReleasesOverYears from 'components/ReleasesOverYears'
 
-const ArtistReleases = ( {artist_id} ) => {
+const ArtistReleases = ( {artist_id, setReleaseGroup, callSetArtistId} ) => {
     const [records, setRecords] = useState([])
     const [source, setSource] = useState('')
     const [artist, setArtist] = useState({})
@@ -43,7 +43,9 @@ const ArtistReleases = ( {artist_id} ) => {
       <ReleasesOverYears 
         data_source={source} 
         records={records}
-        artist={artist} />
+        artist={artist} 
+        setReleaseGroup={setReleaseGroup}
+        callSetArtistId={callSetArtistId}/>
     </div>
 }
 

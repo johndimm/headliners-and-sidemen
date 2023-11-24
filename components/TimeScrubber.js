@@ -9,23 +9,43 @@ const TimeScrubber = ( {params, setParams, yearRange}) => {
     }
 
     const goleft = (e) => {
-        // const newYear = parseInt(params.year) - parseInt(params.num_years)
-		const newYear = parseInt(parseInt(yearRange.min_year) - 0.6 * parseInt(params.num_years))
+		let newYear = parseInt(parseInt(yearRange.min_year) - 0.4 * parseInt(params.num_years))
+		newYear = Math.min(2023, newYear)
 		setParams({ ...params, year: newYear })
         setDate(newYear)
 	}
 
     const goright = (e) => {
-        const newYear = parseInt(parseInt(yearRange.max_year) + 0.6 * parseInt(params.num_years))
+        let newYear = parseInt(parseInt(yearRange.max_year) + 0.8 * parseInt(params.num_years))
+		newYear = parseInt(Math.min(2023 - 0.4 * (params.num_years / 2), newYear))
 		setParams({ ...params, year: newYear })
         setDate(newYear)
+	}
+
+	const goup= (e) => {
+        const newMinRank = Math.max(1, 
+			parseInt(parseInt(params.min_rank)  - parseInt(params.num_ranks))
+			)
+		setParams({ ...params, min_rank: newMinRank })
+	}
+
+	const godown= (e) => {
+        const newMinRank = parseInt(parseInt(params.min_rank) + parseInt(params.num_ranks))
+		setParams({ ...params, min_rank: newMinRank })
 	}
 
 	return (
 		<div id='scrubberContainer'>
 	
 			<form>
+
+			    <span className='arrow' onClick={goup}>&uarr;</span>
+				<div id='tooltip'>{params.min_rank}</div>
+                <span className='arrow' onClick={godown}>&darr;</span>
+
                 <span className='arrow' onClick={goleft}>&larr;</span>
+				<div id='tooltip'>{date}</div>
+                <span className='arrow' onClick={goright}>&rarr;</span>
 
 				<input
 					type='range'
@@ -40,8 +60,8 @@ const TimeScrubber = ( {params, setParams, yearRange}) => {
                     onMouseUp={(e) => setYear(e)} 
                     onTouchEnd={(e) => setYear(e)}
 				/>
-                <div id='tooltip'>{date}</div>
-                <span className='arrow' onClick={goright}>&rarr;</span>
+
+
 			</form>
 		</div>
 	)

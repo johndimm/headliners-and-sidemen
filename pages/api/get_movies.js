@@ -2,7 +2,7 @@ import db from 'utils/db'
 
 export default async function handler(req, res) {
 	const {
-		query: { year, genres, title_type, has_cover, max_local_rank, num_years, query, skim }
+		query: { year, genres, title_type, has_cover, max_local_rank, num_years, query, skim, min_rank, num_ranks }
 	} = req
 
 	const response = await db.getMovies(
@@ -13,7 +13,9 @@ export default async function handler(req, res) {
 		max_local_rank,
 		num_years,
 		query,
-		skim
+		skim,
+		min_rank,
+		num_ranks
 	)
 
 	// console.log("get_movies.js:", response)

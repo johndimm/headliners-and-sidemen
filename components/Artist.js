@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-const Artist = ({ record, withpix, data_source }) => {
+const Artist = ({ record, withpix, data_source, callSetArtistId }) => {
 	const [artist, setArtist] = useState('')
 
 	const getArtistInfo = async () => {
@@ -49,23 +49,22 @@ const Artist = ({ record, withpix, data_source }) => {
 		age = <span className='age'>({record['age']})</span>
 
 	let instrument = ''
-	if (record.instrument)
-	  instrument = record.instrument.replace(/,/g, ', ')
+	if (record.instrument) instrument = record.instrument.replace(/,/g, ', ')
 
 	return (
-		<Link legacyBehavior href={link} passHref={true}>
-			<div className='artist_div'>
-				<a title={title}>
-					<div className='artist_info'>
-						<div>{pix}</div>
-						<div className='artist_name'>
-							{record.artist} {age}
-						</div>
-						<div className='instrument'>{instrument}</div>
+		<div className='artist_div' onClick={() => 
+		   callSetArtistId(record.artist_id)
+		   }>
+			<a title={title}>
+				<div className='artist_info'>
+					<div>{pix}</div>
+					<div className='artist_name'>
+						{record.artist} {age}
 					</div>
-				</a>
-			</div>
-		</Link>
+					<div className='instrument'>{instrument}</div>
+				</div>
+			</a>
+		</div>
 	)
 }
 

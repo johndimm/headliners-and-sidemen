@@ -20,9 +20,7 @@ or replace function get_movies(
   _max_local_rank int,
   _num_years int,
   _query text,
-  _skim boolean,
-  _min_rank int,
-  _num_ranks int
+  _skim boolean
 ) returns table (
   startyear int,
   cover_url text,
@@ -52,7 +50,7 @@ with movies as (
       ) as int
     ) as local_rank 
   from
-    top_movie_year as tmy
+    top_tv_year as tmy
   where
     ( _skim is null or _skim = false
       or 
@@ -82,10 +80,6 @@ with movies as (
       -- or position (_query in tmy.primaryTitle) > 0
       or tmy.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     )
-    and (
-      _min_rank is null or 
-      tmy.rank between _min_rank and _min_rank + _num_ranks - 1
-    )
   order by
     array_intersect_count(
       string_to_array(tmy.genres, ','),
@@ -97,7 +91,6 @@ with movies as (
   select movies.startYear, count(*)
   from movies
   where movies.startYear >= _year - (_num_years / 2)
-
   group by 1
   order by -- abs(movies.startYear - _year)
     movies.startYear - _year
@@ -109,13 +102,9 @@ from
   start_years as sy
 join  
   movies on movies.startYear = sy.startYear
---where
---  movies.local_rank <= _max_local_rank
-
---  and  
- 
---    movies.rank between _min_rank and _min_rank + _num_ranks
-  
+where
+  movies.local_rank between 1
+  and _max_local_rank
 order by
   rank
 limit
@@ -128,16 +117,12 @@ end $$;
 --from get_movies(1968, 1969, 1, 2000, 'Romance,Thriller', 'movie', true)
 --;
 \x
-
-
-
 select
   *
 from
-  get_movies(2018, '', null, null, 2, 5, '', true, 100, 10)
+  get_movies(2018, '', null, null, 2, 5, '', true)
 limit
-  2;
-
+  10;
 
 /*
     and 
@@ -147,48 +132,3 @@ limit
       and _year + _num_years - 1 - floor((_num_years) / 2)
     )
 */
-
-
-
-
-drop function if exists get_artist;
-create
-or replace function get_artist(
-  _nconst text)
-returns table (
-  startyear int,
-  cover_url text,
-  primaryTitle text,
-  genres text,
-  tconst text,
-  rank int,
-  local_rank int 
-) language plpgsql as $$ begin return query 
-
-  select
-    tmy.startYear,
-    tmy.cover_url,
-    tmy.primaryTitle,
-    tmy.genres,
-    tmy.tconst,
-    tmy.rank,
-    cast(
-      rank() OVER (
-        PARTITION BY tmy.startYear
-        ORDER BY
-          tmy.rank
-      ) as int
-    ) as local_rank 
-  from
-    top_movie_year as tmy
-    join context as c on c.release_group = tmy.tconst
-  where c.artist_id = _nconst
-
-limit
-  1000;
-
-end $$;
-
-select * from
-  get_artist('nm0001980')
-limit 2;

@@ -14,6 +14,7 @@ create type context_record_type as (
     cover_url text,
     fulltext tsvector,
     artist_seq int,
+    gap int,
     rank int
 );
 
@@ -66,7 +67,7 @@ begin
     from hits as c
     order by c.begin_date 
     )
-    select *
+    select *, 0 as gap
     from years
     where rank <= 5
     -- limit 200
@@ -84,13 +85,13 @@ as $$
 begin
   return query
     with latest as (
-    select c.*, 1 as rank
+    select c.*, 1 as rank, 0 as gap
     from context as c
     where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     order by c.begin_date desc
     limit 200
     ), earliest as (
-    select c.*, 1 as rank
+    select c.*, 1 as rank, 0 as gap
     from context as c
     where c.fulltext @@ to_tsquery('english', replace(_query,' ',' & '))
     order by c.begin_date 
@@ -112,8 +113,9 @@ language plpgsql
 as $$
 begin
   return query
-    select c.*, 1 as rank
+    select c.*, 0 as gap, tmy.rank
     from context as c
+    left join top_movie_year as tmy on tmy.tconst = c.release_group
     where c.release_group=_release_group
     order by c.artist
     limit 200
@@ -129,8 +131,9 @@ language plpgsql
 as $$
 begin
   return query
-    select c.*, 1 as rank
+    select c.*, 0 as gap, tmy.rank
     from context as c
+    left join top_movie_year as tmy on tmy.tconst = c.release_group
     where c.artist_id = _artist_id
     order by c.begin_date
     limit 800
@@ -150,7 +153,7 @@ begin
       select c2.*, 
           cast(ROW_NUMBER() OVER (PARTITION by c2.artist
             ORDER BY c2.artist_seq
-            ) as int) as rank
+            ) as int) as gap
       from context as c 
       join context as c2 on c2.artist_id = c.artist_id 
 
@@ -159,9 +162,10 @@ begin
       and c.release_group != c2.release_group
       order by c2.artist, c2.artist_seq
     )
-    select *
+    select ab.*, tmy.rank
     from all_after as ab
-    where rank = 1
+    left join top_movie_year as tmy on tmy.tconst = ab.release_group
+    where gap = 1
     order by ab.artist
     ;
 end;
@@ -179,7 +183,7 @@ begin
     with all_after as (
       select c2.*,  cast(ROW_NUMBER() OVER (PARTITION by c2.artist
             ORDER BY c2.artist_seq desc
-            ) as int) as rank
+            ) as int) as gap
       from context as c 
       join context as c2 on c2.artist_id = c.artist_id 
 
@@ -188,9 +192,10 @@ begin
       and c2.artist_seq < c.artist_seq
       order by c2.artist, c2.artist_seq desc
     )
-    select *
+    select ab.*, tmy.rank
     from all_after as ab
-    where rank = 1
+    left join top_movie_year as tmy on tmy.tconst = ab.release_group
+    where gap = 1
     order by ab.artist
     ;
 end;

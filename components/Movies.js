@@ -3,6 +3,7 @@ import axios from 'axios'
 import CoverArt from '../components/CoverArt'
 import TimeScrubber from '../components/TimeScrubber'
 import BrowseLayout from 'components/BrowseLayout'
+import ArtistReleases from 'components/ArtistReleases'
 
 export const metadata = {
 	viewport: `width=device-width, height='device-height', initial-scale: 1.0`
@@ -71,9 +72,11 @@ const Movie = ({ movie, num_years, setReleaseGroup }) => {
 const Movies = () => {
 	const [data, setMovies] = useState([])
 	const [params, setParams] = useState({
-		year: 2021,
+		year: 2023,
 		genres: '',
-		max_local_rank: 10,
+		min_rank: 1,
+		num_ranks: 10,
+		max_local_rank: 20,
 		num_years: 0,
 		release_group: 'tt7286456',
 		query: ''
@@ -85,14 +88,22 @@ const Movies = () => {
 	const [touchStart, setTouchStart] = useState(null)
 	const [touchEnd, setTouchEnd] = useState(null)
 
-	const topMovieTable = { settings: 2, context: 1, movie_table: 3 }
-	const topContext = { settings: 1, context: 3, movie_table: 2 }
+	// menu is 3
+	const topWall = { artist: 1, context: 1, wall: 4 }
+	const topContext = { artist: 1, context: 4, wall: 1 }
+	const topArtist = { artist: 4, context: 1, wall: 1 }
 
-	const [zindex, setZindex] = useState(topMovieTable)
+	const [zindex, setZindex] = useState(topWall)
 
 	const [dataSource, setDataSource] = useState('')
+	const [artistId, setArtistId] = useState('nm0290047')
+	
+	
 
-	const [nconst, setNconst] = useState('')
+	const callSetArtistId = (newArtistId) => {
+		setZindex(topArtist)
+		setArtistId(newArtistId)
+	}
 
 	useEffect(() => {
 		const url = `/api/env/DATA_SOURCE/`
@@ -119,7 +130,7 @@ const Movies = () => {
 		const mw = document.body.clientWidth
 		const num_years = Math.max(parseInt(mw / 200), 3)
 		// console.log('num_years', num_years)
-		const center_year = parseInt(2023 - num_years / 2)
+		const center_year = parseInt(2023 + 1 - (num_years / 2))
 		console.log('center_year', center_year)
 		setParams({
 			...params,
@@ -130,28 +141,39 @@ const Movies = () => {
 
 	useEffect(() => {
 		if (params.num_years != 0) {
-			if (nconst != '') {
-				getArtist()
-			} else {
-				getData()
-			}
+			getData()
 		}
 	}, [params])
 
-	const getArtist = () => {
-		const url = `api/artist_releases_year/${nconst}`
-		getYears(url)
-	}
-
 	const getData = () => {
-		const skim = !params.query || params.query == ''
-		const url = `api/get_movies?year=${params.year}&genres='${params.genres}'&max_local_rank=${params.max_local_rank}&num_years=${params.num_years}&query='${params.query}'&skim=${skim}`
+		params.skim = !params.query || params.query == ''
+		const p = ["year", "num_years", "max_local_rank", "skim"]
+		if (params.skim) {
+			p.push("num_ranks")
+			p.push('min_rank')
+		}
+		const pstr = ["genres","query"]
+		const kvi = p.map ( (field, idx) => {
+			return `${field}=${params[field]}`
+		}
+		)
+		const kvs = pstr.map ( (field, id) => {
+			return `${field}='${params[field]}'`
+		})
+
+		const url = 'api/get_movies?' + kvi.join("&") + "&" + kvs.join("&")
+		
+		/*
+		const oldparams = `year=${params.year}&genres='$years}&query='${params.query}'&skim=${params.skim}`
+
+        console.log("url", url)
+		console.log("oldparams", oldparams)
+		*/
 
 		getYears(url)
 	}
 
 	const getYears = async (url) => {
-
 		// console.log(url)
 
 		axios
@@ -194,7 +216,10 @@ const Movies = () => {
 	const yearHeading = Object.keys(years).map((year, idx) => {
 		return (
 			<th key={idx}>
-				<div key={idx} className='year_cell' onClick={() => setParams({ ...params, year: year })}>
+				<div key={idx} className='year_cell' onClick={(e) => {
+					e.preventDefault()
+					setParams({ ...params, year: year })
+				}}>
 					{year}
 				</div>
 			</th>
@@ -265,8 +290,8 @@ const Movies = () => {
 			)
 	})
 
-	const maxLocalRankSelector = [3, 10, 20, 50, 100, 200].map((val, idx) => {
-		if (val == params.max_local_rank) {
+	const maxLocalRankSelector = [2, 3, 10, 20, 50, 100, 200].map((val, idx) => {
+		if (val == params.num_ranks) {
 			return (
 				<span key={idx} className='selected'>
 					{val}&nbsp;
@@ -277,7 +302,7 @@ const Movies = () => {
 				<span
 					key={idx}
 					className='rank_selector'
-					onClick={() => setParams({ ...params, max_local_rank: val })}
+					onClick={() => setParams({ ...params, num_ranks: val })}
 				>
 					{val}
 				</span>
@@ -285,8 +310,9 @@ const Movies = () => {
 	})
 
 	const genreDropdown = genres.map((val, idx) => {
+		// const checked = val == params.genres
 		return (
-			<option key={idx} value={val}>
+			<option key={idx} value={val} defaultValue={params.genres}>
 				{val}
 			</option>
 		)
@@ -338,14 +364,14 @@ const Movies = () => {
 
 	const onKeyDown = (e) => {
 		if (e.keyCode === 38) {
-			const div = document.getElementById('movie_table_div')
+			const div = document.getElementById('wall')
 			div.scrollBy({
 				top: -350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
 				behavior: 'smooth'
 			})
 			// console.log("up arrow pressed");
 		} else if (e.keyCode === 40) {
-			const div = document.getElementById('movie_table_div')
+			const div = document.getElementById('wall')
 			div.scrollBy({
 				top: 350, // Math.sign(e.deltaY) * 100, // 100 pixels in the right direction
 				behavior: 'smooth'
@@ -363,15 +389,14 @@ const Movies = () => {
 	const titles = { imdb: 'Movies', imdb_tv: 'TV Series' }
 	const title = titles[dataSource]
 
-	return (
-		<div className='movie_page'>
-			<div className='menu' style={{ zIndex: zindex['settings'] }}>
-				<div className='movie_page_title'>{title}</div>
+	const Menu = () => {
+		return (
+			<div className='menu'>
+				<div className='top_title'>{title}</div>
 				<form className='top_form' onSubmit={handleSubmit}>
 					<select className='genre' name='genre' onChange={handleSubmit}>
 						{genreDropdown}
 					</select>
-
 					<input
 						id='query'
 						name='query'
@@ -389,10 +414,14 @@ const Movies = () => {
 				<br />
 				<TimeScrubber params={params} setParams={setParams} yearRange={yearRange} />
 			</div>
+		)
+	}
 
+	const Context = () => {
+		return (
 			<div className='context' style={{ zIndex: zindex['context'] }}>
 				<div className='back_button_div'>
-					<a onClick={() => setZindex(topMovieTable)} className='back_button'>
+					<a onClick={() => setZindex(topWall)} className='back_button'>
 						{' '}
 						&larr; back
 					</a>
@@ -400,17 +429,42 @@ const Movies = () => {
 				<BrowseLayout
 					release_group={params.release_group}
 					setReleaseGroup={setReleaseGroup}
+					callSetArtistId={callSetArtistId}
 					noHeader={true}
 				/>
 			</div>
+		)
+	}
 
+	const Artist = () => {
+		return (
+			<div className='artist' style={{ zIndex: zindex['artist'] }}>
+				<div className='back_button_div'>
+					<a onClick={() => setZindex(topContext)} className='back_button'>
+						{' '}
+						&larr; back
+					</a>
+				</div>
+
+				<ArtistReleases
+					artist_id={artistId}
+					setReleaseGroup={setReleaseGroup}
+					callSetArtistId={callSetArtistId}
+					noHeader={true}
+				/>
+			</div>
+		)
+	}
+
+	const Wall = () => {
+		return (
 			<div
-				className='movie_table_div'
-				style={{ zIndex: zindex['movie_table'] }}
+				className='wall'
+				style={{ zIndex: zindex['wall'] }}
 				//onTouchStart={onTouchStart}
 				//onTouchMove={onTouchMove}
 				//onTouchEnd={onTouchEnd}
-				id='movie_table_div'
+				id='wall'
 			>
 				<table className='movie_table' id='movie_table'>
 					<thead>
@@ -429,8 +483,28 @@ const Movies = () => {
 					{maxLocalRankSelector}
 				</div>
 			</div>
+		)
+	}
+
+	return (
+		<div className='top'>
+			<Menu />
+			{Context()}
+			<Artist />
+			{Wall()}
 		</div>
 	)
 }
+
+/*
+
+		<div className='top'>
+			<Menu />
+            <Context />
+			<Artist />
+			<Wall />
+		</div>
+
+*/
 
 export default Movies
