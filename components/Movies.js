@@ -78,7 +78,7 @@ const Movies = () => {
 		num_ranks: 10,
 		max_local_rank: 20,
 		num_years: 0,
-		release_group: 'tt7286456',
+		release_group: 'tt8543390', //'tt7286456',
 		query: ''
 	})
 	const [yearRange, setYearRange] = useState({
@@ -405,7 +405,6 @@ const Movies = () => {
 						placeholder='search titles'
 						size='12'
 						onKeyDown={onKeyDown}
-						autoFocus
 					/>
 
 					<input type='submit' value='&#128269;' />
