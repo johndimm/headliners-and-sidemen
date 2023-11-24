@@ -117,6 +117,7 @@ td, th {
 
 .album_title img {
   display: inline-block;
+  max-width: 20vw;
 }
 
 .header {
@@ -190,6 +191,7 @@ td, th {
 
 .artist_featured_pix {
   max-width: 300px;
+  max-height: 60vh;
   border: 1px solid lightgray;
   margin: 0px;
   padding: 3px;
