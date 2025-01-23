@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReleaseGroup from 'components/ReleaseGroup'
 // import dups from 'utils/dups'
 
-const Sidebar = ( {release_group, data_source, before_after} ) => {
+const Sidebar = ( {release_group, data_source, before_after, setReleaseGroup, callSetArtistId} ) => {
     const [records, setRecords] = useState([])
 
     useEffect( () => {
@@ -29,7 +29,6 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
       })
 
       // console.log('releases', releases)
-
       html = Object.keys(releases).map ( (release_group, idx) => {
         const record = releases[release_group][0]
         const artists = releases[release_group]
@@ -37,11 +36,20 @@ const Sidebar = ( {release_group, data_source, before_after} ) => {
           key={idx} 
           record={record} 
           data_source={data_source} 
-          artists={artists} />
+          artists={artists} 
+          setReleaseGroup={setReleaseGroup}
+          callSetArtistId={callSetArtistId}/>
       })
     }
 
-    return <div>{html}</div>
+    const title = (before_after == 'last_before')
+    ? "before" 
+    : "after"
+
+    return <div className="sidebar">
+       <div className="sidebar_title">{title}</div>
+       {html}
+       </div>
 }
 
 export default Sidebar

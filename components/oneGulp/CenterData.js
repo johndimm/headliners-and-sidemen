@@ -1,7 +1,7 @@
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const CenterData = ( {records}) => {
+const CenterData = ( {records, callSetArtistId}) => {
 
     const data = records
     console.log('CenterData', data)
@@ -11,11 +11,11 @@ const CenterData = ( {records}) => {
     let coverArt
     if (Array.isArray(data) && data.length > 0) {
       console.log(data[0], data[0].release_group_gid)
-      coverArt = <CoverArt release_group_gid={data[0].release_group_gid} />
+      coverArt = <CoverArt release_group_gid={data[0].release_group_gid} size='small' />
       artists = data.map( (record, idx) => {
         if (record.begin_date < begin_date)
            begin_date = record.begin_date 
-        return <Artist key={idx} record={record} />
+        return <Artist key={idx} record={record} callSetArtistId={callSetArtistId}/>
       })
 
       release = <div>

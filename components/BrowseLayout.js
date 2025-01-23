@@ -7,7 +7,7 @@ import Center from 'components/Center'
 import Header from 'components/Header'
 
 // const Index = () => {
-export default function BrowseLayout( { release_group }) {
+export default function BrowseLayout( { release_group, setReleaseGroup, callSetArtistId, setSpotifyAlbum, noHeader }) {
   const [dataSource, setDataSource] = React.useState('')
 
   useEffect( () => {
@@ -34,20 +34,32 @@ export default function BrowseLayout( { release_group }) {
       return null
   }
 
+  const header = noHeader 
+    ? <div></div>
+    : <Header data_source={dataSource}/>
+
     return <div>
-    <Header data_source={dataSource}/>
+    {header}
     <div className="content">
       <table>
       <tbody><tr>
         <td>
           <Sidebar before_after='last_before' 
+            setReleaseGroup={setReleaseGroup}
+            callSetArtistId={callSetArtistId}
             release_group={release_group} data_source={dataSource}/>
         </td>
-        <td className='center'>
-          <Center release_group={release_group} data_source={dataSource}/>
+        <td className='center'> 
+          <Center 
+            setReleaseGroup={setReleaseGroup}
+            callSetArtistId={callSetArtistId}
+            setSpotifyAlbum={setSpotifyAlbum}
+            release_group={release_group} data_source={dataSource}/>
         </td>
         <td>
           <Sidebar before_after='first_after' 
+            setReleaseGroup={setReleaseGroup}
+            callSetArtistId={callSetArtistId}
             release_group={release_group} data_source={dataSource}/>     
         </td>
       </tr></tbody>
