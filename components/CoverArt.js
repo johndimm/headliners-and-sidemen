@@ -15,14 +15,22 @@ const CoverArt = ({ record, data_source, size }) => {
 
 		setImage({'url': null, 'source': 'initialize'})
 		const url = `/api/imdb/${imdbid}`
+
+		console.log("fetching poster: ", url)
 		const response = await fetch(url)
 		if (!response) {
 			console.log('failed to fetch')
 		}
 		const data = await response.json()
-		if (!data) return
+		if (!data) {
+			log("no data")
+			return 
+		}
 
-		const resultsField = 'tv_results' in data ? 'tv_results' : 'movie_results'
+		const resultsField = 'tv_results' in data 
+		  && data['tv_results'].length > 0 
+		  ? 'tv_results' 
+		  : 'movie_results'
 
 		const results = data[resultsField][0]
 		if (!results) return
@@ -35,11 +43,12 @@ const CoverArt = ({ record, data_source, size }) => {
 
 		const imgUrl = imageSized(`https://image.tmdb.org/t/p/w200/${poster_path}`, size)
 
+
 		const img = { url: imgUrl, source: 'download' }
 		setImage(img)
 
-		//console.log('download results:', results)
-		//console.log('image:', JSON.stringify(img))
+		console.log('download results:', results)
+		console.log('image:', JSON.stringify(img))
 	}
 
 	const updateDatabase = (imdbid, cover_url) => {
@@ -77,7 +86,10 @@ const CoverArt = ({ record, data_source, size }) => {
 	}
 
 	useEffect(() => {
-		if (!(data_source == 'imdb' || data_source == 'imdb_tv')) return
+		if (!(data_source == 'imdb' || data_source == 'imdb_tv')) {
+			setImage( {url: record.cover_url, source: 'database'})
+			return;
+		}
 
 		if (
 			record.cover_url &&

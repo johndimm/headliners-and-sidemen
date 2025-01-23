@@ -9,6 +9,7 @@ const categories = {
 	imdb_tv: 'tv show'
 }
 
+
 const youTube = (dataSource, imdbid, record) => {
 	const youtube_logo = '/youtube.png'
 	const date = record?.begin_date?.slice(0, 4)
@@ -98,21 +99,49 @@ function titleCase(str) {
 		.join(' ')
 }
 
-const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId }) => {
+const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId, setSpotifyAlbum }) => {
 	const [data, setData] = useState([])
 	const [album, setAlbum] = useState({})
+//	const [spotifyAlbum, setSpotifyAlbum] = useState(0)
+	// const [spotifyToken, setSpotifyToken] = useState()
+
+
+
+
 	// console.log('data_source', data_source)
 
 	// const imdbid = 'tt' + release_group.toString().padStart(7, '0')
 	const imdbid = release_group
 
 	useEffect(() => {
+
+
+		const getSpotifyAlbum = async (data) => {
+			if (! (data && Array.isArray(data) && data.length > 0))
+			  return
+			const album = data[0].title
+			const artist = data[0].headliner
+	
+			const url = `/api/spotify_search?album=${album}&artist=${artist}`
+			const results = await axios (url)
+			const uri = results?.data?.['uri']?.replace('spotify:album:','')
+			console.log(uri)
+			setSpotifyAlbum (uri)
+		}
+
 		const url = `/api/release_group/${release_group}`
 		axios
 			.get(url)
 			.then(function (response) {
 				// console.log("Center, data", response.data)
 				setData(response.data)
+
+
+		if (data_source == 'musicbrainz') {
+			getSpotifyAlbum(response.data)
+		}
+
+
 			})
 			.catch((err) => err)
 
@@ -128,11 +157,12 @@ const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId }
 				})
 				.catch((err) => err)
 		}
+
 	}, [release_group])
 
 	let plot
 	let details
-	let title = data && data.length >= 1 ? data[0].title : ''
+	let title = data && Array.isArray(data) && data.length >= 1 ? data[0].title : ''
 	if (album && Object.keys(album).length > 0) {
 		title = album['title'] ? album['title'] : title
 
@@ -150,12 +180,6 @@ const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId }
 				</tr>
 			)
 		})
-
-		// console.log("album", album)
-
-		//title = album['original_title']
-
-		// console.log('details:', details)
 	}
 
 	let artists

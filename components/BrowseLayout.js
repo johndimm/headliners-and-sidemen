@@ -7,7 +7,7 @@ import Center from 'components/Center'
 import Header from 'components/Header'
 
 // const Index = () => {
-export default function BrowseLayout( { release_group, setReleaseGroup, callSetArtistId, noHeader }) {
+export default function BrowseLayout( { release_group, setReleaseGroup, callSetArtistId, setSpotifyAlbum, noHeader }) {
   const [dataSource, setDataSource] = React.useState('')
 
   useEffect( () => {
@@ -53,6 +53,7 @@ export default function BrowseLayout( { release_group, setReleaseGroup, callSetA
           <Center 
             setReleaseGroup={setReleaseGroup}
             callSetArtistId={callSetArtistId}
+            setSpotifyAlbum={setSpotifyAlbum}
             release_group={release_group} data_source={dataSource}/>
         </td>
         <td>
