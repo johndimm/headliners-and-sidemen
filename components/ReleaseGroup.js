@@ -32,8 +32,8 @@ const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup, callSetAr
 					}
 				}}
 			>
-				{record.title} {hlin}
-				<div className='date'>{begin_date} {rankHtml}</div>
+				<b>{record.title}</b> {hlin}
+				<div className='date'>{begin_date}</div>
 				<CoverArt record={record} data_source={data_source} size='small' />
 			</div>
 

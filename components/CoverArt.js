@@ -111,7 +111,7 @@ const CoverArt = ({ record, data_source, size }) => {
 		<img
 			className='center_img'
 			id={record.release_group}
-			src={image.url}
+			src={imageSized(image.url, size)}
 			type='image/jpeg'
 			alt={record.release_group}
 			onError={(e) => {
@@ -123,7 +123,7 @@ const CoverArt = ({ record, data_source, size }) => {
 				if (image.source == 'download') {
 					updateDatabase(record.release_group, image.url)
 				}
-				e.target.style.display = 'block'
+				// e.target.style.display = 'block'
 			}}
 		/>
 	)

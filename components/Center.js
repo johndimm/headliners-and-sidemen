@@ -126,7 +126,7 @@ const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId, 
 			const results = await axios (url)
 			const uri = results?.data?.['uri']?.replace('spotify:album:','')
 			console.log(uri)
-			setSpotifyAlbum (uri)
+			//setSpotifyAlbum (uri)
 		}
 
 		const url = `/api/release_group/${release_group}`
@@ -207,12 +207,11 @@ const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId, 
 		begin_date = begin_date.toString().replace('-01-01', '')
 
 		links = externalLinks(data_source, imdbid, data[0])
-		let youtube = youTube(data_source, imdbid, data[0])
+		// let youtube = youTube(data_source, imdbid, data[0])
 
 		release = (
 			<div>
-				{youtube}
-				<div className='date'>{begin_date} #{data[0].rank}</div>
+	
 				<div className='title'>{title}</div>
 				<div className='headliner'>{data[0].headliner}</div>
 				<div className='img_holder'>{coverArt}</div>

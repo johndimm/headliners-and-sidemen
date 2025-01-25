@@ -21,18 +21,17 @@ a {
 }
 
 .artist_name {
-  font-size: 8pt;
-  display: inline-block;
+  font-weight: 600;
 }
 
 .instrument {
   margin-left: 20px;
-  font-size: 8pt;
+  font-size: 10pt;
   margin-bottom: 10px;
 }
 .title {
-  font-size: 20pt;
-  font-weight: 500;
+  font-size: 24pt;
+  font-weight: 600;
 }
 .date {
   font-size: 8pt;
@@ -50,23 +49,19 @@ td, th {
 
 .center {
   text-align: center;
-  max-width: 35vw;
+  max-width: 550px;
   padding: 10px;
   margin: 10px;
 }
 
 .linked_album img, .header img, .external_links img {
-
-  padding: 2px;
-  margin: 2px;
+  max-width: 200px;
+  padding: 5px;
+  margin: 5px;
 }
 
 .center img {
-  max-width: min(600px, 100%);
-}
-
-.img_holder {
-  display: inline-block;
+  max-width: 500px;
 }
 
 .headliner {
@@ -74,27 +69,20 @@ td, th {
 }
 
 .linked_album {
-  padding: 2px;
-  margin: 2px;
-
-  width: 100%;
-  border: 1px solid #444444;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid lightgray;
+  max-width: 250px;
+  min-width: 200px;
+  border: 1px solid lightgray;
   border-radius: 5px;
   cursor:pointer;
 }
 
-.linked_album img {
-  min-width: 100px;
-  display: inline-block !important;
-  max-width: 204px;
-}
-
 .artist_info {
   cursor: pointer;
-  margin: 3px;
-  padding: 2px;
-  height: fit-content;
-  border: 1px solid #444444;
+  margin: 5px;
+  padding: 0px;
 }
 
 .linked_album:hover {
@@ -109,22 +97,11 @@ td, th {
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
 }
 
-.album_title {
-  cursor: pointer;
-  font-size: 8pt;
-  text-align: center;
-}
-
-.album_title img {
-  display: inline-block;
-  max-width: 15vw;
-}
-
 .header {
   position: relative;
   top: 0;
   padding: 20px;
-  white-space: wrap;
+  white-space: nowrap;
   background-color: white;
   width: 100%
 }
@@ -135,13 +112,12 @@ td, th {
 
 .page_title_div {
   display: inline-block;
-  margin-left: 200px;
-  width: 50vw;
+  margin-left: 40px;
+  width: 470px;
 }
 .page_title {
   font-size:24pt;
   font-weight: 600;
-  margin-left: 10px;
 }
 
 .page_subtitle {
@@ -153,11 +129,10 @@ td, th {
 .search_input {
   display: inline-block;
   width: 300px;
-  white-space: nowrap;
 }
 
 .search_input input {
-  font-size: 12pt;
+  font-size: 14pt;
   margin-right:3px;
 }
 
@@ -168,14 +143,13 @@ td, th {
 .plot, .details {
   display: inline-block;
   text-align: left;
-  width: 35vw;
+  width: 400px;
   margin: 20px;
+  background-color: #EEEEEE;
   border: 1px solid lightgray;
   border-radius: 10px;
   padding: 10px;
   clear: both;
-  font-size: 9pt;
-  background-color: #666666;
 }
 
 .details {
@@ -183,15 +157,15 @@ td, th {
 }
 
 .artist_pix {
-  max-width: 15vw;
-
-  margin: 2px;
-  padding: 2px;
+  max-width: 200px;
+  max-height: 200px;
+  border: 1px solid lightgray;
+  margin: 5px;
+  padding: 3px;
 }
 
 .artist_featured_pix {
   max-width: 300px;
-  max-height: 60vh;
   border: 1px solid lightgray;
   margin: 0px;
   padding: 3px;
@@ -216,14 +190,12 @@ td, th {
   margin-bottom: 30px;
   max-width: 300px;
   text-align: left;
-  white-space: wrap;
 }
 
 
 .timeline {
  display: flex;
  cursor:all-scroll;
- width: auto;
 }
 
 
@@ -234,11 +206,11 @@ td, th {
 
 .variations {
   display: inline-block;
-  width: 10px;
+  width: 130px;
   font-weight: 200;
   font-size: 10pt;
   margin-right: 20px;
-  white-space: nowrap;
+  top:-100px;
 }
 
 .age {
@@ -320,358 +292,4 @@ button {
   padding: 20px;
   border: 1px solid lightgray;
   border-radius: 25px;
-}
-
-
-
-
-.top {
-  position:relative;
-
-  padding: 10px;
-  margin: 0px;
-  text-align: center;
-  background-color: black;
-  width: 100%;
-  height: 100%
-}
-
-
-
-.year_cell {
-  background-color: lightgray;
-  color: black;
-  margin-left: 10px;
-  margin-right: 10px;
-  height: 20px; 
-  padding: 3px;
-  text-align: center;
-  font-family: sans-serif; 
-  letter-spacing: 10px; 
-  font-weight: 100;
-  font-size: 10pt;
-  cursor: pointer;
-}
-
-.movie {
-  white-space: wrap; 
-  font-family: sans-serif; 
-  margin-bottom: 12px;
-  font-size: 10pt;
-  cursor: pointer;
-  text-align: center;
-}
-
-.movie img {
-  width: 100%;
-  max-width:300px;
-}
-
-.movie_table a { 
-  color: inherit;  
-  text-decoration: none;
-  table-layout: fixed; 
-  margin-right: 10px;
-  width: 100%;
-}
-
-
-.movie_table th { 
-  position: sticky; 
-  top: 0; 
-  background-color: white
-}
-
-.genres { font-size: 8pt;}
-
-.range_input {
-  margin: 2px;
-}
-
-.selectors {
-  font-size: 9pt;
-}
-
-.genre_selector {
-  overflow-y: auto;
-  height: fit-content;
-  display: inline-block;
-
-  columns: 3;
-  text-align: left;
-  cursor: pointer;
-  font-size: 8pt;
-}
-
-.rank_selector {
-  margin: 10px;
-  cursor: pointer;
-}
-
-.rank_selector:hover, .genre:hover {
-  text-decoration: underline;
-}
-
-.genre {
-  cursor: pointer;
-}
-
-
-.top_title {
-  font-family: 'Copperplate';
-  font-size: 18pt;
-
-  float: left;
-  text-align: center;
-  width: calc(100% - 500px);
-}
-
-.selected {
-  font-size:18pt;
-  color: blue;
-  font-weight: 600;
-  margin: 10px;
-}
-
-
-#scrubber {
-  width: calc((100% - 250px) / 2.0);
-  height: 8px;
-  text-align: center;
-  display: inline-block;
-}
-#tooltip {
-  position:relative;
-  display: inline-block;
-  margin: 2px;
-  padding: 2px;
-  border: 1px solid darkgray;
-  font-size: 10pt;
-}
-#scrubberContainer {
-  overflow:hidden;
-  text-align:left;
-  white-space: nowrap;
-  width: fit-content;
-  width: 100%;
-}
-
-.settings {
-  display: inline-block;
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid black;
-  text-align: left;
-  width: fit-content;
-  height: 300px;
-  font-size: 14pt;
-}
-
-.arrow {
-  font-size:14pt;
-  cursor: pointer;
-  margin: 1px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.content {
-  white-space: wrap;
-  width: 100%;
-}
-
-.content table {
-  width: 100%
-}
-
-.sidebar_title {
-  font-style: italic;
-}
-
-.sidebar {
-  width: 20vw;
-}
-
-.context, .artist, .wall  {
-  position: fixed;
-  height: 100%;
-  left: 300px;
-  top: 0;
-  overflow-y: scroll;
-  overflow-x: scroll;
-}
-
-.context, .artist {
-  background-color: black;
-  z-index: 2;
-}
-
-.artist {
-  z-index: 1;
-}
-
-.wall {
-  background-color: white;
-  z-index: 3;
-}
-
-.movie_table {
-  table-layout: fixed;
-  position: relative;
-  width:100%;
-  background-color: white;
-  overflow-y: scroll;
-}
-
-body {
-  overflow-y: auto;
-}
-
-.settings {
-  position: fixed;
-  top: calc(50vh - 175px);
-  left: calc(50vw - 250px);
-  width: 300px;
-  height: 350px;
-  z-index: 3;
-  border: 1px solid black;
-  background-color: white;
-  text-align: center;
-
-}
-
-.menu {
-  width: 100%;
-  z-index: 5;
-  display: inline-block;
-  position: relative;
-  background-color: white;
-  height: 90px;
-  overflow: hidden;
-  text-align: center;
-
-}
-
-.top_form {
-  white-space: nowrap;
-  float: left;
-  height: fit-content;
-  margin-right: 10px;
-}
-
-.top_form input {
-  margin-left: 3px;
-}
-
-.genre {
-  height: 24px;
-  margin-right: 5px;
-  margin-top: 0px;
-}
-
-
-.movie {
-  background-color: black;
-}
-
-.movie_table td, .movie_table th {
-  background-color: black;
-  color: white;
-}
-
-
-.menu, body, .wall, .content, html, __next, .header{
-  background-color: black;
-  color: white;
-}
-
-
-::-webkit-scrollbarx {
-  height: 12px;
-  width: 8px;
-  background: #969696;
-  color: white;
-  -webkit-border-radius: 1ex;
-}
-
-.youtube_logo {
-  background-color: white;
-  padding-right:2px;
-  border-radius: 10px;
-}
-
-.artist_div {
-  -webkit-column-break-inside: avoid; 
-  font-size: 8pt;
-}
-
-.back_button {
-  cursor: pointer;
-  font-size: 18pt;
-}
-
-.back_button_div {
-  float: left;
-  margin-left: 30px;
-}
-
-.spotify_embed, .wall_menu {
-  width: 40%;
-  height: 90px;
-  float: left;
-}
-
-.map_table {
-  border-spacing: 0;
-  border-width: 0;
-}
-
-.map_table_div {
-  height: 300px;
-  overflow: auto;
-
-}
-
-.map_table td {
-  padding: 0;
-  margin: 0;
-  padding-right:0px;
-}
-
-.map_column {
-  font-size:6px;
-}
-
-.map_quad {
-  padding-bottom: 0px;
-}
-
-.map_filler {
-  color: gray;
-  cursor: default;
-  background-color: gray;
-  border: 1px solid black;
-}
-
-.overlay_filler, .selected_quad {
-  cursor: pointer;
-  border: 1px solid black;
-}
-
-.overlay_filler {
-  color: red;
-  background-color: red;
-}
-
-.control_panel {
-  width: 200px;
-}
-
-.selected_quad {
-  color: yellow;
-  background-color: yellow;
-}
-
-.game_input {
-  width: 16px;
 }

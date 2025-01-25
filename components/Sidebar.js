@@ -47,7 +47,6 @@ const Sidebar = ( {release_group, data_source, before_after, setReleaseGroup, ca
     : "after"
 
     return <div className="sidebar">
-       <div className="sidebar_title">{title}</div>
        {html}
        </div>
 }
