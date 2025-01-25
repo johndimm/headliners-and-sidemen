@@ -1,95 +1,102 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Artist from 'components/Artist'
 import CoverArt from 'components/CoverArt'
 
 const categories = {
-  'musicbrainz': 'album', 
-  'imdb': 'movie', 
-  'imdb_tv': 'tv show'
+	musicbrainz: 'album',
+	imdb: 'movie',
+	imdb_tv: 'tv show'
 }
 
-const youTube = (dataSource, imdbid, record) => {
-  const youtube_logo = '/youtube.png'
-  const date = record?.begin_date?.slice(0,4)
-  const category = categories[dataSource]
-  const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date} trailer`) 
-  const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
-  return (
 
-            <div>
-         <a target='imdb' rel="noreferrer" href={youtube_url}>
-           <img height='40' src={youtube_logo} alt=''/>
-         </a>
-       </div> 
-  )
+const youTube = (dataSource, imdbid, record) => {
+	const youtube_logo = '/youtube.png'
+	const date = record?.begin_date?.slice(0, 4)
+	const category = categories[dataSource]
+	const query = encodeURIComponent(
+		`${category} ${record.title} with ${record.artist} ${date} trailer`
+	)
+	const youtube_url = `https://www.youtube.com/results?search_query=${query}`
+	return (
+		<div>
+			<a target='imdb' rel='noreferrer' href={youtube_url}>
+				<img className='youtube_logo' height='40' src={youtube_logo} alt='' />
+			</a>
+		</div>
+	)
 }
 
 const externalLinks = (dataSource, imdbid, record) => {
-  const youtube_logo = '/youtube.png'
+	const youtube_logo = '/youtube.png'
 
-  const date = record?.begin_date?.slice(0,4)
+	const date = record?.begin_date?.slice(0, 4)
 
-  const category = categories[dataSource]
+	const category = categories[dataSource]
 
-  if (dataSource == 'musicbrainz') {
-     const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
-     const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
+	if (dataSource == 'musicbrainz') {
+		const musicbrainz_url = `https://musicbrainz.org/release-group/${record.release_group}`
+		const musicbrainz_logo = 'https://staticbrainz.org/MB/header-logo-1f7dc2a.svg'
 
-     let queryRaw = `${category} ${record.title} ${date}`
-     if (record.headliner != '')
-       queryRaw += ` with ${record.headliner}`
-     const query = encodeURIComponent(queryRaw)  
-     const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+		let queryRaw = `${category} ${record.title} ${date}`
+		if (record.headliner != '') queryRaw += ` with ${record.headliner}`
+		const query = encodeURIComponent(queryRaw)
+		const youtube_url = `https://www.youtube.com/results?search_query=${query}`
 
-     return <div className='external_links'>
-       <div>
-         <a target='musicbrainz' rel="noreferrer" href={youtube_url}>
-           <img height='40' src={youtube_logo} alt='IMDb'/>
-         </a>
-       </div>
+		return (
+			<div className='external_links'>
+				<div>
+					<a target='musicbrainz' rel='noreferrer' href={youtube_url}>
+						<img height='40' src={youtube_logo} alt='IMDb' />
+					</a>
+				</div>
 
-       <div>
-         <a target='musicbrainz' rel="noreferrer" href={musicbrainz_url}>
-           <img height='50' width='150' src={musicbrainz_logo} alt='IMDb'/>
-         </a>
-       </div>
-  </div>
-  }
+				<div>
+					<a target='musicbrainz' rel='noreferrer' href={musicbrainz_url}>
+						<img height='50' width='150' src={musicbrainz_logo} alt='IMDb' />
+					</a>
+				</div>
+			</div>
+		)
+	}
 
-  if (dataSource == 'imdb' || dataSource == 'imdb_tv') {
-    const logo = 'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
-    const link = `https://www.imdb.com/title/${imdbid}`
+	if (dataSource == 'imdb' || dataSource == 'imdb_tv') {
+		const logo =
+			'https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png'
+		const link = `https://www.imdb.com/title/${imdbid}`
 
-    const query = encodeURIComponent(`${category} ${record.title} with ${record.artist} ${date} trailer`) 
-    const youtube_url =  `https://www.youtube.com/results?search_query=${query}`
+		const query = encodeURIComponent(
+			`${category} ${record.title} with ${record.artist} ${date} trailer`
+		)
+		const youtube_url = `https://www.youtube.com/results?search_query=${query}`
 
-    const rtLogo = "https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png"
-    const rtLink = `https://www.rottentomatoes.com/search?search=${query}`
+		const rtLogo =
+			'https://www.rottentomatoes.com/assets/pizza-pie/images/rottentomatoes_logo_40.336d6fe66ff.png'
+		const rtLink = `https://www.rottentomatoes.com/search?search=${query}`
 
-    return <div className='external_links'>
+		return (
+			<div className='external_links'>
+				<div>
+					<a target='imdb' rel='noreferrer' href={rtLink}>
+						<img height='50' src={rtLogo} alt='' />
+					</a>
+				</div>
 
-       <div>
-         <a target='imdb' rel="noreferrer" href={rtLink}>
-           <img height='50' src={rtLogo} alt=''/>
-         </a>
-       </div>  
-
-      <div>
-        <a target='imdb' rel="noreferrer" href={link}>
-          <img height='50' src={logo} alt='IMDb'/>
-        </a>
-     </div>
-    </div>
-  }
- 
+				<div>
+					<a target='imdb' rel='noreferrer' href={link}>
+						<img height='50' src={logo} alt='IMDb' />
+					</a>
+				</div>
+			</div>
+		)
+	}
 }
 
 function titleCase(str) {
-  return str
-      .split('_')
-      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+	return str
+		.split('_')
+		.map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+		.join(' ')
 }
 
 const Center = ( {release_group, data_source, setReleaseGroup}) => {

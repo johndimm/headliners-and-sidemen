@@ -2,7 +2,7 @@
 import CoverArt from 'components/CoverArt'
 import Artist from 'components/Artist'
 
-const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup }) => {
+const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup, callSetArtistId }) => {
 	const link = `/release_group/${record.release_group}`
 	const hlin = record.headliner ? <span> by {record.headliner}</span> : null
 
@@ -11,7 +11,7 @@ const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup }) => {
 	let artistsHTML
 	if (artists) {
 		artistsHTML = artists.map((artist, idx) => {
-			return <Artist key={idx} record={artist} withpix={false} data_source={data_source} />
+			return <Artist key={idx} record={artist} withpix={false} data_source={data_source} callSetArtistId={callSetArtistId}/>
 		})
 	}
 
@@ -19,6 +19,7 @@ const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup }) => {
 	if (record && 'begin_date' in record && record['begin_date'])
 		begin_date = record['begin_date'].replace('-01-01', '')
 
+	const rankHtml = record.rank ? "#" + record.rank : ''
 	return (
 		<div className='linked_album'>
 			<div
@@ -32,7 +33,7 @@ const ReleaseGroup = ({ record, data_source, artists, setReleaseGroup }) => {
 				}}
 			>
 				{record.title} {hlin}
-				<div className='date'>{begin_date}</div>
+				<div className='date'>{begin_date} {rankHtml}</div>
 				<CoverArt record={record} data_source={data_source} size='small' />
 			</div>
 

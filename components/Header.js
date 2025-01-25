@@ -5,7 +5,7 @@ import Link from 'next/link'
 const GitHub = () => {
   return <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
           <span className='link_span'>
-          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
+          <img height='30' src="/GitHub-Logos/github-mark-white.png" />
           </span>
           </Link>
 }
@@ -122,12 +122,12 @@ const HeaderIMDb = ( {query, data_source} ) => {
 
       <Variations data_source={data_source}/>
 
-      <a>
+      
       <div className='page_title_div'>
             <div className='page_title'>{titles[data_source].title}</div>
             <div className='page_subtitle'>{titles[data_source].subtitle}</div>
       </div>
-      </a>
+      
 
     </form>
 

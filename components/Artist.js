@@ -1,35 +1,30 @@
 import Link from 'next/link'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
+const Artist = ({ record, withpix, data_source, callSetArtistId }) => {
+	const [artist, setArtist] = useState('')
 
-const Artist =  ( { record, withpix, data_source } ) => {
-  const [artist, setArtist] = useState('')
-  
-  const getArtistInfo = async () => {
-    if (!withpix || data_source == 'musicbrainz') 
-      return
+	const getArtistInfo = async () => {
+		if (!withpix || data_source == 'musicbrainz') return
 
-    // const nconst = 'nm' + record['artist_id'].toString().padStart(7, '0')
-    const nconst = record['artist_id']
-    const url = `/api/artist_pic/${nconst}`
-    //console.log('getArtistInfo, url:', url)
-    const results = await fetch(url)
-    const data = await results.json()
-    //console.log(data.results)
-    setArtist(data.results)
-  }
+		const nconst = record['artist_id']
+		const url = `/api/artist_pic/${nconst}`
+		// console.log('getArtistInfo, url:', url)
+		const results = await fetch(url)
+		const data = await results.json()
+		//console.log(data.results)
+		setArtist(data.results)
+	}
 
-  useEffect ( () => {
-    getArtistInfo()
-  },[record])
+	useEffect(() => {
+		getArtistInfo()
+	}, [record])
 
-  let pix
-  if (withpix && artist && 'image_url' in artist && artist['image_url']) {
-      const name = 'name' in artist
-        ? artist['name'] 
-        : ''
+	let pix
+	if (withpix && artist && 'image_url' in artist && artist['image_url']) {
+		const name = 'name' in artist ? artist['name'] : ''
 
-      pix = <img className='artist_pix' 
+   pix = <img className='artist_pix' 
       onError={(e)=>{
         e.target.style.display='none'
         }}
@@ -42,28 +37,37 @@ const Artist =  ( { record, withpix, data_source } ) => {
     ? artist['partial_bio'] 
     : ''
 
-  const link = `/artist_releases/${record.artist_id}`
 
-  let begin_date
-  if (record && 'begin_date' in record && record['begin_date']) 
-    begin_date = record['begin_date'].replace('-01-01','')
+	const title = artist && 'partial_bio' in artist ? artist['partial_bio'] : ''
 
-  let age
-  if (record && 'age' in record && record['age'] && record['age'] > 0)
-    age = <span className='age'>({record['age']})</span>
+	const link = `/artist_releases/${record.artist_id}`
 
-  //            <div className='date'>{begin_date}</div>
+	let begin_date
+	if (record && 'begin_date' in record && record['begin_date'])
+		begin_date = record['begin_date'].replace('-01-01', '')
 
-    return <Link legacyBehavior href={link} passHref={true}>
-      <a title={title}>
-      <div className='artist_info'>
-          <div>{pix}</div>
-          <div className='artist_name'>{record.artist} {age}</div>
-          <div className='instrument'>{record.instrument}</div>
+	let age
+	if (record && 'age' in record && record['age'] && record['age'] > 0)
+		age = <span className='age'>({record['age']})</span>
 
-      </div>
-      </a>
-    </Link>
-  }
+	let instrument = ''
+	if (record.instrument) instrument = record.instrument.replace(/,/g, ', ')
 
-  export default Artist
+	return (
+		<div className='artist_div' onClick={() => 
+		   callSetArtistId(record.artist_id)
+		   }>
+			<a title={title}>
+				<div className='artist_info'>
+					<div>{pix}</div>
+					<div className='artist_name'>
+						{record.artist} {age}
+					</div>
+					<div className='instrument'>{instrument}</div>
+				</div>
+			</a>
+		</div>
+	)
+}
+
+export default Artist

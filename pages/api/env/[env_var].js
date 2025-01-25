@@ -10,6 +10,7 @@ export default async function handler (req, res) {
   if ( env_var in accept) {
     const value = process.env[env_var]
     response[env_var] = value
+    console.log(`env_var: ${env_var}, value: ${value}`)
   }
   res.status(200).json( response )
 }

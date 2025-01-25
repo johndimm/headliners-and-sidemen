@@ -43,7 +43,7 @@ const ReleaseGroupSet = ( { release_group}) => {
                 <LastBeforeData records={data.lastBefore} />
             </td>
             <td className='center'>
-                <CenterData records={data.center} />
+                <CenterData records={data.center} callSetArtistId={{callSetArtistId}}/>
             </td>
             <td>
                 <FirstAfterData records={data.firstAfter} />     
