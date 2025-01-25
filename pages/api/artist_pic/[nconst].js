@@ -22,7 +22,7 @@ const getTheMovieDatabase = async (nconst) => {
   const size='small'
   const person = results.person_results[0]
   // console.log ("person", person)
-  if (person && 'profile_path' in Object.keys(person)) {
+  if (person && 'profile_path' in person) { // Object.keys(person)) {
     const profile_path = person.profile_path
     // const tmdb_id = person.id
   

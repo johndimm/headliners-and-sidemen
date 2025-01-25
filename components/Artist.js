@@ -35,6 +35,8 @@ const Artist =  ( { record, withpix, data_source } ) => {
         }}
       src={artist['image_url']} alt={name} />
   }
+
+  console.log("artist", artist)
   
   const title = artist && 'partial_bio' in artist
     ? artist['partial_bio'] 

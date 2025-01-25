@@ -61,7 +61,7 @@ td, th {
 }
 
 .center_img {
-  width: 100%;
+  max-width: 550px;
 }
 
 
@@ -101,6 +101,11 @@ td, th {
   cursor: pointer;
   font-size: 10pt;
   text-align: center;
+  font-weight: 600;
+}
+
+.album_title span {
+  font-weight: 400;
 }
 
 .album_title img {
@@ -122,12 +127,13 @@ td, th {
 
 .page_title_div {
   display: inline-block;
-  margin-left: 200px;
+  margin-left: 20px;
   width: 50vw;
 }
 .page_title {
   font-size:24pt;
   font-weight: 600;
+  margin-right: 20px;
 }
 
 .page_subtitle {
@@ -212,6 +218,9 @@ td, th {
 .artists {
   text-align: center;
   width: 100%;
+  -webkit-column-break-inside: avoid;
+page-break-inside: avoid;
+break-inside: avoid-column;
 }
 
 .variations {
