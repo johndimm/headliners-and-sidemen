@@ -100,7 +100,7 @@ const CoverArt = ({ record, data_source, size }) => {
 				}}
 				onLoad={(e) => {
 					//console.log('cover image loaded!', bigCover)
-					e.target.style.display = 'block'
+					e.target.style.display = 'inline-block'
 				}}
 			/>
 		)
@@ -125,7 +125,7 @@ const CoverArt = ({ record, data_source, size }) => {
 				onLoad={(e) => {
 					//console.log('poster image loaded!', coverImg, e)
 					updateDatabase(imdbid, coverImg)
-					e.target.style.display = 'block'
+					e.target.style.display = 'inline-block'
 				}}
 			/>
 		)

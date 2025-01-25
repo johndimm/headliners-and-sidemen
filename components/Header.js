@@ -82,8 +82,9 @@ const HeaderMusicbrainz = ({query}) => {
           <a>
           <div className='page_title_div'>
                 <div className='page_title'>{titles['musicbrainz'].title}</div>
-                <div className='page_subtitle'>{titles['musicbrainz'].subtitle}</div>
           </div>
+          
+          <div className='page_subtitle'>{titles['musicbrainz'].subtitle}</div>
           </a>
 
       </form>
@@ -125,8 +126,9 @@ const HeaderIMDb = ( {query, data_source} ) => {
       <a>
       <div className='page_title_div'>
             <div className='page_title'>{titles[data_source].title}</div>
-            <div className='page_subtitle'>{titles[data_source].subtitle}</div>
       </div>
+            <div className='page_subtitle'>{titles[data_source].subtitle}</div>
+
       </a>
 
     </form>

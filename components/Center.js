@@ -173,7 +173,6 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
       let youtube = youTube(data_source, imdbid, data[0])
 
       release = <div>
-         {youtube}
           <div className='date'>{begin_date}</div>
           <div className='title'>{title}</div>
           <div className='headliner'>{data[0].headliner}</div>
@@ -185,7 +184,7 @@ const Center = ( {release_group, data_source, setReleaseGroup}) => {
 
     return <div>
       {release}
-      <div className='artists'>
+      <div className='artists' style={{ columnCount: 2, paddingBottom: '50px', width: '75%', display: 'inline-block' }}>
       {artists}
       </div>
       <div className='details'><table><tbody>{details}</tbody></table></div>
