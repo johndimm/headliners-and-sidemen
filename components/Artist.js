@@ -31,13 +31,6 @@ const Artist = ({ record, withpix, data_source, callSetArtistId }) => {
       src={artist['image_url']} alt={name} />
   }
 
-  console.log("artist", artist)
-  
-  const title = artist && 'partial_bio' in artist
-    ? artist['partial_bio'] 
-    : ''
-
-
 	const title = artist && 'partial_bio' in artist ? artist['partial_bio'] : ''
 
 	const link = `/artist_releases/${record.artist_id}`
