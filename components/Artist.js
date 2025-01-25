@@ -24,17 +24,19 @@ const Artist = ({ record, withpix, data_source, callSetArtistId }) => {
 	if (withpix && artist && 'image_url' in artist && artist['image_url']) {
 		const name = 'name' in artist ? artist['name'] : ''
 
-		pix = (
-			<img
-				className='artist_pix'
-				onError={(e) => {
-					e.target.style.display = 'none'
-				}}
-				src={artist['image_url']}
-				alt={name}
-			/>
-		)
-	}
+   pix = <img className='artist_pix' 
+      onError={(e)=>{
+        e.target.style.display='none'
+        }}
+      src={artist['image_url']} alt={name} />
+  }
+
+  console.log("artist", artist)
+  
+  const title = artist && 'partial_bio' in artist
+    ? artist['partial_bio'] 
+    : ''
+
 
 	const title = artist && 'partial_bio' in artist ? artist['partial_bio'] : ''
 

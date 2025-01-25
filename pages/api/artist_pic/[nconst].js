@@ -22,10 +22,10 @@ const getTheMovieDatabase = async (nconst) => {
   const size='small'
   const person = results.person_results[0]
 
-  // if (person && 'profile_path' in Object.keys(person)) {
-  if (person && person['profile_path']) {
-    const profile_path = person['profile_path']
-
+  if (person && 'profile_path' in person) { 
+    const profile_path = person.profile_path
+    // const tmdb_id = person.id
+  
     const width = size == 'small' ? 'w200' : 'w500'
     results.image_url = `https://image.tmdb.org/t/p/${width}/${profile_path}`
   }

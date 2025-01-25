@@ -99,142 +99,100 @@ function titleCase(str) {
 		.join(' ')
 }
 
-const Center = ({ release_group, data_source, setReleaseGroup, callSetArtistId, setSpotifyAlbum }) => {
-	const [data, setData] = useState([])
-	const [album, setAlbum] = useState({})
-//	const [spotifyAlbum, setSpotifyAlbum] = useState(0)
-	// const [spotifyToken, setSpotifyToken] = useState()
+const Center = ( {release_group, data_source, setReleaseGroup}) => {
+    const [data, setData] = useState ([])
+    const [album, setAlbum] = useState({})
+    // console.log('data_source', data_source)
+
+    // const imdbid = 'tt' + release_group.toString().padStart(7, '0')
+    const imdbid = release_group
+
+    useEffect( () => {
+        const url = `/api/release_group/${release_group}`
+        axios.get(url).then(function (response) {
+            // console.log("Center, data", response.data)
+            setData(response.data)
+        }).catch(err => err)
+
+        if (data_source == 'imdb' || data_source == 'imdb_tv') {
+          const url = `/api/imdb/${imdbid}`
+          axios.get(url).then(function (response) {
+            // console.log("Center, data", response.data)
+            const resultsField = data_source == 'imdb' 
+              ? 'movie_results' 
+              : 'tv_results'
+            setAlbum(response.data[resultsField][0])
+            // console.log('setAlbum:', response.data)
+        }).catch(err => err)
+      }
+
+    },[release_group])
 
 
+    let plot
+    let details
+    let title = data && data.length >= 1 ? data[0].title : ''
+    if (album && Object.keys(album).length > 0) {
+      title = album['title'] ? album['title'] : title
 
+      if (album.overview != 'N/A')
+        plot = album.overview
+      
+      const fields = ['original_language', 'original_title', 'release_date', 'popularity']
+      //  ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
+        
+        details = fields.map( (field, idx) => {
+           if (album[field] == 'null')
+             return null
+           return <tr key={idx}><th>{titleCase(field)}</th><td>{album[field]}</td></tr>
+        })
 
-	// console.log('data_source', data_source)
+        console.log("album", album)
 
-	// const imdbid = 'tt' + release_group.toString().padStart(7, '0')
-	const imdbid = release_group
+        //title = album['original_title']
+        
+        // console.log('details:', details)
+    }
 
-	useEffect(() => {
+    let artists 
+    let release
+    let links
+    let begin_date = '2200-01-01'
+    if (Array.isArray(data) && data.length > 0) {
+      // console.log('center', data[0])
+      let coverArt = <CoverArt record={data[0]} data_source={data_source} size='big'/>
 
+      artists = data.map( (record, idx) => {
+        // console.log("artist", record.artist)
+        if (record.begin_date < begin_date)
+           begin_date = record.begin_date 
+        return <Artist key={idx} record={record} withpix={true} data_source={data_source}/>
+      })
 
-		const getSpotifyAlbum = async (data) => {
-			if (! (data && Array.isArray(data) && data.length > 0))
-			  return
-			const album = data[0].title
-			const artist = data[0].headliner
-	
-			const url = `/api/spotify_search?album=${album}&artist=${artist}`
-			const results = await axios (url)
-			const uri = results?.data?.['uri']?.replace('spotify:album:','')
-			console.log(uri)
-			setSpotifyAlbum (uri)
-		}
+      begin_date = begin_date.toString().replace('-01-01','')
 
-		const url = `/api/release_group/${release_group}`
-		axios
-			.get(url)
-			.then(function (response) {
-				// console.log("Center, data", response.data)
-				setData(response.data)
+      links = externalLinks(data_source, imdbid, data[0])
+      //let youtube = youTube(data_source, imdbid, data[0])
 
+      release = <div>
+  
+          <div className='date'>{begin_date}</div>
+          <div className='title'>{title}</div>
+          <div className='headliner'>{data[0].headliner}</div>
+          {coverArt}
+          <div className='plot'>{plot}</div>
+ 
+        </div>
+    }
 
-		if (data_source == 'musicbrainz') {
-			getSpotifyAlbum(response.data)
-		}
-
-
-			})
-			.catch((err) => err)
-
-		if (data_source == 'imdb' || data_source == 'imdb_tv') {
-			const url = `/api/imdb/${imdbid}`
-			axios
-				.get(url)
-				.then(function (response) {
-					// console.log("Center, data", response.data)
-					const resultsField = data_source == 'imdb' ? 'movie_results' : 'tv_results'
-					setAlbum(response.data[resultsField][0])
-					// console.log('setAlbum:', response.data)
-				})
-				.catch((err) => err)
-		}
-
-	}, [release_group])
-
-	let plot
-	let details
-	let title = data && Array.isArray(data) && data.length >= 1 ? data[0].title : ''
-	if (album && Object.keys(album).length > 0) {
-		title = album['title'] ? album['title'] : title
-
-		if (album.overview != 'N/A') plot = album.overview
-
-		const fields = ['original_language', 'original_title', 'release_date', 'popularity']
-		//  ['Awards', 'Country', 'Director', 'Genre', 'Language', 'Rated', 'Writer', 'imdbRating']
-
-		details = fields.map((field, idx) => {
-			if (album[field] == 'null') return null
-			return (
-				<tr key={idx}>
-					<th>{titleCase(field)}</th>
-					<td>{album[field]}</td>
-				</tr>
-			)
-		})
-	}
-
-	let artists
-	let release
-	let links
-	let begin_date = '2200-01-01'
-	if (Array.isArray(data) && data.length > 0) {
-		// console.log('center', data[0])
-		let coverArt = <CoverArt record={data[0]} data_source={data_source} size='big' />
-
-		artists = data.map((record, idx) => {
-			// console.log("artist", record.artist)
-			if (record.begin_date < begin_date) begin_date = record.begin_date
-			return (
-				<Artist
-					key={idx}
-					record={record}
-					withpix={true}
-					data_source={data_source}
-					callSetArtistId={callSetArtistId}
-				/>
-			)
-		})
-
-		begin_date = begin_date.toString().replace('-01-01', '')
-
-		links = externalLinks(data_source, imdbid, data[0])
-		let youtube = youTube(data_source, imdbid, data[0])
-
-		release = (
-			<div>
-				{youtube}
-				<div className='date'>{begin_date} #{data[0].rank}</div>
-				<div className='title'>{title}</div>
-				<div className='headliner'>{data[0].headliner}</div>
-				<div className='img_holder'>{coverArt}</div>
-				<div className='plot'>{plot}</div>
-			</div>
-		)
-	}
-
-	return (
-		<div>
-			{release}
-			<div className='artists' style={{ columnCount: 2, paddingBottom: '50px' }}>
-				{artists}
-			</div>
-			<div className='details'>
-				<table>
-					<tbody>{details}</tbody>
-				</table>
-			</div>
-			{links}
-		</div>
-	)
+    return <div style={{textAlign: 'center'}}>
+      {release}
+      <div className='artists' style={{ columnCount: 2, paddingBottom: '50px', width: '75%', display: 'inline-block' }}>
+      {artists}
+      </div>
+      <div className='details'><table><tbody>{details}</tbody></table></div>
+      {links}
+      </div>
 }
 
 export default Center
