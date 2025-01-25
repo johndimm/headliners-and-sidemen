@@ -5,7 +5,7 @@ import Link from 'next/link'
 const GitHub = () => {
   return <Link href="https://github.com/johndimm/headliners-and-sidemen/" passHref={true}>
           <span className='link_span'>
-          <img height='30' src="/GitHub-Logos/github-mark-white.png" />
+          <img height='30' src="/GitHub-Logos/GitHub_Logo.png" />
           </span>
           </Link>
 }
@@ -102,7 +102,8 @@ const HeaderIMDb = ( {query, data_source} ) => {
     <form onSubmit={search}>
       <div className='search_input'>
 
-          <input placeholder='Search...' name='query' type='text' width='80' defaultValue={query}></input>
+          <input placeholder='Search...' name='query' type='text' defaultValue={query}
+            style={{width: "250px"}}></input>
           <input type='submit' />
           <br />
           <Link href='https://imdb.com/' passHref={true}>
@@ -125,8 +126,9 @@ const HeaderIMDb = ( {query, data_source} ) => {
       
       <div className='page_title_div'>
             <div className='page_title'>{titles[data_source].title}</div>
+            </div>
+
             <div className='page_subtitle'>{titles[data_source].subtitle}</div>
-      </div>
       
 
     </form>

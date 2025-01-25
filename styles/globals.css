@@ -128,7 +128,6 @@ td, th {
 .page_title_div {
   display: inline-block;
   margin-left: 20px;
-  width: 50vw;
 }
 .page_title {
   font-size:24pt;
@@ -140,17 +139,18 @@ td, th {
   font-size: 10pt;
   font-weight: 100;
   font-style: italic;
+  display: inline-block;
+  margin-left: 20px;
 }
 
 .search_input {
   display: inline-block;
-  width: 300px;
   white-space: nowrap;
 }
 
 .search_input input {
   font-size: 12pt;
-  margin-right:3px;
+  margin-right:20px;
 }
 
 .search_input img {
@@ -225,10 +225,8 @@ break-inside: avoid-column;
 
 .variations {
   display: inline-block;
-  width: 10px;
   font-weight: 200;
   font-size: 10pt;
-  margin-right: 20px;
   white-space: nowrap;
 }
 
@@ -417,7 +415,7 @@ button {
   font-size: 18pt;
   width: fit-content;
   float: left;
-  margin-left: 200px;
+  margin-left: 30px;
 }
 
 .selected {
